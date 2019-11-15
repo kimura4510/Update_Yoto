@@ -31,7 +31,14 @@
 *.out
 *.app
 
+# VS
 /.vs
+*.vs
+
+# debug
 /debug
+*debug
+
+# x64
 /x64
-/.vs/Update_Yoto/.v16
+*x64
