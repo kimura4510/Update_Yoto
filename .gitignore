@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+/.vs
+/debug
+/x64
+/.vs/Update_Yoto/.v16
