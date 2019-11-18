@@ -1,12 +1,12 @@
 #include <d3dx9.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
+#include <map>
 #include "Texture.hpp"
 
 cTexture::cTexture()
 {
-	m_ppTextureList = nullptr;
-	m_pTextureCategorySize = nullptr;
 }
 
 //IDチェック
@@ -27,74 +27,43 @@ bool cTexture::IsCategoryIDCheck(int category_id, int texture_id)
 
 void cTexture::InitTexture()
 {
-	m_pTextureCategorySize = new int[MAX_TEXTURE_CATEGORY];
-	
-	m_pTextureCategorySize =
-	{
-		(int)TitleCategoryTextureList::Max,
-		(int)GameCategoryTextureList::Max,
-		(int)HelpCategoryTextureList::Max,
-		(int)ClearCategoryTextureList::Max,
-		(int)GameoverCategoryTextureList::Max
-	};
-
-	m_ppTextureList = new Texture **[MAX_TEXTURE_CATEGORY];
-	
-	for (int i = 0; i < MAX_TEXTURE_CATEGORY; i++)
-	{
-		m_ppTextureList[i] = new Texture *[(int)]
-	}
+	m_TextureData = NULL;
+	m_TextureList = NULL;
 }
 
 void cTexture::ReleaseCategoryTexture(int release_category)
 {
-	if (m_ppTextureList[release_category] == nullptr)
+	for (int i = 1; i < m_TextureData.size; i++)
 	{
-		return;
+		m_TextureData.erase(i);
 	}
 
-	for (int i = 0; i < m_pTextureCategorySize[release_category]; i++)
+	for (int i = 1; i < m_TextureList.size; i++)
 	{
-		if (m_ppTextureList[release_category][i]->m_TextureData == nullptr)
-		{
-			continue;
-		}
-
-		m_ppTextureList[release_category][i]->m_TextureData->Release();
-		m_ppTextureList[release_category][i]->m_TextureData = nullptr;
+		m_TextureList.erase(i);
 	}
 }
 
 void cTexture::AllReleaseTexture()
 {
-	for (int i = 0; i < MAX_TEXTURE_CATEGORY; i++)
-	{
-		ReleaseCategoryTexture(i);
-
-		free(m_ppTextureList[i]);
-		m_ppTextureList[i] = nullptr;
-	}
+	m_TextureData.clear();
+	m_TextureList.clear();
 }
 
-bool cTexture::LoadTexture(const char* file_name, int id, int texture_id)
+bool cTexture::LoadTexture(const char* file_name)
 {
-	if (IsCategoryIDCheck(id, texture_id) == false)
-	{
-		return false;
-	}
-
-	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_ppTextureList[id][texture_id]);
+	m_TextureData.push_back();
+	m_TextureList.insert(std::make_pair(file_name, (int)m_TextureData.size() - 1));
+	Texture* p_tex = &m_TextureData.emplace_back();
+	
+	return Graphics::GetGraphicInstance()->CreateTexture(file_name, p_tex);
 }
 
-Texture* cTexture::GetTexture(int category_id, int texture_id)
+Texture* cTexture::GetTexture(const char* file_name)
 {
-	if (IsCategoryIDCheck(category_id, texture_id) == false)
-	{
-		return nullptr;
-	}
-	return m_ppTextureList[category_id][texture_id];
+	int num = m_TextureList.at(file_name);
+	return m_TextureData[num];
 }
-
 
 void cTexture::CreateTextureInstance()
 {
