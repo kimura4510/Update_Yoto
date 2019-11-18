@@ -10,7 +10,6 @@
 #include <vector>
 #include <map>
 
-
 class cTexture
 {
 public:
@@ -94,9 +93,6 @@ private:
 
 	//カテゴリのテクスチャ最大サイズの配列
 	std::map<char, int> m_TextureList;
-
-	bool IsCategoryIDCheck(int category_id, int texture_id);
-
 };
 
 #endif

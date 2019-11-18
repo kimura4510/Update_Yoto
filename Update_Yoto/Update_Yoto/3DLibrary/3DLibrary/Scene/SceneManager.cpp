@@ -4,7 +4,7 @@
 #include "TitleScene.hpp"
 #include "..//Engine/Input.hpp"
 
-SceneManager::SceneManager() : m_NextScene(Non_Scene)
+SceneManager::SceneManager() : m_NextScene(SceneID::eNon_Scene)
 {
 	m_Scene = (BaseScene*) new TitleScene(this);
 }
@@ -24,7 +24,7 @@ void SceneManager::End()
 //更新関数
 void SceneManager::Update()
 {
-	if (m_NextScene != Non_Scene)
+	if (m_NextScene != SceneID::eNon_Scene)
 	{
 		m_Scene->End();
 		switch (m_NextScene)
@@ -64,7 +64,7 @@ void SceneManager::ChangeScene(SceneID nextScene_)
 //ゲーム終了関数
 bool SceneManager::IsGameEnd()
 {
-	if (GetInputInstance()->GetKey(KEY_INFO::ESCAPE_KEY) == true)
+	if (Input::GetInputInstance()->GetKey(KEY_INFO::ESCAPE_KEY) == true)
 	{
 		return true;
 	}

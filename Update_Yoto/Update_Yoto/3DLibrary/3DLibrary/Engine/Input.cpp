@@ -116,3 +116,8 @@ Input::Input()
 	g_InputInterface = nullptr;
 	g_KeyDevice = nullptr;
 }
+
+Input::~Input()
+{
+
+}

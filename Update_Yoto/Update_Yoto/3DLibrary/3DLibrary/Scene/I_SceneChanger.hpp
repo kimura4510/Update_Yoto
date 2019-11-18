@@ -1,7 +1,8 @@
 #ifndef I_SCENECHANGER_H_
 #define I_SCENECHANGER_H_
 
-typedef enum class {
+enum class SceneID
+{
 	eTitleScene,
 	eGameScene,
 	eHelpScene,
@@ -11,7 +12,7 @@ typedef enum class {
 	eSceneIDMax,
 	eNon_Scene,
 
-}SceneID;
+};
 
 // Scene変更のためのインターフェイスクラス
 class I_SceneChanger

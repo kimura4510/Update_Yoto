@@ -8,7 +8,7 @@ bool Engine::InitEngine(HINSTANCE hI, HWND hW)
 {
 	Graphics::CreateGraphicInstance();
 	Input::CreateInputInstance();
-	cTexture Texture;
+	cTexture::CreateTextureInstance();
 
 	if (Graphics::GetGraphicInstance()->InitGraphics(hW) == false)
 	{
@@ -20,14 +20,13 @@ bool Engine::InitEngine(HINSTANCE hI, HWND hW)
 		return false;
 	}
 
-	Texture.InitTexture();
-
 	return true;
-
 }
 
 void Engine::EndEngine()
 {
+	cTexture::GetTextureInstance()->AllReleaseTexture();
+	cTexture::DestroyTextureInstance();
 	Graphics::GetGraphicInstance()->ReleaseGraphics();
 	Input::GetInputInstance()->ReleaseInput();
 	Graphics::DestroyGraphicInstance();

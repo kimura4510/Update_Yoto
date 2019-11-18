@@ -6,10 +6,6 @@
 
 class SceneManager : public I_SceneChanger, Task
 {
-private:
-	BaseScene* m_Scene;
-	SceneID m_NextScene;
-
 public:
 	//コンストラクタ
 	SceneManager();
@@ -33,6 +29,10 @@ public:
 	void ChangeScene(SceneID nextScene) override;
 
 	bool IsGameEnd();
+
+private:
+	BaseScene* m_Scene;
+	SceneID m_NextScene;
 };
 
 
