@@ -1,8 +1,8 @@
 #ifndef SCENEMANAGER_H_
 #define SCENEMANAGER_H_
 
-#include "I_SceneChanger.hpp"
 #include "BaseScene.hpp"
+#include "I_SceneChanger.hpp"
 
 class SceneManager : public I_SceneChanger, Task
 {
@@ -34,7 +34,5 @@ private:
 	BaseScene* m_Scene;
 	SceneID m_NextScene;
 };
-
-
 
 #endif

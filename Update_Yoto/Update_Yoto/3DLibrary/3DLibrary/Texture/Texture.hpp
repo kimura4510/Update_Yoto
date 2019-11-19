@@ -92,7 +92,7 @@ private:
 	std::vector<Texture*> m_TextureData;
 
 	//カテゴリのテクスチャ最大サイズの配列
-	std::map<char, int> m_TextureList;
+	std::map<const char* ,int> m_TextureList;
 };
 
 #endif

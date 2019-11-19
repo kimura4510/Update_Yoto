@@ -17,19 +17,16 @@ void cTexture::InitTexture()
 
 void cTexture::ReleaseCategoryTexture(int release_category)
 {
-	for (int i = 1; i < (int)m_TextureData.size(); i++)
-	{
-		m_TextureData.erase(i);
-	}
 
-	for (int i = 1; i < (int)m_TextureList.size(); i++)
-	{
-		m_TextureList.erase(i);
-	}
 }
 
 void cTexture::AllReleaseTexture()
 {
+	for (int i = 0; i < (int)m_TextureData.size; i++)
+	{
+		delete m_TextureData[i];
+	}
+
 	m_TextureData.clear();
 	m_TextureList.clear();
 }
@@ -38,7 +35,7 @@ bool cTexture::LoadTexture(const char* file_name)
 {
 	m_TextureData.push_back(new Texture);
 
-	m_TextureList.insert(std::make_pair(file_name, (int)m_TextureData.size() - 1));
+	m_TextureList.insert(std::make_pair(file_name, m_TextureData.size()));
 		
 	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_TextureData.back);
 }
