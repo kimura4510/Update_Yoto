@@ -36,15 +36,11 @@ void cTexture::AllReleaseTexture()
 
 bool cTexture::LoadTexture(const char* file_name)
 {
-	if (m_TextureData.back() != NULL)
-	{
-		m_TextureData.push_back();
-	}
-	
+	m_TextureData.push_back(new Texture);
+
 	m_TextureList.insert(std::make_pair(file_name, (int)m_TextureData.size() - 1));
-	Texture* p_tex = &m_TextureData.emplace_back();
-	
-	return Graphics::GetGraphicInstance()->CreateTexture(file_name, p_tex);
+		
+	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_TextureData.back);
 }
 
 Texture* cTexture::GetTexture(const char* file_name)

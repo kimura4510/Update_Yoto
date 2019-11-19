@@ -89,7 +89,7 @@ private:
 	static cTexture* p_TextureInstance;
 
 	//カテゴリごとのテクスチャ保存用配列
-	std::vector<Texture> m_TextureData;
+	std::vector<Texture*> m_TextureData;
 
 	//カテゴリのテクスチャ最大サイズの配列
 	std::map<char, int> m_TextureList;
