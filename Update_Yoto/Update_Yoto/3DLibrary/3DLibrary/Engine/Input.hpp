@@ -126,7 +126,7 @@ public:
 	{
 		if (Input::IsInputInstance_NULL() == false)
 		{
-			return;
+			return NULL;
 		}
 		return p_InputInstance;
 	}

@@ -5,7 +5,10 @@
 
 class GameScene : public BaseScene
 {
-	GamseScene(I_SceneChanger* changer);
+	//コンストラクタ
+	GameScene(I_SceneChanger* changer);
+	//デストラクタ
+	~GameScene();
 	void Init() override;
 	void End() override;
 	void Update() override;

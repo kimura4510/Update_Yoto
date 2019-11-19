@@ -6,49 +6,8 @@
 #define TEXTURE_H_
 
 #include "../Engine/Graphics.hpp"
-#include "../Scene/I_SceneChanger.hpp"
-
-// @brief タイトル用のテクスチャリスト
-enum class TitleCategoryTextureList : int
-{
-	TitleBgTex,				//!< 背景
-	TitleObject,			//!< 選択アイコン
-	Max,		//!< リスト最大数
-};
-
-// @brief ゲーム本編用テクスチャリスト
-enum class GameCategoryTextureList : int
-{
-	GameBgTex,			//!< 背景
-	Max,		//!< リスト最大数
-};
-
-
-// @brief ヘルプ用テスクチャリスト
-enum class HelpCategoryTextureList : int
-{
-	Help1,				//!< 背景
-	Max,			//!< リスト最大数
-};
-
-
-enum class GameoverCategoryTextureList : int
-{
-	Max,
-};
-
-
-enum class ClearCategoryTextureList : int
-{
-	Max,
-};
-
-#define TEXTURE_CATEGORY_TITLE ((int)SceneID::eTitleScene);
-#define TEXTURE_CATEGORY_GAME ((int)SceneID::eGameScene);
-#define TEXTURE_CATEGORY_HELP ((int)SceneID::eHelpScene);
-#define TEXTURE_CATEGORY_CLEAR ((int)SceneID::eClearScene);
-#define TEXTURE_CATEGORY_GAMEOVER ((int)SceneID::eGameoverScene);
-#define MAX_TEXTURE_CATEGORY ((int)SceneID::eSceneIDMax)
+#include <string>
+#include <map>
 
 class cTexture
 {
@@ -81,7 +40,7 @@ public:
 	* @param[in] category_id 登録するカテゴリー
 	* @param[in] texture_id カテゴリー内のテクスチャID
 	*/
-	bool LoadTexture(const char* file_name, int category_id, int texture_id);
+	bool LoadTexture(const char* file_name);
 
 	/**
 	* @brief テクスチャデータの取得関数@n
@@ -90,7 +49,7 @@ public:
 	* @param[in] category_id 取得したいテクスチャのカテゴリ
 	* @param[in] texture_id 取得したいテクスチャのID
 	*/
-	Texture* GetTexture(int category_id, int texture_id);
+	Texture* GetTexture(const char* file_name);
 
 	//シングルトンデザインパターン
 public:
@@ -120,20 +79,16 @@ public:
 
 
 private:
-	//カテゴリごとのテクスチャ保存用配列
-	Texture*** m_ppTextureList;
+	//シングルトン
+//コンストラクタ
+	cTexture();
+	//デストラクタ
+	~cTexture();
+	//Textureのインスタンス
+	static cTexture* p_TextureInstance;
 
 	//カテゴリのテクスチャ最大サイズの配列
-	int* m_pTextureCategorySize;
-
-	bool IsCategoryIDCheck(int category_id, int texture_id);
-
-	//シングルトン
-	//コンストラクタ
-	cTexture();
-	~cTexture();		//デストラクタ
-
-	static cTexture* p_TextureInstance;		//Textureのインスタンス
+	std::map<std::string ,Texture*> m_TextureList;
 };
 
 #endif

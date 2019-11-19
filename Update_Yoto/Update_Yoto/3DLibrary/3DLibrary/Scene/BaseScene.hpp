@@ -11,7 +11,7 @@ protected:
 	I_SceneChanger* m_SceneChanger;
 
 public:
-	BaseScene(I_SceneChanger sceneChanger);
+	BaseScene(I_SceneChanger* sceneChanger);
 	virtual ~BaseScene() { }
 	virtual void Update() override {};
 	virtual void Draw() override {};

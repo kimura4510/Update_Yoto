@@ -168,7 +168,7 @@ Graphics* Graphics::GetGraphicInstance()
 {
 	if (Graphics::IsGraphicInstance_NULL() == false)
 	{
-		return;
+		return NULL;
 	}
 	return p_GraphicInstance;
 }
