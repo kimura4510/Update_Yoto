@@ -119,6 +119,4 @@ private:
 	static Graphics* p_GraphicInstance;		//Graphicsのインスタンス
 };
 
-
-
 #endif

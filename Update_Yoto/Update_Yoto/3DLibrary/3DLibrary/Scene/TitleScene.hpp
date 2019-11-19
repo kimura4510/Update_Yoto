@@ -7,6 +7,7 @@ class TitleScene : public BaseScene
 {
 public:
 	TitleScene(I_SceneChanger* changer);
+	~TitleScene();
 	void Init() override;
 	//void End() override;
 	void Update() override;

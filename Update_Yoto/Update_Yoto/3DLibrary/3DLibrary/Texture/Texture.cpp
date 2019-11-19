@@ -1,9 +1,7 @@
-#include <d3dx9.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <vector>
 #include <map>
 #include "Texture.hpp"
+
+cTexture* cTexture::p_TextureInstance = NULL;
 
 cTexture::cTexture()
 {
@@ -22,28 +20,19 @@ void cTexture::ReleaseCategoryTexture(int release_category)
 
 void cTexture::AllReleaseTexture()
 {
-	for (int i = 0; i < (int)m_TextureData.size; i++)
-	{
-		delete m_TextureData[i];
-	}
-
-	m_TextureData.clear();
 	m_TextureList.clear();
 }
 
 bool cTexture::LoadTexture(const char* file_name)
 {
-	m_TextureData.push_back(new Texture);
-
-	m_TextureList.insert(std::make_pair(file_name, m_TextureData.size()));
-		
-	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_TextureData.back);
+	m_TextureList.insert(std::make_pair(file_name, new Texture));
+	
+	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_TextureList.end()->second);
 }
 
 Texture* cTexture::GetTexture(const char* file_name)
 {
-	int num = m_TextureList.at(file_name);
-	return m_TextureData[num];
+	return m_TextureList.at(file_name);
 }
 
 void cTexture::CreateTextureInstance()
@@ -72,7 +61,7 @@ cTexture* cTexture::GetTextureInstance()
 {
 	if (cTexture::IsTextureInstance_NULL() == false)
 	{
-		return;
+		return NULL;
 	}
 	return p_TextureInstance;
 }

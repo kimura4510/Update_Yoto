@@ -4,7 +4,7 @@
 #include "BaseScene.hpp"
 #include "I_SceneChanger.hpp"
 
-class SceneManager : public I_SceneChanger, Task
+class SceneManager : public I_SceneChanger
 {
 public:
 	//コンストラクタ
@@ -14,16 +14,16 @@ public:
 	~SceneManager();
 
 	//初期化関数
-	void Init() override;
+	void Init();
 
 	//終了関数
-	void End() override;
+	void End();
 	
 	//更新関数
-	void Update() override;
+	void Update();
 
 	//描画関数
-	void Draw() override;
+	void Draw();
 
 	//シーン変更関数
 	void ChangeScene(SceneID nextScene) override;

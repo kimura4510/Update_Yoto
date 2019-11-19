@@ -6,8 +6,7 @@
 #define TEXTURE_H_
 
 #include "../Engine/Graphics.hpp"
-#include "../Scene/I_SceneChanger.hpp"
-#include <vector>
+#include <string>
 #include <map>
 
 class cTexture
@@ -88,11 +87,8 @@ private:
 	//Textureのインスタンス
 	static cTexture* p_TextureInstance;
 
-	//カテゴリごとのテクスチャ保存用配列
-	std::vector<Texture*> m_TextureData;
-
 	//カテゴリのテクスチャ最大サイズの配列
-	std::map<const char* ,int> m_TextureList;
+	std::map<std::string ,Texture*> m_TextureList;
 };
 
 #endif

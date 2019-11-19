@@ -1,8 +1,8 @@
 #include "SceneManager.hpp"
-#include "GameScene.hpp"
+#include "..//Engine/Input.hpp"
 #include "HelpScene.hpp"
 #include "TitleScene.hpp"
-#include "..//Engine/Input.hpp"
+#include "GameScene.hpp"
 
 SceneManager::SceneManager() : m_NextScene(SceneID::eNon_Scene)
 {
