@@ -1,13 +1,13 @@
 #include <Windows.h>
 #include "Engine/Engine.hpp"
 #include "Engine/Window.hpp"
-//#include "Scene/SceneManager.hpp"
+#include "Scene/SceneManager.hpp"
 
 int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpCmpLine, INT nCmdShow)
 {
 	Engine engine;
 	Window window;
-	//SceneManager sceneManager;
+	SceneManager sceneManager;
 	
 	HWND hW = window.MakeWindow(hI, 1920, 1080, "Update:Yoto");
 	
@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpCmpLine, INT nCmdShow)
 
 	MSG msg;
 
-	//sceneManager.Init();
+	sceneManager.Init(SceneID::eTitleScene);
 
 	//ゲームループの開始
 	while (true)
@@ -40,12 +40,12 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpCmpLine, INT nCmdShow)
 		else
 		{
 			//シーン更新
-			//sceneManager.Update();
+			sceneManager.Update();
 			//シーン描画
-			//sceneManager.Draw();
+			sceneManager.Draw();
 		}
 	}
 
-	//sceneManager.End();
+	sceneManager.End();
 	engine.EndEngine();
 }

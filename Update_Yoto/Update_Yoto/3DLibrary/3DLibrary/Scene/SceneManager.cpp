@@ -1,64 +1,64 @@
 #include "SceneManager.hpp"
-#include "..//Engine/Input.hpp"
+#include "../Engine/Input.hpp"
 #include "HelpScene.hpp"
 #include "TitleScene.hpp"
 #include "GameScene.hpp"
+#include "NonScene.hpp"
 
-SceneManager::SceneManager() : m_NextScene(SceneID::eNon_Scene)
+SceneManager::SceneManager()
 {
-	m_Scene = (BaseScene*) new TitleScene(this);
+	m_SceneID = SceneID::eTitleScene;
+	m_CurrentScene = new TitleScene;
+}
+
+SceneManager::~SceneManager()
+{
+
 }
 
 //初期化関数
-void SceneManager::Init()
+void SceneManager::Init(SceneID id)
 {
-	m_Scene->Init();
+	m_SceneList.push_back(new TitleScene());
+	m_SceneList.push_back(new GameScene());
+	m_SceneList.push_back(new HelpScene());
+
+	m_SceneID = SceneID::eTitleScene;
 }
 
 //終了関数
 void SceneManager::End()
 {
-	m_Scene->End();
+	for (auto scene : m_SceneList)
+	{
+		BaseScene* base = scene;
+		delete base;
+	}
+	m_SceneList.clear();
 }
 
 //更新関数
 void SceneManager::Update()
 {
-	if (m_NextScene != SceneID::eNon_Scene)
-	{
-		m_Scene->End();
-		switch (m_NextScene)
-		{
-		case SceneID::eTitleScene:
-			m_Scene = (BaseScene*) new TitleScene(this);
-			break;
-		case SceneID::eGameScene:
-			m_Scene = (BaseScene*) new GameScene(this);
-			break;
-		case SceneID::eHelpScene:
-			m_Scene = (BaseScene*) new HelpScene(this);
-			break;
-		//case SceneID::eGameoverScene:
-		//	m_Scene = (BaseScene*) new GameoverScene(this);
-		//	break;
-		}
-		m_NextScene = SceneID::eNon_Scene;
-		m_Scene->Init();
-	}
-
-	m_Scene->Update();
+	SceneID id;
+	id = m_CurrentScene->Control();
+	ChangeScene(id);
 }
 
 //描画関数
 void SceneManager::Draw()
 {
-	m_Scene->Draw();
+	m_CurrentScene->Draw();
 }
 
 //シーン変更関数
 void SceneManager::ChangeScene(SceneID nextScene_)
 {
-	m_NextScene = nextScene_;
+	if (nextScene_ != m_SceneID)
+	{
+		m_SceneID = nextScene_;
+	}
+	m_CurrentScene = m_SceneList[(int)m_SceneID];
 }
 
 //ゲーム終了関数

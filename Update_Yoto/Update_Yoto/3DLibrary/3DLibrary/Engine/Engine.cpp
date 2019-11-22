@@ -19,6 +19,7 @@ bool Engine::InitEngine(HINSTANCE hI, HWND hW)
 	{
 		return false;
 	}
+	cTexture::GetTextureInstance()->InitTexture();
 
 	return true;
 }

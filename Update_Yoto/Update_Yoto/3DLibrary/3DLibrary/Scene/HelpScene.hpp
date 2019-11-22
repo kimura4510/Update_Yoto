@@ -5,10 +5,9 @@
 
 class HelpScene : public BaseScene
 {
-	HelpScene(I_SceneChanger* changer);
 	~HelpScene();
 	void Init() override;
-	void End() override;
+	SceneID End() override;
 	void Update() override;
 	void Draw() override;
 };

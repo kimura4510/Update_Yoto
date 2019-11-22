@@ -6,8 +6,46 @@
 #define TEXTURE_H_
 
 #include "../Engine/Graphics.hpp"
-#include <string>
-#include <map>
+
+enum class TextureCategory : int
+{
+	TitleCategory,
+	GameCategory,
+	HelpCategory,
+	ClearCategory,
+	GameoverCategory,
+	MaxTextureCategory,
+};
+
+enum class TitleCategoryTextureList : int
+{
+	Background,
+	MaxTitleTex
+};
+
+enum class GameCategoryTextureList : int
+{
+	Background,
+	MaxGameTex
+};
+
+enum class HelpCategoryTextureList : int
+{
+	Background,
+	MaxHelpTex
+};
+
+enum class ClearCategoryTextureList : int
+{
+	Background,
+	MaxClearTex
+};
+
+enum class GameoverCategoryTextureList : int
+{
+	Background,
+	MaxGameoverTex
+};
 
 class cTexture
 {
@@ -40,7 +78,7 @@ public:
 	* @param[in] category_id 登録するカテゴリー
 	* @param[in] texture_id カテゴリー内のテクスチャID
 	*/
-	bool LoadTexture(const char* file_name);
+	bool LoadTexture(const char* file_name, int id, int textureID);
 
 	/**
 	* @brief テクスチャデータの取得関数@n
@@ -49,7 +87,7 @@ public:
 	* @param[in] category_id 取得したいテクスチャのカテゴリ
 	* @param[in] texture_id 取得したいテクスチャのID
 	*/
-	Texture* GetTexture(const char* file_name);
+	Texture* GetTexture(int categoryID, int textureID);
 
 	//シングルトンデザインパターン
 public:
@@ -84,11 +122,24 @@ private:
 	cTexture();
 	//デストラクタ
 	~cTexture();
+
+	bool IsCategoryIDCheck(int category_id, int texture_id);
+
+private:
 	//Textureのインスタンス
 	static cTexture* p_TextureInstance;
 
 	//カテゴリのテクスチャ最大サイズの配列
-	std::map<std::string ,Texture*> m_TextureList;
+	Texture** m_ppTextureList[(int)TextureCategory::MaxTextureCategory];
+
+	const int TextureCategorySize[(int)TextureCategory::MaxTextureCategory] =
+	{
+		(int)TitleCategoryTextureList::MaxTitleTex,
+		(int)GameCategoryTextureList::MaxGameTex,
+		(int)HelpCategoryTextureList::MaxHelpTex,
+		(int)ClearCategoryTextureList::MaxClearTex,
+		(int)GameoverCategoryTextureList::MaxGameoverTex,
+	};
 };
 
 #endif

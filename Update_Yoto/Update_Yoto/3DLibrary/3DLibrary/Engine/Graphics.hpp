@@ -17,6 +17,16 @@ struct Texture
 	float m_Height;						//!< 縦幅
 };
 
+// @biref 3D描画用頂点座標保存構造体
+struct CustomVertex3D
+{
+	float m_x;
+	float m_y;
+	float m_z;
+	D3DCOLOR color;
+	float tu, tv;
+};
+
 struct CustomVertex
 {
 	float x;	//x座標
@@ -26,6 +36,28 @@ struct CustomVertex
 
 	float tu;	//テクスチャ座標x
 	float tv;	//テクスチャ座標y
+};
+
+struct Vertex3D
+{
+	float m_x;	//x座標
+	float m_y;	//y座標
+	float m_z;	//z座標
+
+	float m_tu;	//uテクスチャ座標
+	float m_tv;	//vテクスチャ座標
+
+	float m_width;	//幅
+	float m_height;	//高さ
+
+	DWORD m_color;	//color
+
+	float m_rotx;	//x回転
+	float m_roty;	//y回転
+	float m_rotz;	//z回転
+
+	float m_scalex;	//拡縮x
+	float m_scaley;	//拡縮y
 };
 
 class Graphics
@@ -81,6 +113,31 @@ public:
 	*/
 	void DrawTexture(float x, float y, Texture* texture_data);
 
+	/**
+	* @brief 統合画像描画関数
+	* texture_dataはTexture.hのGetTextureDataを使用してください
+	* @param[in] x X軸描画座標
+	* @param[in] y Y軸描画座標
+	* @param[in] texture_data 描画で使用するテクスチャのデータ
+	* @param[in] tu テクスチャU座標
+	* @param[in] tv テクスチャV座標
+	*/
+	void DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY);
+
+	/**
+	* @biref 3D描画関数
+	* 指定された位置に3Dポリゴンを描画します@n
+	* texture_dataはFile.hのGetTextureDataを使用してください
+	* @param[in] v3D 座標などの情報群
+	* @param[in] texture_data 描画で使用するテクスチャのデータ
+	*/
+	void Draw3D(const Vertex3D& v3D, Texture* texture_data);
+
+	//以下、カメラ用の関数
+	bool SetView(const D3DMATRIX& matView) const;
+	void GetViewport_Camera(D3DVIEWPORT9* vp);
+	bool SetMatProj(const D3DMATRIX& matProj) const;
+
 	//シングルトンデザインパターン
 public:
 	/**
@@ -108,14 +165,19 @@ public:
 	static Graphics* GetGraphicInstance();
 
 private:
+
+	//シングルトン
+//コンストラクタ
+	Graphics();
+//デストラクタ
+	~Graphics();
+
+private:
 	//グローバル変数
 	LPDIRECT3D9 g_D3DInterface;		//DirectGraphicsインターフェース
 	LPDIRECT3DDEVICE9 g_D3DDevice;		//DirectGraphicsデバイス
 
-	//シングルトン
-	//コンストラクタ
-	Graphics();
-	~Graphics();		//デストラクタ
+
 	static Graphics* p_GraphicInstance;		//Graphicsのインスタンス
 };
 

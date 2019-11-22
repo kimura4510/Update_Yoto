@@ -1,24 +1,52 @@
 #ifndef BASE_SCENE_H_
 #define BASE_SCENE_H_
 
-#include "../Task.hpp"
-#include "I_SceneChanger.hpp"
-
-class BaseScene :public Task
+enum class SceneID
 {
-protected:
-	// @biref クラスの所有元にシーンの切り替えを伝えるインターフェイス
-	I_SceneChanger* m_SceneChanger;
+	eTitleScene,
+	eGameScene,
+	eHelpScene,
+	eClearScene,
+	eGameoverScene,
 
+	eSceneIDMax,
+	eNon_Scene,
+
+};
+
+enum class SceneState
+{
+	eInit,
+	eMain,
+	eEnd,
+};
+
+class BaseScene
+{
 public:
-	BaseScene(I_SceneChanger* sceneChanger);
+	BaseScene()
+	{
+		m_State = SceneState::eInit;
+	}
 	virtual ~BaseScene() { }
-	virtual void Update() override {};
-	virtual void Draw() override {};
 
-	virtual void Init() override {};
-	virtual void End() override {};
-}
+
+	virtual void Update() = 0;
+	virtual void Draw() { };
+	virtual void Init() = 0;
+	virtual SceneID End()
+	{
+		return SceneID::eNon_Scene;
+	}
+
+	virtual SceneID Control()
+	{
+		return SceneID::eNon_Scene;
+	}
+
+protected:
+	SceneState m_State;	///< シーンの状態
+};
 
 
 #endif

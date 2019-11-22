@@ -5,13 +5,15 @@
 
 class GameScene : public BaseScene
 {
+public:
 	//コンストラクタ
-	GameScene(I_SceneChanger* changer);
+	GameScene();
 	//デストラクタ
-	~GameScene();
+	~GameScene() override;
 	void Init() override;
-	void End() override;
+	SceneID End() override;
 	void Update() override;
+	SceneID Control() override;
 	void Draw() override;
 };
 

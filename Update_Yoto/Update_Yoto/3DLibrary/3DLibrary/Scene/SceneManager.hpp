@@ -2,9 +2,9 @@
 #define SCENEMANAGER_H_
 
 #include "BaseScene.hpp"
-#include "I_SceneChanger.hpp"
+#include <vector>
 
-class SceneManager : public I_SceneChanger
+class SceneManager
 {
 public:
 	//コンストラクタ
@@ -14,7 +14,7 @@ public:
 	~SceneManager();
 
 	//初期化関数
-	void Init();
+	void Init(SceneID id);
 
 	//終了関数
 	void End();
@@ -26,13 +26,14 @@ public:
 	void Draw();
 
 	//シーン変更関数
-	void ChangeScene(SceneID nextScene) override;
+	void ChangeScene(SceneID nextScene);
 
 	bool IsGameEnd();
 
 private:
-	BaseScene* m_Scene;
-	SceneID m_NextScene;
+	std::vector<BaseScene*> m_SceneList;
+	BaseScene* m_CurrentScene;
+	SceneID m_SceneID;
 };
 
 #endif

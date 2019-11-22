@@ -124,10 +124,6 @@ public:
 	*/
 	static Input* GetInputInstance()
 	{
-		if (Input::IsInputInstance_NULL() == false)
-		{
-			return NULL;
-		}
 		return p_InputInstance;
 	}
 
