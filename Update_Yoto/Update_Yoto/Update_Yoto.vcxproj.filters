@@ -95,5 +95,17 @@
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Animation\AnimationBase\AnimationBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimationManager\AnimationManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\WaitAnimation\WaitAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
