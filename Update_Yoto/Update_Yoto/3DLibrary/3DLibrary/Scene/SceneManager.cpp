@@ -1,4 +1,5 @@
 #include "SceneManager.hpp"
+#include "../Engine/Graphics.hpp"
 #include "../Engine/Input.hpp"
 #include "HelpScene.hpp"
 #include "TitleScene.hpp"
@@ -48,7 +49,13 @@ void SceneManager::Update()
 //•`‰æŠÖ”
 void SceneManager::Draw()
 {
+	if (Graphics::GetGraphicInstance()->DrawStart() == false)
+	{
+		return;
+	}
 	m_CurrentScene->Draw();
+
+	Graphics::GetGraphicInstance()->DrawEnd();
 }
 
 //ƒV[ƒ“•ÏXŠÖ”

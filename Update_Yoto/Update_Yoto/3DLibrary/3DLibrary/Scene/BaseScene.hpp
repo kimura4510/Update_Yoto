@@ -45,7 +45,7 @@ public:
 	}
 
 protected:
-	SceneState m_State;	///< ƒV[ƒ“‚Ìó‘Ô
+	SceneState m_State;
 };
 
 

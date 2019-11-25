@@ -8,7 +8,7 @@ void TitleScene::Init()
 {
 	m_State = SceneState::eMain;
 
-	cTexture::GetTextureInstance()->LoadTexture("3DLibrary/3DLibrary/Res/title1.png",
+	cTexture::GetTextureInstance()->LoadTexture("3DLibrary/3DLibrary/Res/title.png",
 		(int)TextureCategory::TitleCategory,
 		(int)TitleCategoryTextureList::Background);
 }
@@ -33,7 +33,7 @@ SceneID TitleScene::End()
 
 SceneID TitleScene::Control()
 {
-	switch (m_State)
+	switch(m_State)
 	{
 	case SceneState::eInit:
 		Init();

@@ -22,7 +22,7 @@ bool Graphics::InitGraphics(HWND hwindow)
 	ZeroMemory(&pres_param, sizeof(D3DPRESENT_PARAMETERS));
 
 	pres_param.BackBufferCount = 1;
-	pres_param.BackBufferFormat = D3DFMT_X8R8G8B8;
+	pres_param.BackBufferFormat = D3DFMT_UNKNOWN;
 	pres_param.Windowed = true;
 	pres_param.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	pres_param.BackBufferHeight = 1080;
