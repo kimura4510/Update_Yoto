@@ -8,7 +8,7 @@
 
 class CharacterAnimationManager {
 public:
-	/*
+	
 	CharacterAnimationManager(const CharacterAnimationBase::AnimationType &animation_type,
 	//Sprite2DData&attack_data,
 	//	Sprite2DData&wait_data
@@ -93,9 +93,9 @@ private:
 	CharacterAnimationBase * m_p_anim;
 
 	// 待機中のデータ
-	Sprite2DData m_wait_data;
+	//Sprite2DData m_wait_data;
 
 	// 攻撃中のデータ
-	Sprite2DData m_attack_data;
-	*/
+	//Sprite2DData m_attack_data;
+	
 };

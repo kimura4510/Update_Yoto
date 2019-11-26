@@ -4,31 +4,32 @@
 #include"../../TextureId/TextureId.h"
 
 
-void TitleUI::Update() {
+void CalloutUI::Update() {
 
 
 }
 
 
-void TitleUI::Draw() {
+void CalloutUI::Draw() {
+
 
 	// テクスチャ取得
-	Texture* hp =
-		cTexture::GetTextureInstance()->GetTexture(0, (int)TextureId::HP);
+	Texture* hp = 
+		cTexture::GetTextureInstance()->GetTexture((int)CategoryId::UI, (int)TextureId::CALLOUT);
 
 	// HP描画
-	Graphics::GetGraphicInstance()->DrawTexture(500.f, 500.f, hp);
+	//Graphics::GetGraphicInstance()->DrawTexture(500.f, 500.f, hp);
 
 	// 分割して描画
 	Graphics::GetGraphicInstance()->DrawIntegratedImage(
-		1920.f / 2,
-		1080.f / 2,
+		(float)400.f,
+		(float)400.f,
 		hp,
-		0.2,
-		0.2,
-		0.f,
-		0.f,
-		0,
-		0
+		0.5f,
+		1.f,
+		1000.f,
+		1000.f,
+		1000,
+		1000
 	);
 }

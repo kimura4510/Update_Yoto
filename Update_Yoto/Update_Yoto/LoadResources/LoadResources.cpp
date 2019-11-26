@@ -7,10 +7,18 @@ namespace LoadResources {
 
 	void Load() {
 
-		cTexture::GetTextureInstance()->
-			LoadTexture("Resource/UI/Callout2048x1024",0,(int)TextureId::CALLOUT);
+		if (cTexture::GetTextureInstance()->
+			LoadTexture("Resource/UI/Callout2048x1024.png", (int)CategoryId::UI, (int)TextureId::CALLOUT)
+			== false) {
+			return;
+		}
 
-		cTexture::GetTextureInstance()->
-			LoadTexture("Resource/UI/HP.png",0,(int)TextureId::HP);
+		if (cTexture::GetTextureInstance()->
+			LoadTexture("Resource/UI/HP.png", 1, (int)TextureId::HP)
+			== false) {
+			return;
+		}
+
+
 	}
 }

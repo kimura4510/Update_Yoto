@@ -1,15 +1,17 @@
 ﻿#pragma once
 
 
+// 吹き出しUI
 
-class TitleUI{
+
+
+class CalloutUI{
 public:
 
-	TitleUI() {};
+	CalloutUI() {};
 
 	void Update();
 	void Draw();
-	
 
 
 private:

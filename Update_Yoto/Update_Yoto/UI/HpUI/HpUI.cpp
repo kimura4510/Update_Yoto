@@ -13,15 +13,16 @@ void HpUI::Draw() {
 
 	// テクスチャ取得
 	Texture *hp = 
-		cTexture::GetTextureInstance()->GetTexture(0, (int)TextureId::HP);
+		cTexture::GetTextureInstance()->
+		GetTexture(1, (int)TextureId::HP);
 
 	// HP描画
 	Graphics::GetGraphicInstance()->DrawTexture(500.f,500.f,hp);
 
 	// 分割して描画
 	Graphics::GetGraphicInstance()->DrawIntegratedImage(
-		1920.f / 2,
-		1080.f / 2,
+		400.f,
+		400.f,
 		hp,
 		0.2,
 		0.2,

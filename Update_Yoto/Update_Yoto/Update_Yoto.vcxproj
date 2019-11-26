@@ -105,7 +105,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,7 +134,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -146,7 +146,15 @@
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Window.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Main.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
+    <ClCompile Include="Animation\AnimationManager\AnimationManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LoadResources\LoadResources.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TestUpdate.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -175,6 +183,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="LoadResources\LoadResources.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TestUpdate.h">
       <SubType>
       </SubType>
     </ClInclude>
