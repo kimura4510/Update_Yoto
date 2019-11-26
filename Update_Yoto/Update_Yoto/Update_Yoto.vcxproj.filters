@@ -42,19 +42,13 @@
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp">
       <Filter>ソース ファイル\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\BaseScene.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
+    <ClCompile Include="LoadResources\LoadResources.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
+    <ClCompile Include="UI\HpUI\HpUI.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadResource.cpp">
+    <ClCompile Include="UI\CalloutUI\CalloutUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,24 +74,6 @@
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp">
       <Filter>ソース ファイル\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\BaseScene.hpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.hpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Animation\AnimationBase\AnimationBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -110,7 +86,16 @@
     <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="LoadResource.h">
+    <ClInclude Include="LoadResources\LoadResources.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\HpUI\HpUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CalloutUI\CalloutUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureId\TextureId.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

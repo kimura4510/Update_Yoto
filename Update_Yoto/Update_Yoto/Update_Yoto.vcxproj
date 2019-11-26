@@ -145,27 +145,19 @@
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Input.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Window.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Main.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\BaseScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
-    <ClCompile Include="LoadResource.cpp">
+    <ClCompile Include="LoadResources\LoadResources.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="UI\CalloutUI\CalloutUI.cpp" />
+    <ClCompile Include="UI\HpUI\HpUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Engine.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Graphics.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Input.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Window.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\BaseScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Task.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp" />
@@ -182,10 +174,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="LoadResource.h">
+    <ClInclude Include="LoadResources\LoadResources.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TextureId\TextureId.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="UI\CalloutUI\CalloutUI.h" />
+    <ClInclude Include="UI\HpUI\HpUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
