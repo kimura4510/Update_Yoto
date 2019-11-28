@@ -121,6 +121,10 @@ public:
 	* @param[in] texture_data 描画で使用するテクスチャのデータ
 	* @param[in] tu テクスチャU座標
 	* @param[in] tv テクスチャV座標
+	* @param[in] spriteX 描画したいスプライトの幅
+	* @param[in] spriteY 描画したいスプライトの高さ
+	* @param[in] spriteNumX 描画したいスプライトが左から何番目か
+	* @param[in] spriteNumY 描画したいスプライトが上から何番目か
 	*/
 	void DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY);
 
