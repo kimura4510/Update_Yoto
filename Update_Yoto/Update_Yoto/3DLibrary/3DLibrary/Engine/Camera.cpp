@@ -6,6 +6,11 @@
 
 Camera* Camera::p_CameraInstance = nullptr;
 
+Camera::Camera()
+{
+	InitCamera();
+}
+
 void Camera::UpdateCamera()
 {
 	MoveCamera();

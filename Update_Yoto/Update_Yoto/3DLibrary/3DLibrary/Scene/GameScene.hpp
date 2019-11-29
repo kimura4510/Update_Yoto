@@ -6,10 +6,8 @@
 class GameScene : public BaseScene
 {
 public:
-	//コンストラクタ
-	GameScene();
 	//デストラクタ
-	~GameScene() override;
+	~GameScene() override { }
 	void Init() override;
 	SceneID End() override;
 	void Update() override;

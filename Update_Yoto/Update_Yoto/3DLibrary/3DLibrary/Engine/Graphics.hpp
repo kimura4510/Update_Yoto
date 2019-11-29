@@ -9,7 +9,7 @@
 #include <Windows.h>
 #include <d3d9.h>
 
-// @brief テクスチャデータやサイズを保持する構造体
+//!< @brief テクスチャデータやサイズを保持する構造体
 struct Texture
 {
 	LPDIRECT3DTEXTURE9 m_TextureData;	//!< テクスチャデータ
@@ -17,7 +17,7 @@ struct Texture
 	float m_Height;						//!< 縦幅
 };
 
-// @biref 3D描画用頂点座標保存構造体
+//!< @biref 3D描画用頂点座標保存構造体
 struct CustomVertex3D
 {
 	float m_x;
@@ -27,6 +27,7 @@ struct CustomVertex3D
 	float tu, tv;
 };
 
+//!< @brief 2D描画用頂点座標保存構造体
 struct CustomVertex
 {
 	float x;	//x座標
@@ -38,7 +39,8 @@ struct CustomVertex
 	float tv;	//テクスチャ座標y
 };
 
-struct Vertex3D
+//!< @brief 3D描画のために必要なパラメータを設定するデータ構造体
+struct DrawingData3D
 {
 	float m_x;	//x座標
 	float m_y;	//y座標
@@ -119,8 +121,8 @@ public:
 	* @param[in] x X軸描画座標
 	* @param[in] y Y軸描画座標
 	* @param[in] texture_data 描画で使用するテクスチャのデータ
-	* @param[in] tu テクスチャU座標
-	* @param[in] tv テクスチャV座標
+	* @param[in] tu テクスチャU座標の幅
+	* @param[in] tv テクスチャV座標の高さ
 	* @param[in] spriteX 描画したいスプライトの幅
 	* @param[in] spriteY 描画したいスプライトの高さ
 	* @param[in] spriteNumX 描画したいスプライトが左から何番目か
@@ -135,9 +137,39 @@ public:
 	* @param[in] v3D 座標などの情報群
 	* @param[in] texture_data 描画で使用するテクスチャのデータ
 	*/
-	void Draw3D(const Vertex3D& v3D, Texture* texture_data);
+	void Draw3D(const DrawingData3D& v3D, Texture* texture_data);
 
-	//以下、カメラ用の関数
+	/**
+	* @biref 統合画像描画関数3Dversion
+	* texture_dataはTexture.hのGetTextureDataを使用してください
+	* @param[in] x X軸描画座標
+	* @param[in] y Y軸描画座標
+	* @param[in] texture_data 描画で使用するテクスチャのデータ
+	* @param[in] tu テクスチャU座標の幅
+	* @param[in] tv テクスチャV座標の高さ
+	* @param[in] spriteX 描画したいスプライトの幅
+	* @param[in] spriteY 描画したいスプライトの高さ
+	* @param[in] spriteNumX 描画したいスプライトが左から何番目か
+	* @param[in] spriteNumY 描画したいスプライトが上から何番目か
+	*/
+	void DrawIntegratedImage3D(const DrawingData3D& drawdata, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY);
+
+	/**
+	* @biref 統合画像描画関数3Dversion
+	* texture_dataはTexture.hのGetTextureDataを使用してください
+	* @param[in] x X軸描画座標
+	* @param[in] y Y軸描画座標
+	* @param[in] texture_data 描画で使用するテクスチャのデータ
+	* @param[in] tu テクスチャU座標の幅
+	* @param[in] tv テクスチャV座標の高さ
+	* @param[in] spriteX 描画したいスプライトの幅
+	* @param[in] spriteY 描画したいスプライトの高さ
+	* @param[in] spriteNumX 描画したいスプライトが左から何番目か
+	* @param[in] spriteNumY 描画したいスプライトが上から何番目か
+	*/
+	void DrawBillboard(const DrawingData3D& drawdata, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY);
+
+	//カメラ用の関数
 	bool SetView(const D3DMATRIX& matView) const;
 	void GetViewport_Camera(D3DVIEWPORT9* vp);
 	bool SetMatProj(const D3DMATRIX& matProj) const;

@@ -6,46 +6,7 @@
 #define TEXTURE_H_
 
 #include "../Engine/Graphics.hpp"
-
-enum class TextureCategory : int
-{
-	TitleCategory,
-	GameCategory,
-	HelpCategory,
-	ClearCategory,
-	GameoverCategory,
-	MaxTextureCategory,
-};
-
-enum class TitleCategoryTextureList : int
-{
-	Background,
-	MaxTitleTex
-};
-
-enum class GameCategoryTextureList : int
-{
-	Background,
-	MaxGameTex
-};
-
-enum class HelpCategoryTextureList : int
-{
-	Background,
-	MaxHelpTex
-};
-
-enum class ClearCategoryTextureList : int
-{
-	Background,
-	MaxClearTex
-};
-
-enum class GameoverCategoryTextureList : int
-{
-	Background,
-	MaxGameoverTex
-};
+#include "../GameDefinition.h"
 
 class cTexture
 {

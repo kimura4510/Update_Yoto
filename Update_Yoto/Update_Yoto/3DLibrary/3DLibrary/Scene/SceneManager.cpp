@@ -4,12 +4,10 @@
 #include "HelpScene.hpp"
 #include "TitleScene.hpp"
 #include "GameScene.hpp"
-#include "NonScene.hpp"
 
 SceneManager::SceneManager()
 {
-	m_SceneID = SceneID::eTitleScene;
-	m_CurrentScene = new TitleScene;
+	Init(SceneID::eTitleScene);
 }
 
 SceneManager::~SceneManager()

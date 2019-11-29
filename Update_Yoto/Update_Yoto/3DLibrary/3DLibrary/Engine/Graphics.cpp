@@ -111,7 +111,7 @@ void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, floa
 		{x, y, 0.0f, 1.0f, tu * tmpX, tv * tmpY},
 		{x + spriteX, y, 0.0f, 1.0f, tu * spriteNumX, tv * tmpY},
 		{x, y + spriteY, 0.0f, 1.0f, tu * tmpX, tv * spriteNumY},
-		{x + spriteX, y + spriteNumY, 0.0f, 1.0f, tu * spriteNumX, tv * spriteNumY}
+		{x + spriteX, y + spriteY, 0.0f, 1.0f, tu * spriteNumX, tv * spriteNumY}
 	};
 
 	//頂点構造の指定
@@ -123,14 +123,14 @@ void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, floa
 		sizeof(CustomVertex));
 }
 
-void Graphics::Draw3D(const Vertex3D& v3d, Texture* texture_data)
+void Graphics::Draw3D(const DrawingData3D& v3d, Texture* texture_data)
 {
 	// ポリゴンのローカル座標の位置を指定 start
 	CustomVertex3D v[4];
-	v[0].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[1].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[2].color = D3DCOLOR_ARGB(255, 255, 255, 255);
-	v[3].color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	for (int i = 0; i < 4; i++)
+	{
+		v[i].color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	}
 	v[0].m_x = v3d.m_x; v[0].m_y = v3d.m_y; v[0].m_z = v3d.m_z;
 	v[0].tu = 0.0f;	v[0].tv = 0.0f;
 	v[1].m_x = v3d.m_x + v3d.m_width; v[1].m_y = v3d.m_y; v[1].m_z = v3d.m_z;
@@ -177,6 +177,119 @@ void Graphics::Draw3D(const Vertex3D& v3d, Texture* texture_data)
 
 }
 
+void Graphics::DrawIntegratedImage3D(const DrawingData3D& v3d, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY)
+{
+	int tmpX = spriteNumX - 1;
+	int tmpY = spriteNumY - 1;
+
+	// ポリゴンのローカル座標の位置を指定 start
+	CustomVertex3D v[4];
+	for (int i = 0; i < 4; i++)
+	{
+		v[i].color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	}
+	v[0].m_x = v3d.m_x;	v[0].m_y = v3d.m_y;	v[0].m_z = v3d.m_z;
+	v[0].tu = tu * tmpX;	v[0].tv = tv * tmpY;
+	v[1].m_x = v3d.m_x + spriteX; v[1].m_y = v3d.m_y; v[1].m_z = v3d.m_z;
+	v[1].tu = tu * spriteNumX;	v[1].tv = tv * tmpY;
+	v[2].m_x = v3d.m_x; v[2].m_y = v3d.m_y + spriteY; v[2].m_z = v3d.m_z;
+	v[2].tu = tu * tmpX;	v[2].tv = tv * spriteNumY;
+	v[3].m_x = v3d.m_x + spriteX; v[3].m_y = v3d.m_y + spriteY; v[3].m_z = v3d.m_z;
+	v[3].tu = tu * spriteNumX;	v[3].tv = tv * spriteNumY;
+	// ポリゴンのローカル座標の位置を指定 end
+	
+		//ワールド座標変換用の行列の算出 start
+	D3DXMATRIX mat_world, mat_trans, mat_rot, mat_rotx, mat_roty, mat_rotz, mat_scale;
+	D3DXMatrixIdentity(&mat_world);
+	D3DXMatrixIdentity(&mat_rot);
+	D3DXMatrixIdentity(&mat_trans);
+	D3DXMatrixIdentity(&mat_scale);
+
+	// 移動
+	D3DXMatrixTranslation(&mat_trans, 0.0f, 0.0f, 10.0f);
+
+	// 回転
+	D3DXMatrixRotationX(&mat_rotx, D3DXToRadian(v3d.m_rotx));
+	D3DXMatrixRotationY(&mat_roty, D3DXToRadian(v3d.m_roty));
+	D3DXMatrixRotationZ(&mat_rotz, D3DXToRadian(v3d.m_rotz));
+
+	D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_roty);
+	D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotx);
+	D3DXMatrixMultiply(&mat_rot, &mat_rot, &mat_rotz);
+
+	// 拡大
+	D3DXMatrixScaling(&mat_scale, v3d.m_scalex, v3d.m_scaley, 1.0f);
+
+	// 掛け合わせ(拡縮 * 回転 * 移動)
+	mat_world *= mat_scale * mat_rot * mat_trans;
+
+	g_D3DDevice->SetTransform(D3DTS_WORLD, &mat_world);
+	//ワールド座標変換用の行列の算出 end
+
+	g_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+
+	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
+
+	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(CustomVertex3D));
+}
+
+void Graphics::DrawBillboard(const DrawingData3D& v3d, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY)
+{
+	int tmpX = spriteNumX - 1;
+	int tmpY = spriteNumY - 1;
+
+	// ポリゴンのローカル座標の位置を指定 start
+	CustomVertex3D v[4];
+	for (int i = 0; i < 4; i++)
+	{
+		v[i].color = D3DCOLOR_ARGB(255, 255, 255, 255);
+	}
+	v[0].m_x = v3d.m_x;	v[0].m_y = v3d.m_y;	v[0].m_z = v3d.m_z;
+	v[0].tu = tu * tmpX;	v[0].tv = tv * tmpY;
+	v[1].m_x = v3d.m_x + spriteX; v[1].m_y = v3d.m_y; v[1].m_z = v3d.m_z;
+	v[1].tu = tu * spriteNumX;	v[1].tv = tv * tmpY;
+	v[2].m_x = v3d.m_x; v[2].m_y = v3d.m_y + spriteY; v[2].m_z = v3d.m_z;
+	v[2].tu = tu * tmpX;	v[2].tv = tv * spriteNumY;
+	v[3].m_x = v3d.m_x + spriteX; v[3].m_y = v3d.m_y + spriteY; v[3].m_z = v3d.m_z;
+	v[3].tu = tu * spriteNumX;	v[3].tv = tv * spriteNumY;
+	// ポリゴンのローカル座標の位置を指定 end
+
+		//ワールド座標変換用の行列の算出 start
+	D3DXMATRIX mat_world, mat_trans, mat_scale, view_mat;
+	D3DXMatrixIdentity(&mat_world);
+	D3DXMatrixIdentity(&mat_trans);
+	D3DXMatrixIdentity(&mat_scale);
+	D3DXMatrixIdentity(&view_mat);
+
+	// 移動
+	D3DXMatrixTranslation(&mat_trans, 0.0f, 0.0f, 10.0f);
+
+	// カメラビュー行列の逆行列を作成
+	g_D3DDevice->SetTransform(D3DTS_VIEW,&view_mat);
+	D3DXMatrixInverse(&view_mat, NULL, &view_mat);
+	
+	// 移動情報の打ち消し
+	view_mat._41 = 0.0f;
+	view_mat._42 = 0.0f;
+	view_mat._43 = 0.0f;
+
+	// 拡大
+	D3DXMatrixScaling(&mat_scale, v3d.m_scalex, v3d.m_scaley, 1.0f);
+
+	// 掛け合わせ(拡縮 * 回転 * 移動)
+	mat_world *= mat_scale * view_mat * mat_trans;
+
+	g_D3DDevice->SetTransform(D3DTS_WORLD, &mat_world);
+	//ワールド座標変換用の行列の算出 end
+
+	g_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+
+	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
+
+	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(CustomVertex3D));
+}
+
+
 bool Graphics::CreateTexture(const char* file_name, Texture* texture_data)
 {
 	Size size;
@@ -220,7 +333,11 @@ bool Graphics::CreateTexture(const char* file_name, Texture* texture_data)
 
 bool Graphics::SetView(const D3DMATRIX& matView) const
 {
-	return g_D3DDevice->SetTransform(D3DTS_VIEW, &matView);
+	if (FAILED(g_D3DDevice->SetTransform(D3DTS_VIEW, &matView)))
+	{
+		return false;
+	}
+	return true;
 }
 
 void Graphics::GetViewport_Camera(D3DVIEWPORT9* vp)
@@ -230,7 +347,11 @@ void Graphics::GetViewport_Camera(D3DVIEWPORT9* vp)
 
 bool Graphics::SetMatProj(const D3DMATRIX& matProj) const
 {
-	return g_D3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+	if (FAILED(g_D3DDevice->SetTransform(D3DTS_PROJECTION, &matProj)))
+	{
+		return false;
+	}
+	return true;
 }
 
 

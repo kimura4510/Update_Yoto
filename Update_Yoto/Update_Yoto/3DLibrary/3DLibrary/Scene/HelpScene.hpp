@@ -5,10 +5,12 @@
 
 class HelpScene : public BaseScene
 {
-	~HelpScene();
+public:
+	~HelpScene() override { }
 	void Init() override;
 	SceneID End() override;
 	void Update() override;
+	SceneID Control() override;
 	void Draw() override;
 };
 

@@ -1,11 +1,7 @@
 #include "HelpScene.hpp"
 #include "../Engine/Graphics.hpp"
 #include "../Engine/Input.hpp"
-
-HelpScene::~HelpScene()
-{
-
-}
+#include "../Texture/Texture.hpp"
 
 void HelpScene::Init()
 {
@@ -25,4 +21,20 @@ void HelpScene::Draw()
 SceneID HelpScene::End()
 {
 	return SceneID::eTitleScene;
+}
+
+SceneID HelpScene::Control()
+{
+	switch (m_State)
+	{
+	case SceneState::eInit:
+		Init();
+		break;
+	case SceneState::eMain:
+		Update();
+		break;
+	case SceneState::eEnd:
+		return End();
+	}
+	return SceneID::eHelpScene;
 }

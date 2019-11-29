@@ -36,12 +36,12 @@ public:
 	virtual void Init() = 0;
 	virtual SceneID End()
 	{
-		return SceneID::eNon_Scene;
+		return SceneID::eTitleScene;
 	}
 
 	virtual SceneID Control()
 	{
-		return SceneID::eNon_Scene;
+		return SceneID::eTitleScene;
 	}
 
 protected:

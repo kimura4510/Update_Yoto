@@ -3,16 +3,6 @@
 #include "../Engine/Input.hpp"
 #include "../Engine/Camera.h"
 
-GameScene::GameScene()
-{
-
-}
-
-GameScene::~GameScene()
-{
-
-}
-
 void GameScene::Init()
 {
 	m_State = SceneState::eMain;
