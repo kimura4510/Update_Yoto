@@ -8,6 +8,7 @@
 SceneManager::SceneManager()
 {
 	Init(SceneID::eTitleScene);
+	m_CurrentScene = m_SceneList[(int)m_SceneID];
 }
 
 SceneManager::~SceneManager()

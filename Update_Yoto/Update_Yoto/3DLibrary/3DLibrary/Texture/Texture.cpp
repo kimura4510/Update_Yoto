@@ -10,14 +10,14 @@ cTexture::cTexture()
 	}
 }
 
-bool cTexture::IsCategoryIDCheck(int category_id, int texture_id)
+bool cTexture::IsCategoryIDCheck(TextureCategory category_id, int texture_id)
 {
-	if (category_id <= -1 || category_id >= (int)TextureCategory::MaxTextureCategory)
+	if ((int)category_id <= -1 || (int)category_id >= (int)TextureCategory::MaxTextureCategory)
 	{
 		return false;
 	}
 
-	if (texture_id <= -1 || texture_id >= TextureCategorySize[category_id])
+	if (texture_id <= -1 || texture_id >= TextureCategorySize[(int)category_id])
 	{
 		return false;
 	}
@@ -73,22 +73,22 @@ void cTexture::AllReleaseTexture()
 	}
 }
 
-bool cTexture::LoadTexture(const char* file_name, int id, int textureID)
+bool cTexture::LoadTexture(const char* file_name, TextureCategory id,  int textureID)
 {
 	if (IsCategoryIDCheck(id, textureID) == false)
 	{
 		return false;
 	}
-	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_ppTextureList[id][textureID]);
+	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_ppTextureList[(int)id][textureID]);
 }
 
-Texture* cTexture::GetTexture(int category_, int textureID_)
+Texture* cTexture::GetTexture(TextureCategory category_, int textureID_)
 {
 	if (IsCategoryIDCheck(category_, textureID_) == false)
 	{
 		return nullptr;
 	}
-	return m_ppTextureList[category_][textureID_];
+	return m_ppTextureList[(int)category_][textureID_];
 }
 
 void cTexture::CreateTextureInstance()

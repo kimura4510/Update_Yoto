@@ -47,7 +47,6 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 	hr = g_KeyDevice->Acquire();
 
 	return true;
-
 }
 
 void Input::ReleaseInput()

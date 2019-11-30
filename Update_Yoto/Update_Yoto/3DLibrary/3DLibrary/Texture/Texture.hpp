@@ -39,7 +39,7 @@ public:
 	* @param[in] category_id 登録するカテゴリー
 	* @param[in] texture_id カテゴリー内のテクスチャID
 	*/
-	bool LoadTexture(const char* file_name, int id, int textureID);
+	bool LoadTexture(const char* file_name, TextureCategory id, int textureID);
 
 	/**
 	* @brief テクスチャデータの取得関数@n
@@ -48,7 +48,7 @@ public:
 	* @param[in] category_id 取得したいテクスチャのカテゴリ
 	* @param[in] texture_id 取得したいテクスチャのID
 	*/
-	Texture* GetTexture(int categoryID, int textureID);
+	Texture* GetTexture(TextureCategory categoryID, int textureID);
 
 	//シングルトンデザインパターン
 public:
@@ -84,7 +84,7 @@ private:
 	//デストラクタ
 	~cTexture();
 
-	bool IsCategoryIDCheck(int category_id, int texture_id);
+	bool IsCategoryIDCheck(TextureCategory category_id, int texture_id);
 
 private:
 	//Textureのインスタンス

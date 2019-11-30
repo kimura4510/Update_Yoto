@@ -9,7 +9,7 @@ void TitleScene::Init()
 	m_State = SceneState::eMain;
 
 	cTexture::GetTextureInstance()->LoadTexture("3DLibrary/3DLibrary/Res/title.png",
-		(int)TextureCategory::TitleCategory,
+		TextureCategory::TitleCategory,
 		(int)TitleCategoryTextureList::Background);
 }
 
@@ -54,6 +54,6 @@ void TitleScene::Draw()
 		0.0f,
 		cTexture::GetTextureInstance()
 		->GetTexture(
-		(int)TextureCategory::TitleCategory,
+		TextureCategory::TitleCategory,
 		(int)TitleCategoryTextureList::Background));
 }
