@@ -51,9 +51,6 @@
     <ClCompile Include="UI\CalloutUI\CalloutUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TestUpdate.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Animation\AnimationManager\AnimationManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -93,9 +90,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="TextureId\TextureId.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TestUpdate.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Animation\Animation\CharacterAnimation.h">

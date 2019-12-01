@@ -151,10 +151,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="TestUpdate.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="UI\CalloutUI\CalloutUI.cpp" />
     <ClCompile Include="UI\HpUI\HpUI.cpp" />
   </ItemGroup>
@@ -172,10 +168,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="LoadResources\LoadResources.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TestUpdate.h">
       <SubType>
       </SubType>
     </ClInclude>
