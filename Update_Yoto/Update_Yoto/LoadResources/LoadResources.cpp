@@ -14,11 +14,13 @@ namespace LoadResources {
 		}
 
 		if (cTexture::GetTextureInstance()->
-			LoadTexture("Resource/UI/HP.png", 1, (int)TextureId::HP)
+			LoadTexture("Resource/UI/HP.png", (int)CategoryId::UI, (int)TextureId::HP)
 			== false) {
+
+			float hoge;
+			hoge = 0;
+
 			return;
 		}
-
-
 	}
 }

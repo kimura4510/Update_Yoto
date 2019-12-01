@@ -146,10 +146,7 @@
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Window.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Main.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
-    <ClCompile Include="Animation\AnimationManager\AnimationManager.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <ClCompile Include="Animation\AnimationManager\AnimationManager.cpp" />
     <ClCompile Include="LoadResources\LoadResources.cpp">
       <SubType>
       </SubType>
@@ -169,18 +166,10 @@
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Task.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp" />
-    <ClInclude Include="Animation\AnimationBase\AnimationBase.h" />
+    <ClInclude Include="Animation\Animation\CharacterAnimation.h" />
     <ClInclude Include="Animation\AnimationManager\AnimationManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="Animation\WaitAnimation\WaitAnimation.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="LoadResources\LoadResources.h">
       <SubType>

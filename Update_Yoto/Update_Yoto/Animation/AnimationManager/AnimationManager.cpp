@@ -1,18 +1,67 @@
 ﻿#include"AnimationManager.h"
 
 
-CharacterAnimationManager::CharacterAnimationManager
-(const CharacterAnimationBase::AnimationType& animation_type,
-	//Sprite2DData&attack_data,
-	//	Sprite2DData&wait_data
-	) {
-
-	// 現在のアニメーションに選択したアニメーションを代入
-	m_current_animation_type = animation_type;
-
-	m_attack_data = attack_data;
-	m_wait_data = wait_data;
+CharacterAnimationManager::CharacterAnimationManager(
+	const AnimationParameter& anim_param
+) {
 
 	// アニメーション選択
-	AnimationSelect(animation_type);
+	ChangeAnimation(anim_param);
+}
+
+
+
+void CharacterAnimationManager::ChangeAnimation(
+	const AnimationParameter& animation_parameter
+
+) {
+
+	// アニメーション選択
+	SetAnimation(animation_parameter);
+}
+
+
+
+void CharacterAnimationManager::Update() {
+
+	if (m_p_anim == nullptr) {
+		return;
+	}
+
+	m_p_anim->Update();
+}
+
+
+void CharacterAnimationManager::Draw() {
+
+	if (m_p_anim == nullptr) {
+		return;
+	}
+
+	m_p_anim->Draw();
+}
+
+
+void CharacterAnimationManager::SetAnimation(
+	const AnimationParameter&animation_parameter
+) {
+
+	// メモリが存在するなら削除
+	if (m_p_anim != nullptr) {
+
+		delete &m_p_anim;
+	}
+
+	// アニメーション生成
+	m_p_anim = new CharacterAnimation(animation_parameter);
+}
+
+
+void CharacterAnimationManager::AddPosXSet(const float& pos_x) {
+	m_p_anim->AddPosX(pos_x);
+}
+
+
+void CharacterAnimationManager::AddPosYSet(const float& pos_y) {
+	m_p_anim->AddPosY(pos_y);
 }

@@ -20,6 +20,8 @@ enum class TextureCategory : int
 enum class TitleCategoryTextureList : int
 {
 	Background,
+	Hp,
+	Animation,
 	MaxTitleTex
 };
 

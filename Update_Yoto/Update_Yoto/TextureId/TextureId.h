@@ -10,4 +10,5 @@ enum class CategoryId {
 enum class TextureId{
 	CALLOUT,
 	HP,
+	ANIMATION
 };

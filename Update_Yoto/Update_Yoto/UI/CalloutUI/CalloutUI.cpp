@@ -14,7 +14,7 @@ void CalloutUI::Draw() {
 
 
 	// テクスチャ取得
-	Texture* hp = 
+	Texture* p_call_out = 
 		cTexture::GetTextureInstance()->GetTexture((int)CategoryId::UI, (int)TextureId::CALLOUT);
 
 	// HP描画
@@ -24,12 +24,12 @@ void CalloutUI::Draw() {
 	Graphics::GetGraphicInstance()->DrawIntegratedImage(
 		(float)400.f,
 		(float)400.f,
-		hp,
+		p_call_out,
+		0.2f,
 		0.5f,
-		1.f,
 		1000.f,
 		1000.f,
-		1000,
-		1000
+		1,
+		1
 	);
 }

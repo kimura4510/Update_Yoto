@@ -80,16 +80,7 @@
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp">
       <Filter>ソース ファイル\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Animation\AnimationBase\AnimationBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Animation\AnimationManager\AnimationManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation\WaitAnimation\WaitAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="LoadResources\LoadResources.h">
@@ -105,6 +96,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="TestUpdate.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\Animation\CharacterAnimation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

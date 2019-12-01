@@ -106,12 +106,14 @@ void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, floa
 {
 	int tmpX = spriteNumX - 1;
 	int tmpY = spriteNumY - 1;
-	CustomVertex TriStr[] =
+
+
+	CustomVertex TriStr[] = 
 	{
 		{x, y, 0.0f, 1.0f, tu * tmpX, tv * tmpY},
 		{x + spriteX, y, 0.0f, 1.0f, tu * spriteNumX, tv * tmpY},
 		{x, y + spriteY, 0.0f, 1.0f, tu * tmpX, tv * spriteNumY},
-		{x + spriteX, y + spriteNumY, 0.0f, 1.0f, tu * spriteNumX, tv * spriteNumY}
+		{x + spriteX, y + spriteY, 0.0f, 1.0f, tu * spriteNumX, tv * spriteNumY}
 	};
 
 	//頂点構造の指定
@@ -121,6 +123,40 @@ void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, floa
 		2,
 		TriStr,
 		sizeof(CustomVertex));
+}
+
+void Graphics::Animation(
+	float x,
+	float y,
+	Texture*p_texture,
+	float set_tu,
+	float set_tv,
+	float graph_size_x,
+	float graph_size_y,
+	int split_x,
+	int animation_graph_num
+) {
+
+	// アニメーションさせる 総アニメーション数 / 分割枚数
+	int update_num_x = 0;
+	int update_num_y = 0;
+
+	update_num_x = animation_graph_num % split_x;
+	// 横の最大分割数まで来たらy値加算
+	update_num_y = animation_graph_num / split_x;
+
+	// 統合分割
+	DrawIntegratedImage(
+		x,
+		y,
+		p_texture,
+		set_tu,
+		set_tv,
+		graph_size_x,
+		graph_size_y,
+		update_num_x + 1,
+		update_num_y + 1
+	);
 }
 
 void Graphics::Draw3D(const Vertex3D& v3d, Texture* texture_data)

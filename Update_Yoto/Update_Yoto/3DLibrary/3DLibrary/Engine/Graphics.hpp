@@ -125,6 +125,30 @@ public:
 	void DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY);
 
 	/**
+	* @brief 簡易アニメーション関数
+	* @param[in] x X軸描画座標
+	* @param[in] y Y軸描画座標
+	* @param[out] texture_data 描画で使用するテクスチャのデータ
+	* @param[in] set_tu テクスチャU座標
+	* @param[in] set_tv テクスチャV座標
+	* @param[in] graph_size_x 横の画像サイズ
+	* @param[in] graph_size_y 縦の画像サイズ
+	* @param[in] split_x 横の統合画像分割数
+	* @param[in] animation_graph_num 総アニメーション数(縦分割画像と横分割画像の合計)
+	*/
+	void Animation(
+		float x,
+		float y,
+		Texture* p_texture,
+		float set_tu,
+		float set_tv,
+		float graph_size_x,
+		float graph_size_y,
+		int split_x,
+		int animation_graph_num
+	);
+
+	/**
 	* @biref 3D描画関数
 	* 指定された位置に3Dポリゴンを描画します@n
 	* texture_dataはFile.hのGetTextureDataを使用してください
