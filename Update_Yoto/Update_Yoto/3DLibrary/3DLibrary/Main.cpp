@@ -1,7 +1,6 @@
 #include <Windows.h>
 #include "Engine/Engine.hpp"
 #include "Engine/Window.hpp"
-#include "../../TestUpdate.h"
 //#include "Scene/SceneManager.hpp"
 #include"../../LoadResources/LoadResources.h"
 
@@ -16,7 +15,7 @@ int WINAPI WinMain(
 	Engine engine;
 	Window window;
 	//SceneManager sceneManager;
-	TestUpdate tu;
+
 	
 	HWND hW = window.MakeWindow(hI, 1920, 1080, "Update:Yoto");
 	
@@ -49,10 +48,8 @@ int WINAPI WinMain(
 		}
 
 		//シーン更新
-		tu.Update();
 		//sceneManager.Update();
 
-		tu.Draw();
 		//sceneManager.Draw();
 	}
 

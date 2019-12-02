@@ -41,4 +41,12 @@ enum class GameoverCategoryTextureList : int
 	MaxGameoverTex
 };
 
+enum class CameraState
+{
+	Battle,
+	WinningPlayer,
+	LosingPlayer,
+	GameClear,
+};
+
 #endif
