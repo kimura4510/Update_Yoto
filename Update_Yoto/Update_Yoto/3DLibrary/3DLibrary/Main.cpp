@@ -1,13 +1,22 @@
 #include <Windows.h>
 #include "Engine/Engine.hpp"
 #include "Engine/Window.hpp"
-#include "Scene/SceneManager.hpp"
+#include "../../TestUpdate.h"
+//#include "Scene/SceneManager.hpp"
+#include"../../LoadResources/LoadResources.h"
 
-int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpCmpLine, INT nCmdShow)
+
+
+int WINAPI WinMain(
+	_In_ HINSTANCE hI,
+	_In_opt_ HINSTANCE hP,
+	_In_ LPSTR lpCmpLine,
+	_In_ INT nCmdShow)
 {
 	Engine engine;
 	Window window;
-	SceneManager sceneManager;
+	//SceneManager sceneManager;
+	TestUpdate tu;
 	
 	HWND hW = window.MakeWindow(hI, 1920, 1080, "Update:Yoto");
 	
@@ -19,7 +28,8 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpCmpLine, INT nCmdShow)
 
 	MSG msg;
 
-	sceneManager.Init(SceneID::eTitleScene);
+	//sceneManager.Init(SceneID::eTitleScene);
+	LoadResources::Load();
 
 	//ゲームループの開始
 	while (true)
@@ -37,15 +47,17 @@ int WINAPI WinMain(HINSTANCE hI, HINSTANCE hP, LPSTR lpCmpLine, INT nCmdShow)
 				DispatchMessage(&msg);
 			}
 		}
-		else
-		{
-			//シーン更新
-			sceneManager.Update();
-			//シーン描画
-			sceneManager.Draw();
-		}
+
+		//シーン更新
+		tu.Update();
+		//sceneManager.Update();
+
+		tu.Draw();
+		//sceneManager.Draw();
 	}
 
-	sceneManager.End();
+	//sceneManager.End();
 	engine.EndEngine();
+
+	return 0;
 }
