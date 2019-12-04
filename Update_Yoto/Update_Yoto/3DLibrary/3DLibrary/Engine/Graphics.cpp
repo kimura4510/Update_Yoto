@@ -233,6 +233,34 @@ void Graphics::DrawIntegratedImage3D(const DrawingData3D& v3d, Texture* texture_
 	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(CustomVertex3D));
 }
 
+void Graphics::Animation3D(
+	const DrawingData3D&drawing_data_3d,
+	Texture* p_texture,
+	float set_tu,
+	float set_tv,
+	float graph_size_x,
+	float graph_size_y,
+	int split_x,
+	int animation_graph_num
+) {
+
+	// アニメーション番号取り出し
+	float animation_x = animation_graph_num % split_x;
+	float animation_y = animation_graph_num / split_x;
+
+	// 3D統合画像関数を扱う
+	DrawIntegratedImage3D(
+		drawing_data_3d,
+		p_texture,
+		set_tu,
+		set_tv,
+		graph_size_x,
+		graph_size_y,
+		split_x,
+		animation_graph_num
+	);
+}
+
 void Graphics::DrawBillboard(const DrawingData3D& v3d, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY)
 {
 	int tmpX = spriteNumX - 1;

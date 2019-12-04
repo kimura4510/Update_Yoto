@@ -130,8 +130,10 @@ public:
 	*/
 	void DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY);
 
+	
+
 	/**
-	* @brief 簡易アニメーション関数
+	* @brief 3D簡易アニメーション関数
 	* @param[in] x X軸描画座標
 	* @param[in] y Y軸描画座標
 	* @param[out] texture_data 描画で使用するテクスチャのデータ
@@ -142,9 +144,8 @@ public:
 	* @param[in] split_x 横の統合画像分割数
 	* @param[in] animation_graph_num 総アニメーション数(縦分割画像と横分割画像の合計)
 	*/
-	void Animation(
-		float x,
-		float y,
+	void Animation3D(
+		const DrawingData3D& drawing_data_3d,
 		Texture* p_texture,
 		float set_tu,
 		float set_tv,
@@ -153,6 +154,7 @@ public:
 		int split_x,
 		int animation_graph_num
 	);
+
 
 	/**
 	* @biref 3D描画関数
