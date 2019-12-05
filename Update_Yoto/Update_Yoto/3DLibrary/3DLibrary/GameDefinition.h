@@ -1,5 +1,11 @@
 #ifndef GAMEDEFINITION_H_
 #define GAMEDEFINITION_H_
+
+#include <string>
+
+//!< テクスチャリストのキーの例、使用者が各自で追加すること
+const std::string texture_name = "ex.Update_Yoto";
+
 enum class TextureCategory : int
 {
 	TitleCategory,

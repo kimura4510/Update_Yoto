@@ -28,30 +28,33 @@ int WINAPI WinMain(
 	MSG msg;
 
 	//sceneManager.Init(SceneID::eTitleScene);
-	LoadResources::Load();
+	//LoadResources::Load();
+
+	std::string texname = "title";
+	cTexture::GetTextureInstance()->LoadTexture("3DLibrary/3DLibrary/Res/title.png", texname);
 
 	//ゲームループの開始
-	while (true)
-	{
+	//while (true)
+	//{
 
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT)
-			{
-				break;
-			}
-			else
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
+	//	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	//	{
+	//		if (msg.message == WM_QUIT)
+	//		{
+	//			break;
+	//		}
+	//		else
+	//		{
+	//			TranslateMessage(&msg);
+	//			DispatchMessage(&msg);
+	//		}
+	//	}
 
 		//シーン更新
 		//sceneManager.Update();
 
 		//sceneManager.Draw();
-	}
+	//}
 
 	//sceneManager.End();
 	engine.EndEngine();
