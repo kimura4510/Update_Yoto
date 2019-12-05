@@ -27,6 +27,7 @@ bool Engine::InitEngine(HINSTANCE hI, HWND hW)
 void Engine::EndEngine()
 {
 	cTexture::GetTextureInstance()->AllReleaseTexture();
+	cTexture::GetTextureInstance()->ReleaseAllTexture();
 	cTexture::DestroyTextureInstance();
 	Graphics::GetGraphicInstance()->ReleaseGraphics();
 	Input::GetInputInstance()->ReleaseInput();

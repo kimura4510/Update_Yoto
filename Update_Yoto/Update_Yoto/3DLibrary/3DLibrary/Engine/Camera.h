@@ -1,6 +1,8 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
+#include "../GameDefinition.h"
+
 struct CameraParam
 {
 	float m_eye_x;	//視点x
@@ -18,6 +20,12 @@ public:
 	void InitCamera();
 	void ReleaseCamera();
 	void UpdateCamera();
+
+	void ChangeCameraPos(CameraState state_);
+	void ChangeBattlePos();
+	void ChangeWinPos();
+	void ChangeLosePos();
+	void ChangeClearPos();
 
 	//シングルトン
 	//実体を生成する関数

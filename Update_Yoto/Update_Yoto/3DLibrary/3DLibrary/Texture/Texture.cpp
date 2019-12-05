@@ -73,6 +73,32 @@ void cTexture::AllReleaseTexture()
 	}
 }
 
+void cTexture::ReleaseAllTexture()
+{
+	for (auto i = m_pTextureList.begin(); i != m_pTextureList.end(); i++)
+	{
+		delete i->second;
+	}
+
+	/*for (auto& texture : m_pTextureList)
+	{
+		delete &texture;
+	}*/
+	
+	m_pTextureList.clear();
+}
+
+bool cTexture::ReleaseTexture(std::string key_name)
+{
+	if (HasKeyName(key_name) == false)
+	{
+		return false;
+	}
+	delete m_pTextureList[key_name];
+	m_pTextureList.erase(key_name);
+	return true;
+}
+
 bool cTexture::LoadTexture(const char* file_name, TextureCategory id,  int textureID)
 {
 	if (IsCategoryIDCheck(id, textureID) == false)
@@ -82,6 +108,25 @@ bool cTexture::LoadTexture(const char* file_name, TextureCategory id,  int textu
 	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_ppTextureList[(int)id][textureID]);
 }
 
+bool cTexture::LoadTexture(const char* file_name, std::string key_name)
+{
+	if (HasKeyName(key_name) == true)
+	{
+		return false;
+	}
+	m_pTextureList[key_name] = new Texture;
+	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_pTextureList[key_name]);
+}
+
+Texture* cTexture::GetTexture(std::string key_name)
+{
+	if (HasKeyName(key_name) == false)
+	{
+		return nullptr;
+	}
+	return m_pTextureList[key_name];
+}
+
 Texture* cTexture::GetTexture(TextureCategory category_, int textureID_)
 {
 	if (IsCategoryIDCheck(category_, textureID_) == false)
@@ -89,6 +134,17 @@ Texture* cTexture::GetTexture(TextureCategory category_, int textureID_)
 		return nullptr;
 	}
 	return m_ppTextureList[(int)category_][textureID_];
+}
+
+bool cTexture::HasKeyName(std::string key_name)
+{
+	auto it = m_pTextureList.find(key_name);
+
+	if (it == m_pTextureList.end())
+	{
+		return false;
+	}
+	return true;
 }
 
 void cTexture::CreateTextureInstance()

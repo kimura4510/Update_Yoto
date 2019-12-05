@@ -69,6 +69,50 @@ void Camera::MoveCamera()
 	}
 }
 
+void Camera::ChangeCameraPos(CameraState state_)
+{
+	switch (state_)
+	{
+	case CameraState::Battle:
+		ChangeBattlePos();
+		break;
+	case CameraState::WinningPlayer:
+		ChangeWinPos();
+		break;
+	case CameraState::LosingPlayer:
+		ChangeLosePos();
+		break;
+	case CameraState::GameClear:
+		ChangeClearPos();
+		break;
+	}
+}
+
+void Camera::ChangeBattlePos()
+{
+	camera_param.m_pos_x = 0.0f;
+	camera_param.m_pos_x = 0.0f;
+	camera_param.m_pos_x = 0.0f;
+	camera_param.m_eye_x = 0.0f;
+	camera_param.m_eye_x = 0.0f;
+	camera_param.m_eye_x = 100.0f;
+}
+
+void Camera::ChangeWinPos()
+{
+
+}
+
+void Camera::ChangeLosePos()
+{
+
+}
+
+void Camera::ChangeClearPos()
+{
+
+}
+
 void Camera::ReleaseCamera()
 {
 }
