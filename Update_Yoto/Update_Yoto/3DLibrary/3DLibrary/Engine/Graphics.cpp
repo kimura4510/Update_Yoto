@@ -233,6 +233,7 @@ void Graphics::DrawIntegratedImage3D(const DrawingData3D& v3d, Texture* texture_
 	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(CustomVertex3D));
 }
 
+
 void Graphics::Animation3D(
 	const DrawingData3D&drawing_data_3d,
 	Texture* p_texture,
