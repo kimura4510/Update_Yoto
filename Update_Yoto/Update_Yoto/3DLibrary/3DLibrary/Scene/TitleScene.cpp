@@ -49,6 +49,10 @@ SceneID TitleScene::Control()
 
 void TitleScene::Draw()
 {
+	if (m_State != SceneState::eMain)
+	{
+		return;
+	}
 	Graphics::GetGraphicInstance()->DrawTexture(
 		0.0f, 
 		0.0f,

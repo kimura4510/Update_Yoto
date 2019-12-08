@@ -6,6 +6,8 @@
 //!< テクスチャリストのキーの例、使用者が各自で追加すること
 const std::string texture_name = "ex.Update_Yoto";
 
+const std::string titlecategory = "TitleCategory";
+
 enum class TextureCategory : int
 {
 	TitleCategory,

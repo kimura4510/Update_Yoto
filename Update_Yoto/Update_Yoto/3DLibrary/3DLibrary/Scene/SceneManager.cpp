@@ -40,6 +40,7 @@ void SceneManager::End()
 //XVŠÖ”
 void SceneManager::Update()
 {
+	Input::GetInputInstance()->KeyStateUpdate();
 	SceneID id;
 	id = m_CurrentScene->Control();
 	ChangeScene(id);

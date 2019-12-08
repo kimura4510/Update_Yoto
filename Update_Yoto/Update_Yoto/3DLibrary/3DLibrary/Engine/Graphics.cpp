@@ -63,7 +63,7 @@ void Graphics::ReleaseGraphics()
 
 bool Graphics::DrawStart()
 {
-	g_D3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
+	g_D3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 255, 0), 0.0f, 0);
 
 	g_D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	g_D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -169,6 +169,8 @@ void Graphics::Draw3D(const DrawingData3D& v3d, Texture* texture_data)
 	g_D3DDevice->SetTransform(D3DTS_WORLD, &mat_world);
 	//ワールド座標変換用の行列の算出 end
 
+	g_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	g_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	g_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
 	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
@@ -227,12 +229,11 @@ void Graphics::DrawIntegratedImage3D(const DrawingData3D& v3d, Texture* texture_
 	//ワールド座標変換用の行列の算出 end
 
 	g_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
-
+	g_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
 
 	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(CustomVertex3D));
 }
-
 
 void Graphics::Animation3D(
 	const DrawingData3D&drawing_data_3d,

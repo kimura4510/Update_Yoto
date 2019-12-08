@@ -105,7 +105,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,7 +149,6 @@
     <ClCompile Include="3DLibrary\3DLibrary\Scene\BaseScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\GameScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\HelpScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
@@ -164,11 +163,9 @@
     <ClInclude Include="3DLibrary\3DLibrary\Scene\BaseScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Task.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp" />
     <ClInclude Include="Animation\AnimationBase\AnimationBase.h" />
     <ClInclude Include="Animation\AnimationManager\AnimationManager.h">

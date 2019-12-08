@@ -41,10 +41,10 @@ void Camera::InitCamera()
 {
 	camera_param.m_eye_x = 0.0f;
 	camera_param.m_eye_y = 0.0f;
-	camera_param.m_eye_z = 10.0f;
+	camera_param.m_eye_z = 0.0f;
 	camera_param.m_pos_x = 0.0f;
 	camera_param.m_pos_y = 0.0f;
-	camera_param.m_pos_z = 0.0f;
+	camera_param.m_pos_z = -100.0f;
 }
 
 void Camera::MoveCamera()
@@ -91,11 +91,11 @@ void Camera::ChangeCameraPos(CameraState state_)
 void Camera::ChangeBattlePos()
 {
 	camera_param.m_pos_x = 0.0f;
-	camera_param.m_pos_x = 0.0f;
-	camera_param.m_pos_x = 0.0f;
+	camera_param.m_pos_y = 0.0f;
+	camera_param.m_pos_z = 0.0f;
 	camera_param.m_eye_x = 0.0f;
-	camera_param.m_eye_x = 0.0f;
-	camera_param.m_eye_x = 100.0f;
+	camera_param.m_eye_y = 0.0f;
+	camera_param.m_eye_z = 0.0f;
 }
 
 void Camera::ChangeWinPos()

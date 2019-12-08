@@ -15,7 +15,10 @@ void HelpScene::Update()
 
 void HelpScene::Draw()
 {
-
+	if (m_State != SceneState::eMain)
+	{
+		return;
+	}
 }
 
 SceneID HelpScene::End()
