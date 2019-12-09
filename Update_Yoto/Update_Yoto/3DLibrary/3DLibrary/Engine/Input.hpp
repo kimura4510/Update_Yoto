@@ -53,6 +53,13 @@ public:
 	void ReleaseInput();
 
 	/**
+	* @brief Joystickの初期化関数
+	* ジョイスティックを使用可能にする処理を行います
+	* @return 初期化結果、成功の場合はtrue
+	*/
+	bool InitJoystick(HWND hw);
+
+	/**
 	* @brief キーボードの入力情報の更新@n
 	* デバイスの入力情報の更新を行います@n
 	* 毎フレームに1度必ず実行する必要があります
@@ -128,8 +135,13 @@ public:
 	}
 
 private:
+	//bool CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdevins, )
+
+private:
 	LPDIRECTINPUT8 g_InputInterface;	//インプットインターフェイス
-	LPDIRECTINPUTDEVICE8 g_KeyDevice;	//インプットデバイス
+	LPDIRECTINPUTDEVICE8 g_KeyDevice;	//インプットデバイス(キーボード)
+	LPDIRECTINPUTDEVICE8 m_JoyDevice;	//インプットデバイス(ジョイスティック)
+	DIDEVCAPS m_DiDevCaps;
 
 	INPUT_STATE g_InputState[KEY_INFO::MAX_KEY_INFO];
 

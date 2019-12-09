@@ -42,18 +42,6 @@
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp">
       <Filter>ソース ファイル\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="LoadResources\LoadResources.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\HpUI\HpUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\CalloutUI\CalloutUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation\AnimationManager\AnimationManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="3DLibrary\3DLibrary\Scene\GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -61,6 +49,21 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Camera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\BaseScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Engine\Sound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,25 +92,40 @@
     <ClInclude Include="Animation\AnimationManager\AnimationManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="LoadResources\LoadResources.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\HpUI\HpUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\CalloutUI\CalloutUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureId\TextureId.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation\Animation\CharacterAnimation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="3DLibrary\3DLibrary\GameDefinition.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Camera.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\BaseScene.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\I_SceneChanger.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimationBase\AnimationBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\WaitAnimation\WaitAnimation.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Engine\Sound.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
