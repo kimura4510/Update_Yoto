@@ -1,4 +1,5 @@
 #include "Texture.hpp"
+#include<unordered_map>
 
 cTexture* cTexture::p_TextureInstance = NULL;
 
@@ -114,7 +115,7 @@ bool cTexture::LoadTexture(const char* file_name, std::string key_name)
 	{
 		return false;
 	}
-	m_pTextureList[key_name] = new Texture;
+	m_pTextureList[key_name.c_str()] = new Texture;
 	return Graphics::GetGraphicInstance()->CreateTexture(file_name, m_pTextureList[key_name]);
 }
 

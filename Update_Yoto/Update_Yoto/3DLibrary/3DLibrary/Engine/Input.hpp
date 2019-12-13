@@ -134,10 +134,10 @@ private:
 	INPUT_STATE g_InputState[KEY_INFO::MAX_KEY_INFO];
 
 	int g_KeyInfo[7] = {
-		UP_KEY,
-		DOWN_KEY,
-		RIGHT_KEY,
-		LEFT_KEY,
+		DIK_UP,
+		DIK_DOWN,
+		DIK_RIGHT,
+		DIK_LEFT,
 		DIK_RETURN,
 		DIK_ESCAPE,
 		DIK_SPACE,
@@ -146,6 +146,7 @@ private:
 	//シングルトン
 	Input();		//コンストラクタ
 	~Input();	//デストラクタ
+
 
 	static Input* p_InputInstance;
 
