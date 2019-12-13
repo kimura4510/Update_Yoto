@@ -157,6 +157,7 @@ bool Sound::LoadSound(const char* file_name)
 		return false;
 	}
 
+	const DWORD readsize = 1024;
 	char* pData = new char[(int)dataChunk.cksize];
 	size = mmioRead(hmmio, (HPSTR)pData, dataChunk.cksize);
 	if (size != dataChunk.cksize)
@@ -166,4 +167,5 @@ bool Sound::LoadSound(const char* file_name)
 	}
 
 	mmioClose(hmmio, 0);
+
 }

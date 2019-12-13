@@ -1,8 +1,7 @@
 #include <Windows.h>
 #include "Engine/Engine.hpp"
 #include "Engine/Window.hpp"
-//#include "Scene/SceneManager.hpp"
-#include"../../LoadResources/LoadResources.h"
+#include "Scene/SceneManager.hpp"
 
 
 
@@ -14,7 +13,7 @@ int WINAPI WinMain(
 {
 	Engine engine;
 	Window window;
-	//SceneManager sceneManager;
+	SceneManager sceneManager;
 
 	
 	HWND hW = window.MakeWindow(hI, 1920, 1080, "Update:Yoto");
@@ -27,36 +26,32 @@ int WINAPI WinMain(
 
 	MSG msg;
 
-	//sceneManager.Init(SceneID::eTitleScene);
-	//LoadResources::Load();
+	sceneManager.Init(SceneID::eTitleScene);
 
-	std::string texname = "title";
-	cTexture::GetTextureInstance()->LoadTexture("3DLibrary/3DLibrary/Res/title.png", texname);
+	// ゲームループの開始
+	while (true)
+	{
 
-	//ゲームループの開始
-	//while (true)
-	//{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+			else
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
 
-	//	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-	//	{
-	//		if (msg.message == WM_QUIT)
-	//		{
-	//			break;
-	//		}
-	//		else
-	//		{
-	//			TranslateMessage(&msg);
-	//			DispatchMessage(&msg);
-	//		}
-	//	}
+		// シーン更新
+		sceneManager.Update();
 
-		//シーン更新
-		//sceneManager.Update();
+		sceneManager.Draw();
+	}
 
-		//sceneManager.Draw();
-	//}
-
-	//sceneManager.End();
+	sceneManager.End();
 	engine.EndEngine();
 
 	return 0;

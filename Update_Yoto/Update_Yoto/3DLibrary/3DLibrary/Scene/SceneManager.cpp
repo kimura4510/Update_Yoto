@@ -40,6 +40,8 @@ void SceneManager::End()
 //更新関数
 void SceneManager::Update()
 {
+	Input::GetInputInstance()->KeyStateUpdate();
+
 	SceneID id;
 	id = m_CurrentScene->Control();
 	ChangeScene(id);
@@ -48,13 +50,16 @@ void SceneManager::Update()
 //描画関数
 void SceneManager::Draw()
 {
-	if (Graphics::GetGraphicInstance()->DrawStart() == false)
+	if (m_CurrentScene->IsMainStep() == true)
 	{
-		return;
-	}
+		if (Graphics::GetGraphicInstance()->DrawStart() == false)
+		{
+			return;
+		}
 	m_CurrentScene->Draw();
 
 	Graphics::GetGraphicInstance()->DrawEnd();
+	}
 }
 
 //シーン変更関数

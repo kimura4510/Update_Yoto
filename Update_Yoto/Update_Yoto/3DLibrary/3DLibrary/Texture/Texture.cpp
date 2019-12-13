@@ -75,15 +75,10 @@ void cTexture::AllReleaseTexture()
 
 void cTexture::ReleaseAllTexture()
 {
-	for (auto i = m_pTextureList.begin(); i != m_pTextureList.end(); i++)
+	for (auto& texture : m_pTextureList)
 	{
-		delete i->second;
+		delete texture.second;
 	}
-
-	/*for (auto& texture : m_pTextureList)
-	{
-		delete &texture;
-	}*/
 	
 	m_pTextureList.clear();
 }

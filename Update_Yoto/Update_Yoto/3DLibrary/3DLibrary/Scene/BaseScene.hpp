@@ -44,6 +44,15 @@ public:
 		return SceneID::eTitleScene;
 	}
 
+	virtual bool IsMainStep()
+	{
+		if (m_State == SceneState::eMain)
+		{
+			return true;
+		}
+		return false;
+	}
+
 protected:
 	SceneState m_State;
 };
