@@ -152,6 +152,15 @@
     <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
+    <ClCompile Include="Character\Character.cpp" />
+    <ClCompile Include="Character\CharacterManager.cpp" />
+    <ClCompile Include="Character\Enemy\Enemies\Drawer.cpp" />
+    <ClCompile Include="Character\Enemy\Enemies\Fox.cpp" />
+    <ClCompile Include="Character\Enemy\Enemies\Hermit.cpp" />
+    <ClCompile Include="Character\Enemy\Enemies\Perry.cpp" />
+    <ClCompile Include="Character\Enemy\Enemies\Sinsengumi.cpp" />
+    <ClCompile Include="Character\Enemy\Enemy.cpp" />
+    <ClCompile Include="Character\Player\Player.cpp" />
     <ClCompile Include="LoadResources\LoadResources.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +190,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\CharacterID.h" />
+    <ClInclude Include="Character\CharacterManager.h" />
+    <ClInclude Include="Character\Enemy\Enemies\Drawer.h" />
+    <ClInclude Include="Character\Enemy\Enemies\Fox.h" />
+    <ClInclude Include="Character\Enemy\Enemies\Hermit.h" />
+    <ClInclude Include="Character\Enemy\Enemies\Perry.h" />
+    <ClInclude Include="Character\Enemy\Enemies\Sinsengumi.h" />
+    <ClInclude Include="Character\Enemy\Enemy.h" />
+    <ClInclude Include="Character\Player\Player.h" />
     <ClInclude Include="LoadResources\LoadResources.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

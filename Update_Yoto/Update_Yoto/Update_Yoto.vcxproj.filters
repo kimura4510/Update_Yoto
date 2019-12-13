@@ -22,6 +22,18 @@
     <Filter Include="ソース ファイル\Texture">
       <UniqueIdentifier>{9b0bfb9e-674e-4dc2-a063-5b52790c8375}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Character">
+      <UniqueIdentifier>{0f6b59a9-acfd-4759-9232-5d5a9c467035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Player">
+      <UniqueIdentifier>{7322737e-993b-4ffa-94a3-c8063442a512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Enemy">
+      <UniqueIdentifier>{ebb86ff4-12c9-493e-8a34-7043d53c59b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Character\Enemy\Enemies">
+      <UniqueIdentifier>{76d4de38-5018-4329-b959-06455f9e6993}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DLibrary\3DLibrary\Main.cpp">
@@ -62,6 +74,33 @@
     </ClCompile>
     <ClCompile Include="LoadResources\LoadResources.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Character.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\CharacterManager.cpp">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Player\Player.cpp">
+      <Filter>ソース ファイル\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Enemy\Enemy.cpp">
+      <Filter>ソース ファイル\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Enemy\Enemies\Drawer.cpp">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Enemy\Enemies\Fox.cpp">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Enemy\Enemies\Hermit.cpp">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Enemy\Enemies\Perry.cpp">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Enemy\Enemies\Sinsengumi.cpp">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +157,36 @@
     </ClInclude>
     <ClInclude Include="LoadResources\LoadResources.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Character.h">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterID.h">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterManager.h">
+      <Filter>ソース ファイル\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Player\Player.h">
+      <Filter>ソース ファイル\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy\Enemy.h">
+      <Filter>ソース ファイル\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy\Enemies\Drawer.h">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy\Enemies\Fox.h">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy\Enemies\Hermit.h">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy\Enemies\Perry.h">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy\Enemies\Sinsengumi.h">
+      <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
