@@ -4,20 +4,29 @@
 #include "../Engine/Camera.h"
 #include "../Texture/Texture.hpp"
 #include "../GameDefinition.h"
+#include "../../../LoadResources/LoadResources.h"
 
 void GameScene::Init()
 {
 	m_State = SceneState::eMain;
 	Camera::CreateInstance();
 	Camera::GetCameraInstance()->InitCamera();
+	
+	LoadResources::Load();
 
-	cTexture* tex = cTexture::GetTextureInstance();
-	tex->LoadTexture("Resource/BackGround/title1024.png", titlecategory);
+	chmanager.Init();
 }
 
 void GameScene::Update()
 {
 	Camera::GetCameraInstance()->UpdateCamera();
+
+	chmanager.Create();
+	chmanager.Update();
+
+	//chmanager.Release();
+
+	//chmanager.GameEnd();
 }
 
 SceneID GameScene::End()
@@ -50,6 +59,7 @@ void GameScene::Draw()
 	{
 		return;
 	}
+	// バックグラウンド
 	DrawingData3D bg[4];
 	// 後ろ
 	bg[0] = {
@@ -89,8 +99,10 @@ void GameScene::Draw()
 	};
 	Graphics* gp = Graphics::GetGraphicInstance();
 	cTexture* tex = cTexture::GetTextureInstance();
-	gp->Draw3D(bg[0], tex->GetTexture(titlecategory));
-	gp->Draw3D(bg[1], tex->GetTexture(titlecategory));
-	gp->Draw3D(bg[2], tex->GetTexture(titlecategory));
-	gp->Draw3D(bg[3], tex->GetTexture(titlecategory));
+	gp->Draw3D(bg[0], tex->GetTexture(background));
+	gp->Draw3D(bg[1], tex->GetTexture(background));
+	gp->Draw3D(bg[2], tex->GetTexture(background));
+	gp->Draw3D(bg[3], tex->GetTexture(background));
+
+	chmanager.Draw();
 }

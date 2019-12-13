@@ -2,6 +2,7 @@
 #define GAMESCENE_H_
 
 #include "BaseScene.hpp"
+#include "../../../Character/CharacterManager.h"]
 
 class GameScene : public BaseScene
 {
@@ -13,6 +14,9 @@ public:
 	void Update() override;
 	SceneID Control() override;
 	void Draw() override;
+
+private:
+	CharacterManager chmanager;
 };
 
 #endif

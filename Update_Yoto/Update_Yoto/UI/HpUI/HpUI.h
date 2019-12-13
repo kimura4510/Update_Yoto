@@ -20,16 +20,16 @@ public:
 	};
 
 public:
-
 	HpUI(
 		DrawType draw_type,
 		DrawDirection dir,
 		const float&pos_x = 0.f,
-		const float&pos_y = 0.f
+		const float&pos_y = 0.f,
+		const float& graph_size_w = 600.f,
+		const float& graph_size_h = 50.f
 	);
 
 public:
-
 	void Update();
 	void Draw();
 
@@ -70,12 +70,12 @@ private:
 	DrawType m_draw_type;
 	DrawDirection m_dir;
 
-	float m_pos_x = 0.f;
-	float m_pos_y = 0.f;
-	float m_tu = 0.127f;
-	float m_tv = 0.08f;
-	float m_width_size = 700.f;
-	float m_height_size = 100.f;
-	int m_split_num_x = 1;
-	int m_split_num_y = 1;
+	float m_pos_x;
+	float m_pos_y;
+	float m_tu;
+	float m_tv;
+	float m_width_size;
+	float m_height_size;
+	int m_split_num_x;
+	int m_split_num_y;
 };

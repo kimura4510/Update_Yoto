@@ -5,17 +5,17 @@
 #include"../../LoadResources/LoadResources.h"
 
 
-
 int WINAPI WinMain(
 	_In_ HINSTANCE hI,
 	_In_opt_ HINSTANCE hP,
 	_In_ LPSTR lpCmpLine,
 	_In_ INT nCmdShow)
 {
+
+
 	Engine engine;
 	Window window;
-	SceneManager sceneManager;
-
+	
 	
 	HWND hW = window.MakeWindow(hI, 1920, 1080, "Update:Yoto");
 	
@@ -26,6 +26,8 @@ int WINAPI WinMain(
 	}
 
 	MSG msg;
+
+	SceneManager sceneManager;
 
 	sceneManager.Init(SceneID::eTitleScene);
 	//LoadResources::Load();

@@ -5,8 +5,6 @@
 #include"../3DLibrary/3DLibrary/Texture/Texture.hpp"
 
 
-
-
 namespace LoadResources {
 
 	void Load();
