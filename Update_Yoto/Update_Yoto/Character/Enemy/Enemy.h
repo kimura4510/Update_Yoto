@@ -21,7 +21,7 @@ public:
 	void QuickPressFlameDown();*/
 
 protected:
-	
+	int m_reset;
 
 };
 

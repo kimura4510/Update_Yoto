@@ -69,7 +69,7 @@ void CharacterManager::Init()
 	{
 		m_p_hp_ui[0] = new HpUI(
 			HpUI::DrawType::HP_MAX,
-			HpUI::DrawDirection::LEFT,
+			HpUI::DrawDirection::RIGHT,
 			0.0f,
 			0.0f);
 	}
@@ -78,7 +78,7 @@ void CharacterManager::Init()
 	{
 		m_p_hp_ui[1] = new HpUI(
 			HpUI::DrawType::HP_MAX,
-			HpUI::DrawDirection::RIGHT,
+			HpUI::DrawDirection::LEFT,
 			1320.0f,
 			0.0f);
 	}
@@ -114,71 +114,6 @@ void CharacterManager::Create()
 			break;
 		}
 	}
-
-	/*if (m_p_hp_ui[0] == nullptr)
-	{
-		switch (m_p_player->GetHp())
-		{
-		case 0:
-			m_p_hp_ui[0] = new HpUI(
-				HpUI::DrawType::HP_NONE,
-				HpUI::DrawDirection::LEFT,
-				0.0f,
-				0.0f);
-		case 1:
-			m_p_hp_ui[0] = new HpUI(
-				HpUI::DrawType::HP_LITTLE,
-				HpUI::DrawDirection::LEFT,
-				0.0f,
-				0.0f);
-		case 2:
-			m_p_hp_ui[0] = new HpUI(
-				HpUI::DrawType::HP_MEDIUM,
-				HpUI::DrawDirection::LEFT,
-				0.0f,
-				0.0f);
-		case 3:
-			m_p_hp_ui[0] = new HpUI(
-				HpUI::DrawType::HP_MAX,
-				HpUI::DrawDirection::LEFT,
-				0.0f,
-				0.0f);
-		default:
-			break;
-		}
-	}
-	if (m_p_hp_ui[1] == nullptr)
-	{
-		switch (m_p_enemy->GetHp())
-		{
-		case 0:
-			m_p_hp_ui[1] = new HpUI(
-				HpUI::DrawType::HP_NONE,
-				HpUI::DrawDirection::RIGHT,
-				1320.0f,
-				0.0f);
-		case 1:
-			m_p_hp_ui[1] = new HpUI(
-				HpUI::DrawType::HP_LITTLE,
-				HpUI::DrawDirection::RIGHT,
-				1320.0f,
-				0.0f);
-		case 2:
-			m_p_hp_ui[1] = new HpUI(
-				HpUI::DrawType::HP_MEDIUM,
-				HpUI::DrawDirection::RIGHT,
-				1320.0f,
-				0.0f);
-		case 3:
-			m_p_hp_ui[1] = new HpUI(
-				HpUI::DrawType::HP_MAX,
-				HpUI::DrawDirection::RIGHT,
-				1320.0f,
-				0.0f);
-		default:
-			break;
-		}
-	}*/
 }
 
 void CharacterManager::Update()
@@ -194,20 +129,44 @@ void CharacterManager::Update()
 			{
 				// エネミーのHPを減らす
 				m_p_enemy->HpDown();
-				if (m_p_enemy->GetHp() == 0) { HpUI::DrawType::HP_NONE;}
-				else if (m_p_enemy->GetHp() == 1) { HpUI::DrawType::HP_LITTLE; }
-				else if (m_p_enemy->GetHp() == 2) { HpUI::DrawType::HP_MEDIUM; }
-				else if (m_p_enemy->GetHp() == 3) { HpUI::DrawType::HP_MAX; }
+				if (m_p_enemy->GetHp() == 0) 
+				{
+					m_p_hp_ui[1]->ChangeDrawTypeNone();
+				}
+				else if (m_p_enemy->GetHp() == 1)
+				{
+					m_p_hp_ui[1]->ChangeDrawTypeLittle();
+				}
+				else if (m_p_enemy->GetHp() == 2) 
+				{
+					m_p_hp_ui[1]->ChangeDrawTypeMedium();
+				}
+				else if (m_p_enemy->GetHp() == 3) 
+				{ 
+					m_p_hp_ui[1]->ChangeDrawTypeMax();
+				}
 				m_p_callout_ui->IsNotOn();
 			}
 			if (m_p_enemy->GetQuickPressFlame() <= 0)
 			{
 				// プレイヤーのHPを減らす
 				m_p_player->HpDown();
-				if (m_p_player->GetHp() == 0) { HpUI::DrawType::HP_NONE; }
-				else if (m_p_player->GetHp() == 1) { HpUI::DrawType::HP_LITTLE; }
-				else if (m_p_player->GetHp() == 2) { HpUI::DrawType::HP_MEDIUM; }
-				else if (m_p_player->GetHp() == 3) { HpUI::DrawType::HP_MAX; }
+				if (m_p_player->GetHp() == 0)
+				{
+					m_p_hp_ui[0]->ChangeDrawTypeNone();
+				}
+				else if (m_p_player->GetHp() == 1)
+				{
+					m_p_hp_ui[0]->ChangeDrawTypeLittle();
+				}
+				else if (m_p_player->GetHp() == 2)
+				{
+					m_p_hp_ui[0]->ChangeDrawTypeMedium();
+				}
+				else if (m_p_player->GetHp() == 3)
+				{
+					m_p_hp_ui[0]->ChangeDrawTypeMax();
+				}
 				m_p_callout_ui->IsNotOn();
 			}	
 		}
@@ -218,10 +177,22 @@ void CharacterManager::Update()
 			{
 				// プレイヤーのHPを減らす
 				m_p_player->HpDown();
-				if (m_p_player->GetHp() == 0) { HpUI::DrawType::HP_NONE; }
-				else if (m_p_player->GetHp() == 1) { HpUI::DrawType::HP_LITTLE; }
-				else if (m_p_player->GetHp() == 2) { HpUI::DrawType::HP_MEDIUM; }
-				else if (m_p_player->GetHp() == 3) { HpUI::DrawType::HP_MAX; }
+				if (m_p_enemy->GetHp() == 0)
+				{
+					m_p_hp_ui[1]->ChangeDrawTypeNone();
+				}
+				else if (m_p_enemy->GetHp() == 1)
+				{
+					m_p_hp_ui[1]->ChangeDrawTypeLittle();
+				}
+				else if (m_p_enemy->GetHp() == 2)
+				{
+					m_p_hp_ui[1]->ChangeDrawTypeMedium();
+				}
+				else if (m_p_enemy->GetHp() == 3)
+				{
+					m_p_hp_ui[1]->ChangeDrawTypeMax();
+				}
 			}
 		}
 		m_p_player->Update();

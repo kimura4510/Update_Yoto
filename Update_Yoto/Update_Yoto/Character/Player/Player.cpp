@@ -7,11 +7,13 @@ Player::Player()
 	Init();
 }
 
+
+
 void Player::Init()
 {
 	m_isdeth	= false;
-	m_x			= -256.0f;
-	m_y			= -256.0f;
+	m_x			= 128.0f;
+	m_y			= 100.0f;
 	m_z			= 256.0f;
 	m_hp		= 3;
 }
@@ -28,6 +30,8 @@ void Player::Draw()
 			0.0f,0.0f,0.0f,
 			0.5f,0.5f,
 		};
+		player.m_rotz = 180.f;
+
 		Graphics* gp = Graphics::GetGraphicInstance();
 		cTexture* tex = cTexture::GetTextureInstance();
 		gp->Draw3D(player, tex->GetTexture(player_tex));

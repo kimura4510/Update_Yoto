@@ -9,11 +9,13 @@ Drawer::Drawer()
 void Drawer::Init()
 {
 	m_isdeth			= false;
-	m_x					= 128.0f;
-	m_y					= -256.0f;
+	m_x					= -256.0f;
+	m_y					= 100.0f;//-256.0f;
 	m_z					= 256.0f;
 	m_hp				= 3;
 	m_quick_press_flame = 60;
+	m_reset = 0;
+	m_reset = m_quick_press_flame;
 }
 
 void Drawer::Draw()
@@ -28,6 +30,9 @@ void Drawer::Draw()
 			0.0f,0.0f,0.0f,
 			0.5f,0.5f,
 		};
+
+		drawer.m_rotz = 180.f;
+
 		Graphics* gp = Graphics::GetGraphicInstance();
 		cTexture* tex = cTexture::GetTextureInstance();
 		Texture* p_tex = tex->GetTexture(drawer_tex);
@@ -38,7 +43,12 @@ void Drawer::Draw()
 
 void Drawer::Update()
 {
-	if (GetHp() <= 0)
+	/*if (m_reset <= 0)
+	{
+		m_reset = m_quick_press_flame;
+	}*/
+
+	if (this->GetHp() <= 0)
 	{
 		m_isdeth == true;
 		ChangeEnemy(ENEMY_ID::PERRY);
@@ -47,11 +57,12 @@ void Drawer::Update()
 
 int Drawer::GetQuickPressFlame()
 {
-	return m_quick_press_flame;
+	return m_quick_press_flame;//m_reset;
 }
 
 void Drawer::QuickPressFlameDown()
 {
+	//m_reset--;
 	m_quick_press_flame--;
 }
 
