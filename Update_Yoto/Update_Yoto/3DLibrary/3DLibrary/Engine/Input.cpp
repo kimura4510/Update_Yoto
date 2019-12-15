@@ -49,6 +49,11 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 	return true;
 }
 
+//bool Input::InitJoystick(HWND hw)
+//{
+//	//g_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, );
+//}
+
 void Input::ReleaseInput()
 {
 	g_KeyDevice->Unacquire();
