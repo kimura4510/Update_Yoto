@@ -41,6 +41,7 @@ void SceneManager::End()
 void SceneManager::Update()
 {
 	Input::GetInputInstance()->KeyStateUpdate();
+
 	SceneID id;
 	id = m_CurrentScene->Control();
 	ChangeScene(id);
@@ -49,6 +50,10 @@ void SceneManager::Update()
 //•`‰æŠÖ”
 void SceneManager::Draw()
 {
+	if (m_CurrentScene->IsMainStep() == false)
+	{
+		return;
+	}
 	if (Graphics::GetGraphicInstance()->DrawStart() == false)
 	{
 		return;

@@ -2,6 +2,11 @@
 #define TITLESCENE_H_
 
 #include "BaseScene.hpp"
+#include <string>
+
+//!< Title用テクスチャリストキー
+const std::string title = "Title";
+const std::string menu = "Menu";
 
 enum class DisplayState :int
 {
