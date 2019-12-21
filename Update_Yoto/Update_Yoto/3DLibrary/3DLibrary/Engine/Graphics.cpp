@@ -250,10 +250,8 @@ void Graphics::Animation2D(
 
 
 	// アニメーション番号取り出し
-	int animation_x = animation_graph_num % split_x;
-	int animation_y = animation_graph_num / split_x;
-
-	animation_x += 1;
+	int animation_x = (animation_graph_num % split_x) + 1;
+	int animation_y = (animation_graph_num / split_x) + 1;
 
 	// 3D統合画像関数を扱う
 	DrawIntegratedImage(
@@ -281,8 +279,9 @@ void Graphics::Animation3D(
 ) {
 
 	// アニメーション番号取り出し
-	float animation_x = animation_graph_num % split_x;
-	float animation_y = animation_graph_num / split_x;
+	int animation_x = (animation_graph_num % split_x) + 1;
+	int animation_y = (animation_graph_num / split_x) + 1;
+
 
 	// 3D統合画像関数を扱う
 	DrawIntegratedImage3D(
@@ -292,8 +291,8 @@ void Graphics::Animation3D(
 		set_tv,
 		graph_size_x,
 		graph_size_y,
-		split_x,
-		animation_graph_num
+		animation_x,
+		animation_y
 	);
 }
 
