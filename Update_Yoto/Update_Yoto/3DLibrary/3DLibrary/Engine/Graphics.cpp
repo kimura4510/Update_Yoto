@@ -235,6 +235,7 @@ void Graphics::DrawIntegratedImage3D(const DrawingData3D& v3d, Texture* texture_
 	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(CustomVertex3D));
 }
 
+
 void Graphics::Animation2D(
 	float x,
 	float y,
@@ -248,14 +249,12 @@ void Graphics::Animation2D(
 	int animation_graph_num
 ) {
 
-
 	// アニメーション番号取り出し
-	int animation_x = animation_graph_num % split_x;
-	int animation_y = animation_graph_num / split_x;
+	int animation_x = (animation_graph_num % split_x) + 1;
+	int animation_y = (animation_graph_num / split_x) + 1;
 
-	animation_x += 1;
 
-	// 3D統合画像関数を扱う
+	// 2D統合画像関数を扱う
 	DrawIntegratedImage(
 		x,
 		y,
@@ -281,8 +280,8 @@ void Graphics::Animation3D(
 ) {
 
 	// アニメーション番号取り出し
-	float animation_x = animation_graph_num % split_x;
-	float animation_y = animation_graph_num / split_x;
+	float animation_x = (animation_graph_num % split_x) + 1;
+	float animation_y = (animation_graph_num / split_x) + 1;
 
 	// 3D統合画像関数を扱う
 	DrawIntegratedImage3D(
@@ -292,10 +291,11 @@ void Graphics::Animation3D(
 		set_tv,
 		graph_size_x,
 		graph_size_y,
-		split_x,
-		animation_graph_num
+		animation_x,
+		animation_y
 	);
 }
+
 
 void Graphics::DrawBillboard(const DrawingData3D& v3d, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY)
 {

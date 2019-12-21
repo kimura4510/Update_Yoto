@@ -84,26 +84,63 @@ SceneID TitleScene::Control()
 
 void TitleScene::Draw()
 {
+
+
+	{
+		cTexture* p_walk_tex = cTexture::GetTextureInstance();
+
+		static int frame = 0;
+		static int anim_count = 1;
+
+		// フレーム値加算
+		frame++;
+
+		if (frame >= 3) {
+			frame = 0;
+			anim_count++;
+		}
+		else if (anim_count >= (16 * 2) + 3) {
+			anim_count = 0;
+		}
+
+		Texture* tex = p_walk_tex->GetTexture("walk");
+
+		// サンプルアニメーション
+		Graphics::GetGraphicInstance()->Animation2D(
+			200.f,
+			200.f,
+			tex,
+			0.0625f,
+			0.25f,
+			256.f,
+			512.f,
+			16,
+			4,
+			anim_count
+		);
+	}
+
+
 	Graphics* graph = Graphics::GetGraphicInstance();
 	cTexture* tex = cTexture::GetTextureInstance();
 
-	switch (m_DisplayState)
-	{
-	case DisplayState::Title:
-		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(title), 0.9375f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
-		break;
-	case DisplayState::PvE:
-		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(menu), 0.234275f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
-		break;
-	case DisplayState::PvP:
-		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(menu), 0.234375f, 0.52734375f, 1920.0f, 1080.0f, 2, 1);
-		break;
-	case DisplayState::Help:
-		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(menu), 0.234375f, 0.52734375f, 1920.0f, 1080.0f, 3, 1);
-		break;
-	}
+	//switch (m_DisplayState)
+	//{
+	//case DisplayState::Title:
+	//	graph->DrawIntegratedImage(0.0f, 0.0f,
+	//		tex->GetTexture(title), 0.9375f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
+	//	break;
+	//case DisplayState::PvE:
+	//	graph->DrawIntegratedImage(0.0f, 0.0f,
+	//		tex->GetTexture(menu), 0.234275f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
+	//	break;
+	//case DisplayState::PvP:
+	//	graph->DrawIntegratedImage(0.0f, 0.0f,
+	//		tex->GetTexture(menu), 0.234375f, 0.52734375f, 1920.0f, 1080.0f, 2, 1);
+	//	break;
+	//case DisplayState::Help:
+	//	graph->DrawIntegratedImage(0.0f, 0.0f,
+	//		tex->GetTexture(menu), 0.234375f, 0.52734375f, 1920.0f, 1080.0f, 3, 1);
+	//	break;
+	//}
 }

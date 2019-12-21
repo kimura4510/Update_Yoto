@@ -102,6 +102,15 @@
     <ClCompile Include="Character\Enemy\Enemies\Sinsengumi.cpp">
       <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Engine\Sound.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\HpUI\HpUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CalloutUI\CalloutUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp">
@@ -187,6 +196,15 @@
     </ClInclude>
     <ClInclude Include="Character\Enemy\Enemies\Sinsengumi.h">
       <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Engine\Sound.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\HpUI\HpUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CalloutUI\CalloutUI.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

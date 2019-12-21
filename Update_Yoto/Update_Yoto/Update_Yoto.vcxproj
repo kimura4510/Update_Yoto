@@ -163,6 +163,8 @@
     <ClCompile Include="Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Character\Player\Player.cpp" />
     <ClCompile Include="LoadResources\LoadResources.cpp" />
+    <ClCompile Include="UI\CalloutUI\CalloutUI.cpp" />
+    <ClCompile Include="UI\HpUI\HpUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Camera.h" />
@@ -203,6 +205,8 @@
     <ClInclude Include="Character\Enemy\Enemy.h" />
     <ClInclude Include="Character\Player\Player.h" />
     <ClInclude Include="LoadResources\LoadResources.h" />
+    <ClInclude Include="UI\CalloutUI\CalloutUI.h" />
+    <ClInclude Include="UI\HpUI\HpUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
