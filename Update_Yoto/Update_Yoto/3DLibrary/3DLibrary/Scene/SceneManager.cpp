@@ -4,15 +4,11 @@
 #include "HelpScene.hpp"
 #include "TitleScene.hpp"
 #include "GameScene.hpp"
-#include "../Texture/Texture.hpp"
-
 
 SceneManager::SceneManager()
 {
-	cTexture::GetTextureInstance()->LoadTexture("Resource/Character/walk.png","walk");
 	Init(SceneID::eTitleScene);
 	m_CurrentScene = m_SceneList[(int)m_SceneID];
-	
 }
 
 SceneManager::~SceneManager()
@@ -62,10 +58,6 @@ void SceneManager::Draw()
 	{
 		return;
 	}
-
-
-
-
 	m_CurrentScene->Draw();
 
 	Graphics::GetGraphicInstance()->DrawEnd();

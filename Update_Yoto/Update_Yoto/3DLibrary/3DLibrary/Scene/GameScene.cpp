@@ -104,7 +104,5 @@ void GameScene::Draw()
 	gp->Draw3D(bg[2], tex->GetTexture(background));
 	gp->Draw3D(bg[3], tex->GetTexture(background));
 
-	DrawingData3D data;
-
 	chmanager.Draw();
 }

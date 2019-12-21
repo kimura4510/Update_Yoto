@@ -27,6 +27,8 @@ namespace LoadResources {
 
 		//exture::GetTextureInstance()->LoadTexture()
 
+
+
 		cTexture* tex = cTexture::GetTextureInstance();
 
 		tex->LoadTexture("Resource/BackGround/title1024.png", background);
@@ -41,7 +43,6 @@ namespace LoadResources {
 
 		tex->LoadTexture("Resource/UI/Callout2048x1024.png", calloutui_tex);
 		tex->LoadTexture("Resource/UI/HP.png", hpui_tex);
-		
 
 	}
 }
