@@ -8,6 +8,7 @@ enum class SceneID
 	eHelpScene,
 	eClearScene,
 	eGameoverScene,
+	eTransitionScene,
 
 	eSceneIDMax,
 	eNon_Scene,

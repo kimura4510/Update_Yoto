@@ -1,5 +1,4 @@
 #include "Input.hpp"
-#include <Windows.h>
 #include <dinput.h>
 
 #pragma comment(lib, "dinput8.lib")
@@ -49,10 +48,35 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 	return true;
 }
 
-//bool Input::InitJoystick(HWND hw)
-//{
-//	//g_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, );
-//}
+BOOL CALLBACK Input::EnumJoysticksCallback(LPCDIDEVICEINSTANCE pDevIns, LPVOID pContext)
+{
+	HRESULT hr;
+	hr = g_InputInterface->CreateDevice(pDevIns->guidInstance, &m_JoyDevice, NULL);
+	if (FAILED(hr))
+	{
+		return DIENUM_CONTINUE;
+	}
+
+	m_DiDevCaps.dwSize = sizeof(DIDEVCAPS);
+	hr = m_JoyDevice->GetCapabilities(&m_DiDevCaps);
+	if (FAILED(hr))
+	{
+		m_JoyDevice->Release();
+		m_JoyDevice = nullptr;
+		return DIENUM_CONTINUE;
+	}
+
+	return DIENUM_STOP;
+}
+
+bool Input::InitJoystick(HWND hw)
+{
+	HRESULT hr = g_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, this->EnumJoysticksCallback, NULL, DIEDFL_ATTACHEDONLY);
+	if (FAILED(hr) || m_JoyDevice == nullptr)
+	{
+		return false;
+	}
+}
 
 void Input::ReleaseInput()
 {

@@ -6,7 +6,6 @@
 #ifndef DIRECTINPUT_H_
 #define DIRECTINPUT_H_
 
-#include <Windows.h>
 #include <dinput.h>
 
 // @brife キーの種類
@@ -135,13 +134,13 @@ public:
 	}
 
 private:
-	//bool CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdevins, )
+	BOOL CALLBACK EnumJoysticksCallback(const LPCDIDEVICEINSTANCE pdevins, LPVOID pContext);
 
 private:
-	LPDIRECTINPUT8 g_InputInterface;	//インプットインターフェイス
-	LPDIRECTINPUTDEVICE8 g_KeyDevice;	//インプットデバイス(キーボード)
-	LPDIRECTINPUTDEVICE8 m_JoyDevice;	//インプットデバイス(ジョイスティック)
-	DIDEVCAPS m_DiDevCaps;
+	LPDIRECTINPUT8 g_InputInterface;	// インプットインターフェイス
+	LPDIRECTINPUTDEVICE8 g_KeyDevice;	// インプットデバイス(キーボード)
+	LPDIRECTINPUTDEVICE8 m_JoyDevice;	// インプットデバイス(ジョイスティック)
+	DIDEVCAPS m_DiDevCaps;				// ジョイスティックの能力情報
 
 	INPUT_STATE g_InputState[KEY_INFO::MAX_KEY_INFO];
 

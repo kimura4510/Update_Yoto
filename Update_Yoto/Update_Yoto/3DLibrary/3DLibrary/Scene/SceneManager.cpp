@@ -4,6 +4,10 @@
 #include "HelpScene.hpp"
 #include "TitleScene.hpp"
 #include "GameScene.hpp"
+#include "ClearScene.hpp"
+#include "GameoverScene.hpp"
+#include "TransitionScene.hpp"
+
 
 SceneManager::SceneManager()
 {
@@ -22,6 +26,9 @@ void SceneManager::Init(SceneID id)
 	m_SceneList.push_back(new TitleScene());
 	m_SceneList.push_back(new GameScene());
 	m_SceneList.push_back(new HelpScene());
+	m_SceneList.push_back(new ClearScene());
+	m_SceneList.push_back(new GameoverScene());
+	m_SceneList.push_back(new TransitionScene());
 
 	m_SceneID = SceneID::eTitleScene;
 }
@@ -54,6 +61,7 @@ void SceneManager::Draw()
 	{
 		return;
 	}
+
 	if (Graphics::GetGraphicInstance()->DrawStart() == false)
 	{
 		return;
