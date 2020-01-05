@@ -12,21 +12,30 @@ public:
 
 public:
 	void Init();
-	void Create();
 	void Draw();
 	void Update();
-	bool PlayerIsExit();
-	bool EnemyIsExit();
-	void Release();
+	void HpUiManager(BATTLE_CHARACTER battle_character_);
 
-	int GameEnd(Character::GAME_END game_end_id_);
+	void DeleteCheck();
+
+	// ç≤ì°êÊê∂ÇÃÉRÅ[Éh
+	bool IsBattleFinish();
+	GAME_END GetGameEnd();
+	ENEMY_ID GetNextEnemyID();
+	void ChangeNextEnemy();
+
+private:
+	void Create();
+	//void DeleteCheck();
 
 private:
 	Character* m_p_player;
 	Character* m_p_enemy;
 
 	CalloutUI* m_p_callout_ui;
-	HpUI* m_p_hp_ui[2];
+	HpUI* m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_MAX];
+
+	ENEMY_ID m_enemy_id;
 
 };
 

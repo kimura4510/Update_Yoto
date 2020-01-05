@@ -13,10 +13,6 @@ public:
 	void Draw()override;
 	void Update()override;
 
-	int GetHp()override;
-	void HpDown()override;
-	//bool EnemyHpDown()override;
-
 };
 
 #endif

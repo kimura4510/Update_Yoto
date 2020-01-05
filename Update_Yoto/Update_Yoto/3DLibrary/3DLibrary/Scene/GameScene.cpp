@@ -8,33 +8,68 @@
 
 void GameScene::Init()
 {
+	m_end_scene = END_SCENE::GAME_NONE;
+
 	m_State = SceneState::eMain;
 	Camera::CreateInstance();
 	Camera::GetCameraInstance()->InitCamera();
 	
 	LoadResources::Load();
 
-	chmanager.Init();
+	m_bg.Init();
+	m_chmanager.Init();
 }
 
 void GameScene::Update()
 {
 	Camera::GetCameraInstance()->UpdateCamera();
 
-	chmanager.Create();
-	chmanager.Update();
+	m_chmanager.Update();
 
-	//chmanager.Release();
+	if (m_chmanager.IsBattleFinish() == true)
+	{
+		switch (m_chmanager.GetGameEnd())
+		{
+		case GAME_END::GAME_CLEAR:
+			// ゲームクリアシーンに移行
+			m_end_scene = END_SCENE::GAME_CLEAR;
+			m_State = SceneState::eEnd;
+			break;
+		case GAME_END::GAME_OVER:
+			// ゲームオーバーシーンに移行
+			m_end_scene = END_SCENE::GAME_OVER;
+			m_State = SceneState::eEnd;
+			break;
+		case GAME_END::GAME_NONE:
+			// ステージ移行シーンに移行
+			// トランジションシーンに移行
+			m_chmanager.ChangeNextEnemy();
 
-	//chmanager.GameEnd();
+			break;
+		}
+	}
+
+	m_chmanager.DeleteCheck();
 }
 
 SceneID GameScene::End()
 {
 	Camera::GetCameraInstance()->ReleaseCamera();
 	Camera::DestroyInstance();
-	m_State = SceneState::eInit;
-	return SceneID::eTitleScene;
+
+	// GameEnd処理
+	if (m_end_scene == END_SCENE::GAME_CLEAR)
+	{
+		return SceneID::eClearScene;
+	}
+	if (m_end_scene == END_SCENE::GAME_OVER)
+	{
+		return SceneID::eGameoverScene;
+	}
+	 
+	//m_State = SceneState::eInit;
+
+	//return SceneID::eTitleScene;
 }
 
 SceneID GameScene::Control()
@@ -60,50 +95,7 @@ void GameScene::Draw()
 		return;
 	}
 	// バックグラウンド
-	DrawingData3D bg[4];
-	// 後ろ
-	bg[0] = {
-		-256.0f,-128.0f,512.0f,
-		0.0f,0.0f,
-		512.0f,512.0f,
-		0xffff,
-		0.0f,0.0f,0.0f,
-		1.0f,1.0f,
-	};
+	m_bg.Draw();
 
-	// 下
-	bg[1] = {
-		-256.0f,0.0f,128.0f,
-		0.0f,0.0f,
-		512.0f,512.0f,
-		0xffff,
-		90.0f,0.0f,0.0f,
-		1.0f,1.0f,
-	};
-	// 左
-	bg[2] = {
-		0.0f,-128.0f,256.0f,
-		0.0f,0.0f,
-		512.0f,512.0f,
-		0xffff,
-		0.0f,-90.0f,0.0f,
-		1.0f,1.0f,
-	};
-	// 右
-	bg[3] = {
-		-512.f,-128.f,256.0f,
-		0.0f,0.0f,
-		512.0f,512.0f,
-		0xffff,
-		0.0f,90.0f,0.0f,
-		1.0f,1.0f,
-	};
-	Graphics* gp = Graphics::GetGraphicInstance();
-	cTexture* tex = cTexture::GetTextureInstance();
-	gp->Draw3D(bg[0], tex->GetTexture(background));
-	gp->Draw3D(bg[1], tex->GetTexture(background));
-	gp->Draw3D(bg[2], tex->GetTexture(background));
-	gp->Draw3D(bg[3], tex->GetTexture(background));
-
-	chmanager.Draw();
+	m_chmanager.Draw();
 }

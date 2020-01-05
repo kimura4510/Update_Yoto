@@ -1,29 +1,30 @@
 #ifndef CHARACTER_ID_H_
 #define CHARACTER_ID_H_
 
-//enum CHARACTER_HP {
-//	ZERO,
-//	ONE,
-//	TWO,
-//	THREE,
-//	FOUR,
-//
-//	HP_MAX,
-//};
-
-enum ENEMY_ID {
+enum class ENEMY_ID {
 	DRAWER,
 	PERRY,
 	HERMIT,
 	SINSENGUMI,
 	FOX,
+
+	ENMEY_NONE
 };
 
-enum HP_DOWN {
-	PLAYER_HP_DOWN,
-	ENEMY_HP_DOWN,
+enum class BATTLE_CHARACTER {
+	BATTLE_PLAYER,
+	BATTLE_ENEMY,
 
-	HP_DOWN_MAX,
+	BATTLE_MAX,
+};
+
+enum class GAME_END {
+	GAME_NONE,
+
+	GAME_CLEAR,
+	GAME_OVER,
+
+	GAME_END_MAX,
 };
 
 #endif

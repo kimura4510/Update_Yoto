@@ -5,7 +5,6 @@
 
 class Enemy :public Character {
 public:
-	Enemy() {}
 	virtual ~Enemy() {}
 
 public:
@@ -13,15 +12,6 @@ public:
 	virtual void Draw() = 0;
 	virtual void Update() = 0;
 
-	virtual int GetHp() = 0;
-	virtual void HpDown() = 0;
-	//virtual bool PlayerHpDown() = 0;
-
-	/*int GetQuickPressFlame();
-	void QuickPressFlameDown();*/
-
-protected:
-	int m_reset;
 
 };
 

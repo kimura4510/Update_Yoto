@@ -8,6 +8,8 @@ const std::string texture_name = "ex.Update_Yoto";
 
 const std::string background		= "BackGround";
 
+const std::string chara_anime		= "CharaAnime";
+
 const std::string player_tex		= "Player";
 
 const std::string drawer_tex		= "Drawer";

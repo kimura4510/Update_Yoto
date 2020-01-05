@@ -33,6 +33,8 @@ namespace LoadResources {
 
 		tex->LoadTexture("Resource/BackGround/title1024.png", background);
 
+		tex->LoadTexture("Resource/Character/CharaAnime.png", chara_anime);
+
 		tex->LoadTexture("Resource/Character/Player.png", player_tex);
 
 		tex->LoadTexture("Resource/Character/Drawer.png", drawer_tex);

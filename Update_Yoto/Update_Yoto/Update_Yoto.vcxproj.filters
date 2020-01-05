@@ -117,6 +117,9 @@
     <ClCompile Include="UI\CalloutUI\CalloutUI.cpp">
       <Filter>ソース ファイル\UI\CalloutUI</Filter>
     </ClCompile>
+    <ClCompile Include="BackGround\BackGround.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="UI\CalloutUI\CalloutUI.h">
       <Filter>ソース ファイル\UI\CalloutUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround\BackGround.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
