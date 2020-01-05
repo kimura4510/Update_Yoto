@@ -13,13 +13,6 @@ public:
 	void Draw()override;
 	void Update()override;
 
-	int GetQuickPressFlame()override;
-	void QuickPressFlameDown()override;
-
-	int GetHp()override;
-	void HpDown()override;
-	//bool PlayerHpDown()override;
-
 };
 
 #endif

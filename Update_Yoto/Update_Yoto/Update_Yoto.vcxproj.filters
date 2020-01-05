@@ -34,6 +34,15 @@
     <Filter Include="ソース ファイル\Character\Enemy\Enemies">
       <UniqueIdentifier>{76d4de38-5018-4329-b959-06455f9e6993}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{9872592e-d593-4c7c-b952-ea8983361275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\CalloutUI">
+      <UniqueIdentifier>{824687d3-e8b5-4417-9025-2bf68b1fd547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\HpUI">
+      <UniqueIdentifier>{4ad96748-1ff5-4a12-b6ae-b445292ff912}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DLibrary\3DLibrary\Main.cpp">
@@ -101,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="Character\Enemy\Enemies\Sinsengumi.cpp">
       <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\HpUI\HpUI.cpp">
+      <Filter>ソース ファイル\UI\HpUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CalloutUI\CalloutUI.cpp">
+      <Filter>ソース ファイル\UI\CalloutUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround\BackGround.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +205,15 @@
     </ClInclude>
     <ClInclude Include="Character\Enemy\Enemies\Sinsengumi.h">
       <Filter>ソース ファイル\Character\Enemy\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\HpUI\HpUI.h">
+      <Filter>ソース ファイル\UI\HpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CalloutUI\CalloutUI.h">
+      <Filter>ソース ファイル\UI\CalloutUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround\BackGround.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

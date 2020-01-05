@@ -9,9 +9,9 @@ Hermit::Hermit()
 void Hermit::Init()
 {
 	m_isdeth			= false;
-	m_x					= 128.0f;
-	m_y					= -256.0f;
-	m_z					= 100.0f;
+	m_x					= -256.0f;
+	m_y					= 100.0f;
+	m_z					= 256.0f;
 	m_hp				= 3;
 	m_quick_press_flame = 30;
 }
@@ -25,7 +25,7 @@ void Hermit::Draw()
 			0.0f,0.0f,
 			150.0f,170.0f,
 			0xffff,
-			0.0f,0.0f,0.0f,
+			0.0f,0.0f,180.0f,
 			0.5f,0.5f,
 		};
 		Graphics* gp = Graphics::GetGraphicInstance();
@@ -39,31 +39,5 @@ void Hermit::Update()
 	if (GetHp() <= 0)
 	{
 		m_isdeth == true;
-		ChangeEnemy(ENEMY_ID::SINSENGUMI);
 	}
 }
-
-int Hermit::GetQuickPressFlame()
-{
-	return m_quick_press_flame;
-}
-
-void Hermit::QuickPressFlameDown()
-{
-	m_quick_press_flame--;
-}
-
-int Hermit::GetHp()
-{
-	return m_hp;
-}
-
-void Hermit::HpDown()
-{
-	m_hp--;
-}
-
-//bool Hermit::PlayerHpDown()
-//{
-//	return true;
-//}

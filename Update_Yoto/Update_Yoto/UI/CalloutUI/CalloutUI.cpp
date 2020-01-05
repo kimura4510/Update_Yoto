@@ -17,7 +17,7 @@ void CalloutUI::Init()
 	m_z = 256.0f;
 
 	srand((unsigned int)time(NULL));
-	m_time_to_count_out = rand() % 180;// + 420;
+	m_time_to_count_out = rand() % 180 + 420;
 	m_push_flame_count = 0;
 }
 
@@ -28,23 +28,10 @@ void CalloutUI::Update()
 	{
 		m_ison = true;
 		m_push_flame_count = 0;
-		//IsOn();
 	}
-
-	/*if (IsNotOn() == true)
-	{
-		m_ison = false;
-	}*/
 }
 
 void CalloutUI::Draw() {
-	// テクスチャ取得
-	//Texture* p_call_out = cTexture::GetTextureInstance()->GetTexture("call_out");
-
-	// HP描画
-	//Graphics::GetGraphicInstance()->DrawTexture(500.f, 500.f, hp);
-	//Texture* = cTexture::GetTextureInstance()->GetTexture("hp_gauge");
-
 	if (m_ison == true)
 	{
 		Graphics* gp = Graphics::GetGraphicInstance();
@@ -62,8 +49,6 @@ void CalloutUI::Draw() {
 			1,
 			1
 		);
-
-
 	}
 }
 
@@ -79,8 +64,7 @@ bool CalloutUI::IsOn()
 	}
 }
 
-bool CalloutUI::IsNotOn()
+void CalloutUI::IsNotOn()
 {
 	m_ison = false;
-	return true;
 }
