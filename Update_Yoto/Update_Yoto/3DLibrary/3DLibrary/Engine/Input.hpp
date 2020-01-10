@@ -22,6 +22,24 @@ enum KEY_INFO
 	MAX_KEY_INFO,
 };
 
+//!< @brief ゲームパッドの入力種類
+enum class GAMEPAD_INFO
+{
+	Up,
+	Down,
+	Right,
+	Left,
+	A,
+	B,
+	X,
+	Y,
+	R1,
+	R2,
+	L1,
+	L2,
+	MAX_INFO,
+};
+
 //	@brief 入力状態の種類
 enum INPUT_STATE
 {
@@ -57,7 +75,7 @@ public:
 	* ジョイスティックを使用可能にする処理を行います
 	* @return 初期化結果、成功の場合はtrue
 	*/
-	bool InitJoystick(HWND hw);
+	bool CreateGamePadDevice(HWND hw);
 
 	/**
 	* @brief キーボードの入力情報の更新@n
@@ -70,7 +88,7 @@ public:
 	* @brief Joystickの入力情報の更新
 	* ジョイスティックの入力情報の更新を行います
 	*/
-	void UpdateJoystickState();
+	void UpdateGamePad();
 
 	/**
 	* @brief キーが押されている状態の判定関数@n
@@ -143,16 +161,18 @@ public:
 private:
 	static BOOL CALLBACK EnumJoysticksCallback(const LPCDIDEVICEINSTANCE pdevins, LPVOID pContext);
 
-	static BOOL CALLBACK EnumAxesCallback(const LPDIDEVICEOBJECTINSTANCE pdevobjins, LPVOID pContext);
+	bool SetGamePadPropaty(LPDIRECTINPUTDEVICE8 device);
+
+	bool RestartGamePad(LPDIRECTINPUTDEVICE8 device, int num);
 
 private:
-	LPDIRECTINPUT8 g_InputInterface;	// インプットインターフェイス
-	LPDIRECTINPUTDEVICE8 g_KeyDevice;	// インプットデバイス(キーボード)
-	LPDIRECTINPUTDEVICE8 m_JoyDevice;	// インプットデバイス(ジョイスティック)
-	DIDEVCAPS m_DiDevCaps;				// ジョイスティックの能力情報
+	static const int MaxGamePadNum = 2;
+
+	static LPDIRECTINPUT8 m_InputInterface;	// インプットインターフェイス
+	LPDIRECTINPUTDEVICE8 m_KeyDevice;	// インプットデバイス(キーボード)
+	LPDIRECTINPUTDEVICE8 m_GamePadDevices[MaxGamePadNum];	// インプットデバイス(ジョイスティック)
 
 	INPUT_STATE g_InputState[KEY_INFO::MAX_KEY_INFO];
-
 	int g_KeyInfo[7] = {
 		DIK_UP,
 		DIK_DOWN,
@@ -163,6 +183,9 @@ private:
 		DIK_SPACE,
 	};
 
+	INPUT_STATE m_GamePadState[MaxGamePadNum][static_cast<int>(GAMEPAD_INFO::MAX_INFO)];
+
+	private:
 	//シングルトン
 	Input();		//コンストラクタ
 	~Input();	//デストラクタ

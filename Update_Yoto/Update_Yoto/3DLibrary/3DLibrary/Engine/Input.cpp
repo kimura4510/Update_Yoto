@@ -6,10 +6,11 @@
 #pragma comment(lib, "dxguid.lib")
 Input* Input::p_InputInstance = NULL;
 
-struct DeviceEnumParam
+struct GamePadEnumParam
 {
 	LPDIRECTINPUTDEVICE8* GamePadDevList;
 	int FindCount;
+	HWND windowhandle;
 };
 
 bool Input::InitInput(HINSTANCE hI, HWND hW)
@@ -17,7 +18,7 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 	HRESULT hr = DirectInput8Create(hI, 
 		DIRECTINPUT_VERSION,
 		IID_IDirectInput8,
-		(void**)& g_InputInterface,
+		(void**)& m_InputInterface,
 		NULL);
 
 	if (FAILED(hr))
@@ -26,7 +27,7 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 		return false;
 	}
 
-	hr = g_InputInterface->CreateDevice(GUID_SysKeyboard, &g_KeyDevice, NULL);
+	hr = m_InputInterface->CreateDevice(GUID_SysKeyboard, &m_KeyDevice, NULL);
 
 	if (FAILED(hr))
 	{
@@ -34,7 +35,7 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 		return false;
 	}
 
-	hr = g_KeyDevice->SetDataFormat(&c_dfDIKeyboard);
+	hr = m_KeyDevice->SetDataFormat(&c_dfDIKeyboard);
 
 	if (FAILED(hr))
 	{
@@ -42,7 +43,7 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 		return false;
 	}
 
-	hr = g_KeyDevice->SetCooperativeLevel(hW, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
+	hr = m_KeyDevice->SetCooperativeLevel(hW, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
 
 	if (FAILED(hr))
 	{
@@ -50,92 +51,125 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 		return false;
 	}
 
-	hr = g_KeyDevice->Acquire();
+	hr = m_KeyDevice->Acquire();
 
 	return true;
 }
 
 BOOL CALLBACK Input::EnumJoysticksCallback(LPCDIDEVICEINSTANCE pDevIns, LPVOID pContext)
 {
-	DeviceEnumParam* param = dynamic_cast<DeviceEnumParam*>(pContext);
-	HRESULT hr;
+	GamePadEnumParam* param = reinterpret_cast<GamePadEnumParam*>(pContext);
 
-	hr = param->GamePadDevList->CreateDevice(pDevIns->guidInstance, &pDIDev, NULL);
-	if (FAILED(hr))
+	//!< カウント数が2以上になった場合列挙終了
+	if (param->FindCount >= 2)
 	{
-		return DIENUM_CONTINUE;
+		return DIENUM_STOP;
 	}
 
-	pDIDevCap.dwSize = sizeof(DIDEVCAPS);
-	hr = pDIDev->GetCapabilities(&pDIDevCap);
-	if (FAILED(hr))
-	{
-		pDIDev->Release();
-		pDIDev = nullptr;
-		return DIENUM_CONTINUE;
-	}
-
-	return DIENUM_STOP;
-}
-
-BOOL CALLBACK Input::EnumAxesCallback(const LPDIDEVICEOBJECTINSTANCE pdevobjins, LPVOID pContext, LPDIRECTINPUTDEVICE8 pDIDev)
-{
-	HRESULT hr;
-	DIPROPRANGE diprop;
-
-	diprop.diph.dwSize = sizeof(DIPROPRANGE);
-	diprop.diph.dwHeaderSize = sizeof(DIPROPHEADER);
-	diprop.diph.dwHow = DIPH_BYID;
-	diprop.diph.dwObj = pdevobjins->dwType;
-	diprop.lMin = -1000;
-	diprop.lMax = 1000;
-
-	hr = pDIDev->SetProperty(DIPROP_RANGE, &diprop.diph);
+	//!< デバイスの作成
+	HRESULT hr = m_InputInterface->CreateDevice(
+		pDevIns->guidInstance, 
+		&param->GamePadDevList[param->FindCount], 
+		nullptr);
 	if (FAILED(hr))
 	{
 		return DIENUM_STOP;
 	}
 
+	//!< データフォーマットの設定
+	hr = param->GamePadDevList[param->FindCount]->SetDataFormat(&c_dfDIJoystick);
+	if (FAILED(hr))
+	{
+		return DIENUM_STOP;
+	}
+
+	//!< 協調レベルの設定
+	hr = param->GamePadDevList[param->FindCount]->SetCooperativeLevel(
+		param->windowhandle,
+		DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+	if (FAILED(hr))
+	{
+		return DIENUM_STOP;
+	}
+
+	hr = param->GamePadDevList[param->FindCount]->Poll();
+	if (FAILED(hr))
+	{
+		return DIENUM_STOP;
+	}
+
+	param->FindCount++;
+
 	return DIENUM_STOP;
 }
 
-
-bool Input::InitJoystick(HWND hw)
+bool Input::SetGamePadPropaty(LPDIRECTINPUTDEVICE8 device)
 {
-	HRESULT hr = g_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, this, DIEDFL_ATTACHEDONLY);
-	if (FAILED(hr) || m_JoyDevice == nullptr)
+	DIPROPDWORD diprop;
+	ZeroMemory(&diprop, sizeof(diprop));
+
+	//!< 軸を絶対値モードに設定
+	diprop.diph.dwSize = sizeof(diprop);
+	diprop.diph.dwHeaderSize = sizeof(diprop.diph);
+	diprop.diph.dwHow = DIPH_DEVICE;
+	diprop.diph.dwObj = 0;
+	diprop.dwData = DIPROPAXISMODE_ABS;
+	if (FAILED(device->SetProperty(DIPROP_AXISMODE, &diprop.diph)))
 	{
 		return false;
 	}
 
-	hr = m_JoyDevice->SetDataFormat(&c_dfDIJoystick);
-	if (FAILED(hr))
+	//!< X軸の値の範囲設定
+	DIPROPRANGE dipran;
+	ZeroMemory(&dipran, sizeof(dipran));
+	dipran.diph.dwSize = sizeof(dipran);
+	dipran.diph.dwHeaderSize = sizeof(dipran.diph);
+	dipran.diph.dwHow = DIPH_BYOFFSET;
+	dipran.diph.dwObj = DIJOFS_X;
+	dipran.lMin = -1000;
+	dipran.lMax = 1000;
+	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)));
+
+	//!< Y軸の値の範囲設定
+	dipran.diph.dwObj = DIJOFS_Y;
+	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)));
+
+	//!< BufferSizeの設定
+	ZeroMemory(&diprop, sizeof(diprop));
+	diprop.diph.dwSize = sizeof(diprop);
+	diprop.diph.dwHeaderSize = sizeof(diprop.diph);
+	diprop.diph.dwHow = DIPH_DEVICE;
+	diprop.diph.dwObj = 0;
+	diprop.dwData = 1000;
+	if (FAILED(device->SetProperty(DIPROP_BUFFERSIZE, &diprop.diph)))
 	{
 		return false;
 	}
 
-	hr = m_JoyDevice->SetCooperativeLevel(hw, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
-	if (FAILED(hr))
+	return true;
+}
+
+bool Input::CreateGamePadDevice(HWND hw)
+{
+	GamePadEnumParam param;
+	param.FindCount = 0;		// ゲームパッドの列挙数の初期化
+	param.GamePadDevList = m_GamePadDevices;
+	param.windowhandle = hw;
+
+	m_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, this, DIEDFL_ATTACHEDONLY);
+
+	if (param.FindCount == 0)
 	{
 		return false;
 	}
 
-	hr = m_JoyDevice->EnumObjects(EnumAxesCallback, (LPVOID)hw, DIDFT_AXIS);
-	if (FAILED(hr))
+	//!< ゲームパッドの起動
+	for (int i = 0; i < param.FindCount; i++)
 	{
-		return false;
-	}
-
-	hr = m_JoyDevice->Poll();
-	if (FAILED(hr))
-	{
-		return false;
-	}
-
-	hr = m_JoyDevice->Acquire();
-	if (FAILED(hr))
-	{
-		return false;
+		if (FAILED(m_GamePadDevices[i]->Acquire()))
+		{
+			return false;
+		}
 	}
 
 	return true;
@@ -143,31 +177,68 @@ bool Input::InitJoystick(HWND hw)
 
 void Input::ReleaseInput()
 {
-	g_KeyDevice->Unacquire();
-	m_JoyDevice->Unacquire();
-	g_KeyDevice->Release();
-	m_JoyDevice->Release();
-	g_InputInterface->Release();
+	for (int i = 0; i < MaxGamePadNum; i++)
+	{
+		if (m_GamePadDevices[i] != nullptr)
+		{
+			m_GamePadDevices[i]->Unacquire();
+			m_GamePadDevices[i]->Release();
+			m_GamePadDevices[i] = nullptr;
+		}
+	}
+
+	if (m_KeyDevice != nullptr)
+	{
+		m_KeyDevice->Unacquire();
+		m_KeyDevice->Release();
+		m_KeyDevice = nullptr;
+	}
+	
+	m_InputInterface->Release();
 }
 
-void Input::UpdateJoystickState()
+void Input::UpdateGamePad()
 {
 	DIJOYSTATE joy;
-	ZeroMemory(&joy, sizeof(joy));
-	HRESULT hr = m_JoyDevice->GetDeviceState(sizeof(joy), &joy);
-	if (FAILED(hr))
+
+	for (int i = 0; i < MaxGamePadNum; i++)
 	{
-		return;
+		if (m_GamePadDevices[i] == nullptr)
+		{
+			return;
+		}
+
+		HRESULT hr = m_GamePadDevices[i]->GetDeviceState(sizeof(DIJOYSTATE), &joy);
+		if (FAILED(hr))
+		{
+			RestartGamePad(m_GamePadDevices[i], i);
+		}
+
 	}
 
 	
 }
 
+bool Input::RestartGamePad(LPDIRECTINPUTDEVICE8 device, int num)
+{
+	if (FAILED(device->Acquire()))
+	{
+		for (int i = 0; i < static_cast<int>(GAMEPAD_INFO::MAX_INFO); i++)
+		{
+			m_GamePadState[num][i] = INPUT_STATE::NOT_PUSH;
+		}
+
+		return false;
+	}
+	return true;
+}
+
+
 void Input::UpdateKeyState()
 {
 	BYTE Key[256];
 
-	HRESULT hr = g_KeyDevice->GetDeviceState(256, Key);
+	HRESULT hr = m_KeyDevice->GetDeviceState(256, Key);
 
 	if (FAILED(hr))
 	{
@@ -219,8 +290,8 @@ bool Input::GetKeyRelease(KEY_INFO key)
 
 Input::Input()
 {
-	g_InputInterface = nullptr;
-	g_KeyDevice = nullptr;
+	m_InputInterface = nullptr;
+	m_KeyDevice = nullptr;
 }
 
 Input::~Input()
