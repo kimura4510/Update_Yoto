@@ -148,10 +148,13 @@
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Window.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Main.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\BaseScene.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\ClearScene.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\GameoverScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\GameScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\HelpScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\TransitionScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
     <ClCompile Include="BackGround\BackGround.cpp" />
     <ClCompile Include="Character\Character.cpp" />
@@ -176,18 +179,17 @@
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Window.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\GameDefinition.h" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\BaseScene.hpp" />
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\ClearScene.hpp" />
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameoverScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp" />
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp" />
     <ClInclude Include="BackGround\BackGround.h" />
     <ClInclude Include="Animation\AnimationBase\AnimationBase.h" />
-    <ClInclude Include="Animation\AnimationManager\AnimationManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

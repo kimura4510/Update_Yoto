@@ -5,7 +5,8 @@
 
 class Character {
 public:
-	//Character();
+
+	Character();
 	virtual ~Character() {}
 
 public:
@@ -19,6 +20,13 @@ public:
 	void SetQuickPressFlame();
 	int GetQuickPressFlame();
 	void QuickPressFlameDown();
+protected:
+
+	// 追加　アニメーション関連　前川
+	/**
+	* @brief アニメーションをカウントする関数
+	*/
+	void AnimationCount();
 
 protected:
 	bool m_isdeth;
@@ -26,7 +34,22 @@ protected:
 	int m_hp;
 
 	float m_quick_press_flame;
-	float m_quick_press_flame_down = 0;
+	float m_quick_press_flame_down;
+
+
+	// 追加　アニメーション関連　前川
+
+	//! 現在アニメーションをしているカウント
+	int m_current_anim_num;
+
+	//! アニメーションフレーム数
+	int m_anim_frame;
+
+	//! 最大アニメーションフレーム数
+	int m_max_anim_frame;
+
+	//! 最大アニメーション枚数(を入れる)
+	int m_max_anim_num;
 
 };
 
