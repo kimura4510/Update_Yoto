@@ -1,9 +1,16 @@
 #include "Input.hpp"
 #include <dinput.h>
+#include <functional>
 
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 Input* Input::p_InputInstance = NULL;
+
+struct DeviceEnumParam
+{
+	LPDIRECTINPUTDEVICE8* GamePadDevList;
+	int FindCount;
+};
 
 bool Input::InitInput(HINSTANCE hI, HWND hW)
 {
@@ -50,42 +57,113 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 
 BOOL CALLBACK Input::EnumJoysticksCallback(LPCDIDEVICEINSTANCE pDevIns, LPVOID pContext)
 {
+	DeviceEnumParam* param = dynamic_cast<DeviceEnumParam*>(pContext);
 	HRESULT hr;
-	hr = g_InputInterface->CreateDevice(pDevIns->guidInstance, &m_JoyDevice, NULL);
+
+	hr = param->GamePadDevList->CreateDevice(pDevIns->guidInstance, &pDIDev, NULL);
 	if (FAILED(hr))
 	{
 		return DIENUM_CONTINUE;
 	}
 
-	m_DiDevCaps.dwSize = sizeof(DIDEVCAPS);
-	hr = m_JoyDevice->GetCapabilities(&m_DiDevCaps);
+	pDIDevCap.dwSize = sizeof(DIDEVCAPS);
+	hr = pDIDev->GetCapabilities(&pDIDevCap);
 	if (FAILED(hr))
 	{
-		m_JoyDevice->Release();
-		m_JoyDevice = nullptr;
+		pDIDev->Release();
+		pDIDev = nullptr;
 		return DIENUM_CONTINUE;
 	}
 
 	return DIENUM_STOP;
 }
 
+BOOL CALLBACK Input::EnumAxesCallback(const LPDIDEVICEOBJECTINSTANCE pdevobjins, LPVOID pContext, LPDIRECTINPUTDEVICE8 pDIDev)
+{
+	HRESULT hr;
+	DIPROPRANGE diprop;
+
+	diprop.diph.dwSize = sizeof(DIPROPRANGE);
+	diprop.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+	diprop.diph.dwHow = DIPH_BYID;
+	diprop.diph.dwObj = pdevobjins->dwType;
+	diprop.lMin = -1000;
+	diprop.lMax = 1000;
+
+	hr = pDIDev->SetProperty(DIPROP_RANGE, &diprop.diph);
+	if (FAILED(hr))
+	{
+		return DIENUM_STOP;
+	}
+
+	return DIENUM_STOP;
+}
+
+
 bool Input::InitJoystick(HWND hw)
 {
-	HRESULT hr = g_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, this->EnumJoysticksCallback, NULL, DIEDFL_ATTACHEDONLY);
+	HRESULT hr = g_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, this, DIEDFL_ATTACHEDONLY);
 	if (FAILED(hr) || m_JoyDevice == nullptr)
 	{
 		return false;
 	}
+
+	hr = m_JoyDevice->SetDataFormat(&c_dfDIJoystick);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	hr = m_JoyDevice->SetCooperativeLevel(hw, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	hr = m_JoyDevice->EnumObjects(EnumAxesCallback, (LPVOID)hw, DIDFT_AXIS);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	hr = m_JoyDevice->Poll();
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	hr = m_JoyDevice->Acquire();
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 void Input::ReleaseInput()
 {
 	g_KeyDevice->Unacquire();
+	m_JoyDevice->Unacquire();
 	g_KeyDevice->Release();
+	m_JoyDevice->Release();
 	g_InputInterface->Release();
 }
 
-void Input::KeyStateUpdate()
+void Input::UpdateJoystickState()
+{
+	DIJOYSTATE joy;
+	ZeroMemory(&joy, sizeof(joy));
+	HRESULT hr = m_JoyDevice->GetDeviceState(sizeof(joy), &joy);
+	if (FAILED(hr))
+	{
+		return;
+	}
+
+	
+}
+
+void Input::UpdateKeyState()
 {
 	BYTE Key[256];
 

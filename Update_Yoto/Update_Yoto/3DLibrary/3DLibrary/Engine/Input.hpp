@@ -7,6 +7,7 @@
 #define DIRECTINPUT_H_
 
 #include <dinput.h>
+#include <vector>
 
 // @brife キーの種類
 enum KEY_INFO
@@ -63,7 +64,13 @@ public:
 	* デバイスの入力情報の更新を行います@n
 	* 毎フレームに1度必ず実行する必要があります
 	*/
-	void KeyStateUpdate();
+	void UpdateKeyState();
+
+	/**
+	* @brief Joystickの入力情報の更新
+	* ジョイスティックの入力情報の更新を行います
+	*/
+	void UpdateJoystickState();
 
 	/**
 	* @brief キーが押されている状態の判定関数@n
@@ -134,7 +141,9 @@ public:
 	}
 
 private:
-	BOOL CALLBACK EnumJoysticksCallback(const LPCDIDEVICEINSTANCE pdevins, LPVOID pContext);
+	static BOOL CALLBACK EnumJoysticksCallback(const LPCDIDEVICEINSTANCE pdevins, LPVOID pContext);
+
+	static BOOL CALLBACK EnumAxesCallback(const LPDIDEVICEOBJECTINSTANCE pdevobjins, LPVOID pContext);
 
 private:
 	LPDIRECTINPUT8 g_InputInterface;	// インプットインターフェイス
@@ -157,7 +166,6 @@ private:
 	//シングルトン
 	Input();		//コンストラクタ
 	~Input();	//デストラクタ
-
 
 	static Input* p_InputInstance;
 

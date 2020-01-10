@@ -15,7 +15,7 @@ public:
 	void Draw();
 
 	bool IsOn();
-	bool IsNotOn();
+	void IsNotOn();
 
 private:
 	bool m_ison = false;
