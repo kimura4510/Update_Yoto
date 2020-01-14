@@ -27,8 +27,12 @@ enum class GAMEPAD_INFO
 {
 	Up,
 	Down,
-	Right,
 	Left,
+	Right,
+	UpArrow,
+	DownArrow,
+	LeftArrow,
+	RightArrow,
 	A,
 	B,
 	X,

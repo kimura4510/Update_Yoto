@@ -1,6 +1,6 @@
 #include "Input.hpp"
 #include <dinput.h>
-#include <functional>
+#include <d3dx9math.h>
 
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
@@ -200,6 +200,7 @@ void Input::ReleaseInput()
 void Input::UpdateGamePad()
 {
 	DIJOYSTATE joy;
+	bool isPush[static_cast<int>(GAMEPAD_INFO::MAX_INFO)];
 
 	for (int i = 0; i < MaxGamePadNum; i++)
 	{
@@ -214,9 +215,86 @@ void Input::UpdateGamePad()
 			RestartGamePad(m_GamePadDevices[i], i);
 		}
 
-	}
+		//!< スティックの入力確認
+		if (joy.lX < 0)
+		{
+			isPush[static_cast<int>(GAMEPAD_INFO::Left)] = true;
+		}
+		else if (joy.lX > 0)
+		{
+			isPush[static_cast<int>(GAMEPAD_INFO::Right)] = true;
+		}
+		if (joy.lY < 0)
+		{
+			isPush[static_cast<int>(GAMEPAD_INFO::Up)] = true;
+		}
+		else if (joy.lY > 0)
+		{
+			isPush[static_cast<int>(GAMEPAD_INFO::Down)] = true;
+		}
 
-	
+		//!< 十字キーの入力確認
+		if (joy.rgdwPOV[0] != 0xFFFFFFFF)
+		{
+			float rad = D3DXToRadian((joy.rgdwPOV[0] / 100.0f));
+			float x = sinf(rad);
+			float y = cosf(rad);
+
+			if (x < -0.01f)
+			{
+				isPush[static_cast<int>(GAMEPAD_INFO::LeftArrow)] = true;
+			}
+			else if (x > 0.01f)
+			{
+				isPush[static_cast<int>(GAMEPAD_INFO::RightArrow)] = true;
+			}
+
+			if (y < -0.01f)
+			{
+				isPush[static_cast<int>(GAMEPAD_INFO::DownArrow)] = true;
+			}
+			else if (y > 0.01f)
+			{
+				isPush[static_cast<int>(GAMEPAD_INFO::UpArrow)] = true;
+			}
+			
+		}
+
+		for (int j = 0; j < 8; j++)
+		{
+			if (joy.rgbButtons[j] == 0x80)
+			{
+				isPush[j + 8] = true;
+			}
+		}
+
+		for (int j = 0; j < static_cast<int>(GAMEPAD_INFO::MAX_INFO); i++)
+		{
+			if (isPush[j] == true)
+			{
+				if (m_GamePadState[i][j] == INPUT_STATE::NOT_PUSH || m_GamePadState[i][j] == INPUT_STATE::RELEASE)
+				{
+					m_GamePadState[i][j] = INPUT_STATE::PUSH_DOWN;
+				}
+				else
+				{
+					m_GamePadState[i][j] = INPUT_STATE::PUSH;
+				}
+			}
+			else
+			{
+				if (m_GamePadState[i][j] == INPUT_STATE::PUSH || m_GamePadState[i][j] == INPUT_STATE::PUSH_DOWN)
+				{
+					m_GamePadState[i][j] = INPUT_STATE::RELEASE;
+				}
+				else
+				{
+					m_GamePadState[i][j] = INPUT_STATE::NOT_PUSH;
+				}
+
+			}
+		}
+	}	
 }
 
 bool Input::RestartGamePad(LPDIRECTINPUTDEVICE8 device, int num)
