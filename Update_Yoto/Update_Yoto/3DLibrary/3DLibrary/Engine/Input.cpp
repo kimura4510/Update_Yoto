@@ -4,7 +4,8 @@
 
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
-Input* Input::p_InputInstance = NULL;
+Input* Input::p_InputInstance = nullptr;
+LPDIRECTINPUT8 Input::m_InputInterface = nullptr;
 
 struct GamePadEnumParam
 {
@@ -52,6 +53,11 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 	}
 
 	hr = m_KeyDevice->Acquire();
+
+	if (CreateGamePadDevice(hW) == false)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -200,7 +206,7 @@ void Input::ReleaseInput()
 void Input::UpdateGamePad()
 {
 	DIJOYSTATE joy;
-	bool isPush[static_cast<int>(GAMEPAD_INFO::MAX_INFO)];
+	bool isPush[static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO)] = {  };
 
 	for (int i = 0; i < MaxGamePadNum; i++)
 	{
@@ -218,19 +224,19 @@ void Input::UpdateGamePad()
 		//!< スティックの入力確認
 		if (joy.lX < 0)
 		{
-			isPush[static_cast<int>(GAMEPAD_INFO::Left)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::Left)] = true;
 		}
 		else if (joy.lX > 0)
 		{
-			isPush[static_cast<int>(GAMEPAD_INFO::Right)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::Right)] = true;
 		}
 		if (joy.lY < 0)
 		{
-			isPush[static_cast<int>(GAMEPAD_INFO::Up)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::Up)] = true;
 		}
 		else if (joy.lY > 0)
 		{
-			isPush[static_cast<int>(GAMEPAD_INFO::Down)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::Down)] = true;
 		}
 
 		//!< 十字キーの入力確認
@@ -242,20 +248,20 @@ void Input::UpdateGamePad()
 
 			if (x < -0.01f)
 			{
-				isPush[static_cast<int>(GAMEPAD_INFO::LeftArrow)] = true;
+				isPush[static_cast<int>(GAMEPAD_BUTTONS::LeftArrow)] = true;
 			}
 			else if (x > 0.01f)
 			{
-				isPush[static_cast<int>(GAMEPAD_INFO::RightArrow)] = true;
+				isPush[static_cast<int>(GAMEPAD_BUTTONS::RightArrow)] = true;
 			}
 
 			if (y < -0.01f)
 			{
-				isPush[static_cast<int>(GAMEPAD_INFO::DownArrow)] = true;
+				isPush[static_cast<int>(GAMEPAD_BUTTONS::DownArrow)] = true;
 			}
 			else if (y > 0.01f)
 			{
-				isPush[static_cast<int>(GAMEPAD_INFO::UpArrow)] = true;
+				isPush[static_cast<int>(GAMEPAD_BUTTONS::UpArrow)] = true;
 			}
 			
 		}
@@ -268,7 +274,7 @@ void Input::UpdateGamePad()
 			}
 		}
 
-		for (int j = 0; j < static_cast<int>(GAMEPAD_INFO::MAX_INFO); i++)
+		for (int j = 0; j < static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO); i++)
 		{
 			if (isPush[j] == true)
 			{
@@ -301,7 +307,7 @@ bool Input::RestartGamePad(LPDIRECTINPUTDEVICE8 device, int num)
 {
 	if (FAILED(device->Acquire()))
 	{
-		for (int i = 0; i < static_cast<int>(GAMEPAD_INFO::MAX_INFO); i++)
+		for (int i = 0; i < static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO); i++)
 		{
 			m_GamePadState[num][i] = INPUT_STATE::NOT_PUSH;
 		}
@@ -366,10 +372,34 @@ bool Input::GetKeyRelease(KEY_INFO key)
 	return (g_InputState[key] == INPUT_STATE::RELEASE);
 }
 
+INPUT_STATE Input::GetGamePadBottonState(int num, GAMEPAD_BUTTONS button)
+{
+	return m_GamePadState[num][static_cast<int>(button)];
+}
+
+
 Input::Input()
 {
-	m_InputInterface = nullptr;
 	m_KeyDevice = nullptr;
+	for (int i = 0; i < MaxGamePadNum; i++)
+	{
+		m_GamePadDevices[i] = nullptr;
+	}
+
+	//!< ゲームパッドの入力状態の初期化
+	for (int i = 0; i < MaxGamePadNum; i++)
+	{
+		for (int j = 0; j < static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO); j++)
+		{
+			m_GamePadState[i][j] = INPUT_STATE::NOT_PUSH;
+		}
+	}
+
+	//!< キーボードの入力状態の初期化
+	for (int i = 0; i < static_cast<int>(KEY_INFO::MAX_KEY_INFO); i++)
+	{
+		g_InputState[i] = INPUT_STATE::NOT_PUSH;
+	}
 }
 
 Input::~Input()

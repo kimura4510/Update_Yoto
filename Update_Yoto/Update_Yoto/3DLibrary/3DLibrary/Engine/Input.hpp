@@ -23,7 +23,7 @@ enum KEY_INFO
 };
 
 //!< @brief ゲームパッドの入力種類
-enum class GAMEPAD_INFO
+enum class GAMEPAD_BUTTONS
 {
 	Up,
 	Down,
@@ -118,6 +118,13 @@ public:
 	*/
 	bool GetKeyRelease(KEY_INFO key);
 
+	/**
+	* @biref ゲームパッドの入力状態取得関数
+	* 指定した番号のゲームパッドのボタンの入力状態を返します
+	* @return 
+	*/
+	INPUT_STATE GetGamePadBottonState(int num, GAMEPAD_BUTTONS button);
+
 	//シングルトン
 		/**
 	* @brief インスタンス生成関数@n
@@ -187,7 +194,8 @@ private:
 		DIK_SPACE,
 	};
 
-	INPUT_STATE m_GamePadState[MaxGamePadNum][static_cast<int>(GAMEPAD_INFO::MAX_INFO)];
+	//!< ゲームパッドの入力状態保持配列
+	INPUT_STATE m_GamePadState[MaxGamePadNum][static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO)];
 
 	private:
 	//シングルトン
