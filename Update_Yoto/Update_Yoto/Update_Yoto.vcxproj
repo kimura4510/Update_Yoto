@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Camera.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Engine\Collision.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Engine.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Graphics.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Input.cpp" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Camera.h" />
+    <ClInclude Include="3DLibrary\3DLibrary\Engine\Collision.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Engine.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Graphics.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Input.hpp" />
