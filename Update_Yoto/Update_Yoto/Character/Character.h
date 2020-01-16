@@ -5,8 +5,12 @@
 
 class Character {
 public:
+<<<<<<< HEAD
 
 	Character();
+=======
+	//Character();
+>>>>>>> UpdateCamera
 	virtual ~Character() {}
 
 public:
@@ -16,6 +20,7 @@ public:
 
 	int GetHp();
 	void HpDown();
+<<<<<<< HEAD
 
 	void SetQuickPressFlame();
 	int GetQuickPressFlame();
@@ -27,6 +32,12 @@ protected:
 	* @brief アニメーションをカウントする関数
 	*/
 	void AnimationCount();
+=======
+
+	void SetQuickPressFlame();
+	int GetQuickPressFlame();
+	void QuickPressFlameDown();
+>>>>>>> UpdateCamera
 
 protected:
 	bool m_isdeth;
@@ -34,6 +45,7 @@ protected:
 	int m_hp;
 
 	float m_quick_press_flame;
+<<<<<<< HEAD
 	float m_quick_press_flame_down;
 
 
@@ -50,6 +62,9 @@ protected:
 
 	//! 最大アニメーション枚数(を入れる)
 	int m_max_anim_num;
+=======
+	float m_quick_press_flame_down = 0;
+>>>>>>> UpdateCamera
 
 };
 

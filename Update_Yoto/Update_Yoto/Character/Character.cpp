@@ -1,5 +1,6 @@
 #include "Character.h"
 
+<<<<<<< HEAD
 
 Character::Character() {
 
@@ -65,4 +66,29 @@ void Character::AnimationCount() {
 		// アニメーション枚数を元に戻す
 		m_current_anim_num = 0;
 	}
+=======
+int Character::GetHp()
+{
+	return m_hp;
+}
+
+void Character::HpDown()
+{
+	m_hp--;
+}
+
+void Character::SetQuickPressFlame()
+{
+	m_quick_press_flame_down = m_quick_press_flame;
+}
+
+int Character::GetQuickPressFlame()
+{
+	return m_quick_press_flame_down;
+}
+
+void Character::QuickPressFlameDown()
+{
+	m_quick_press_flame_down--;
+>>>>>>> UpdateCamera
 }
