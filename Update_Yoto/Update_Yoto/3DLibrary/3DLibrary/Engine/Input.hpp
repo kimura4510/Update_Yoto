@@ -7,6 +7,7 @@
 #define DIRECTINPUT_H_
 
 #include <dinput.h>
+#include <vector>
 
 // @brife キーの種類
 enum KEY_INFO
@@ -19,6 +20,28 @@ enum KEY_INFO
 	ESCAPE_KEY,
 	SPACE_KEY,
 	MAX_KEY_INFO,
+};
+
+//!< @brief ゲームパッドの入力種類
+enum class GAMEPAD_BUTTONS
+{
+	Up,
+	Down,
+	Left,
+	Right,
+	UpArrow,
+	DownArrow,
+	LeftArrow,
+	RightArrow,
+	A,
+	B,
+	X,
+	Y,
+	R1,
+	R2,
+	L1,
+	L2,
+	MAX_INFO,
 };
 
 //	@brief 入力状態の種類
@@ -56,14 +79,20 @@ public:
 	* ジョイスティックを使用可能にする処理を行います
 	* @return 初期化結果、成功の場合はtrue
 	*/
-	bool InitJoystick(HWND hw);
+	bool CreateGamePadDevice(HWND hw);
 
 	/**
 	* @brief キーボードの入力情報の更新@n
 	* デバイスの入力情報の更新を行います@n
 	* 毎フレームに1度必ず実行する必要があります
 	*/
-	void KeyStateUpdate();
+	void UpdateKeyState();
+
+	/**
+	* @brief Joystickの入力情報の更新
+	* ジョイスティックの入力情報の更新を行います
+	*/
+	void UpdateGamePad();
 
 	/**
 	* @brief キーが押されている状態の判定関数@n
@@ -88,6 +117,13 @@ public:
 	* @param[in] key 判定したいキー
 	*/
 	bool GetKeyRelease(KEY_INFO key);
+
+	/**
+	* @biref ゲームパッドの入力状態取得関数
+	* 指定した番号のゲームパッドのボタンの入力状態を返します
+	* @return 
+	*/
+	INPUT_STATE GetGamePadBottonState(int num, GAMEPAD_BUTTONS button);
 
 	//シングルトン
 		/**
@@ -134,16 +170,20 @@ public:
 	}
 
 private:
-	BOOL CALLBACK EnumJoysticksCallback(const LPCDIDEVICEINSTANCE pdevins, LPVOID pContext);
+	static BOOL CALLBACK EnumJoysticksCallback(const LPCDIDEVICEINSTANCE pdevins, LPVOID pContext);
+
+	bool SetGamePadPropaty(LPDIRECTINPUTDEVICE8 device);
+
+	bool RestartGamePad(LPDIRECTINPUTDEVICE8 device, int num);
 
 private:
-	LPDIRECTINPUT8 g_InputInterface;	// インプットインターフェイス
-	LPDIRECTINPUTDEVICE8 g_KeyDevice;	// インプットデバイス(キーボード)
-	LPDIRECTINPUTDEVICE8 m_JoyDevice;	// インプットデバイス(ジョイスティック)
-	DIDEVCAPS m_DiDevCaps;				// ジョイスティックの能力情報
+	static const int MaxGamePadNum = 2;
+
+	static LPDIRECTINPUT8 m_InputInterface;	// インプットインターフェイス
+	LPDIRECTINPUTDEVICE8 m_KeyDevice;	// インプットデバイス(キーボード)
+	LPDIRECTINPUTDEVICE8 m_GamePadDevices[MaxGamePadNum];	// インプットデバイス(ジョイスティック)
 
 	INPUT_STATE g_InputState[KEY_INFO::MAX_KEY_INFO];
-
 	int g_KeyInfo[7] = {
 		DIK_UP,
 		DIK_DOWN,
@@ -154,10 +194,13 @@ private:
 		DIK_SPACE,
 	};
 
+	//!< ゲームパッドの入力状態保持配列
+	INPUT_STATE m_GamePadState[MaxGamePadNum][static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO)];
+
+	private:
 	//シングルトン
 	Input();		//コンストラクタ
 	~Input();	//デストラクタ
-
 
 	static Input* p_InputInstance;
 

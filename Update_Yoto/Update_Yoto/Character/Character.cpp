@@ -17,6 +17,20 @@ Character::Character()
 
 	m_approach = false;
 	m_approach_count = 0;
+
+
+	// 追加　アニメーション関連　前川
+	//! 現在アニメーションをしているカウント
+	m_current_anim_num = 0;
+
+	//! アニメーションフレーム数
+	m_anim_frame = 0;
+
+	//! アニメーション最大フレーム数
+	m_max_anim_frame = 0;
+
+	//! 最大アニメーション枚数(を入れる)
+	m_max_anim_num = 0;
 }
 
 void Character::Update()
@@ -34,6 +48,23 @@ void Character::Update()
 	if (GetHp() <= 0)
 	{
 		m_isdeth == true;
+	}
+}
+
+void Character::AnimationCount() {
+
+
+	// 最大アニメーションフレームを超えたら
+	if (m_anim_frame >= m_max_anim_frame) {
+
+		// 現在アニメーション枚数を加算
+		m_current_anim_num++;
+	}
+	// アニメーション枚数が最大アニメーション枚数を超えたら
+	else if (m_current_anim_num >= m_max_anim_num) {
+
+		// アニメーション枚数を元に戻す
+		m_current_anim_num = 0;
 	}
 }
 

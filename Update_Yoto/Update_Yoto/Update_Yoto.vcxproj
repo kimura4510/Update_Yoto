@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Camera.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Engine\Collision.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Engine.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Graphics.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Input.cpp" />
@@ -174,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Camera.h" />
+    <ClInclude Include="3DLibrary\3DLibrary\Engine\Collision.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Engine.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Graphics.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Input.hpp" />
@@ -192,10 +194,6 @@
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp" />
     <ClInclude Include="BackGround\BackGround.h" />
     <ClInclude Include="Animation\AnimationBase\AnimationBase.h" />
-    <ClInclude Include="Animation\AnimationManager\AnimationManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

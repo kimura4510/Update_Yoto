@@ -47,7 +47,7 @@ void SceneManager::End()
 //XVŠÖ”
 void SceneManager::Update()
 {
-	Input::GetInputInstance()->KeyStateUpdate();
+	Input::GetInputInstance()->UpdateKeyState();
 
 	SceneID id;
 	id = m_CurrentScene->Control();

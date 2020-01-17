@@ -15,6 +15,7 @@ public:
 	int GetHp();
 	void HpDown();
 
+
 	void SetQuickPressFlame();
 	int GetQuickPressFlame();
 	void QuickPressFlameDown();
@@ -23,6 +24,13 @@ public:
 	void StopApproach();
 	float GetPos();
 
+protected:
+
+	// 追加　アニメーション関連　前川
+	/**
+	* @brief アニメーションをカウントする関数
+	*/
+	void AnimationCount();
 protected:
 	bool m_isdeth;
 	float m_x, m_y, m_z;
@@ -35,6 +43,20 @@ protected:
 	bool m_approach;
 	int m_approach_count;
 	float m_count;
+
+	// 追加　アニメーション関連　前川
+
+	//! 現在アニメーションをしているカウント
+	int m_current_anim_num;
+
+	//! アニメーションフレーム数
+	int m_anim_frame;
+
+	//! 最大アニメーションフレーム数
+	int m_max_anim_frame;
+
+	//! 最大アニメーション枚数(を入れる)
+	int m_max_anim_num;
 
 };
 

@@ -4,7 +4,6 @@
 #include "Scene/SceneManager.hpp"
 #include"../../LoadResources/LoadResources.h"
 
-
 int WINAPI WinMain(
 	_In_ HINSTANCE hI,
 	_In_opt_ HINSTANCE hP,
@@ -15,8 +14,6 @@ int WINAPI WinMain(
 
 	Engine engine;
 	Window window;
-	
-	
 	HWND hW = window.MakeWindow(hI, 1920, 1080, "Update:Yoto");
 	
 	//エンジンの初期化
@@ -26,12 +23,9 @@ int WINAPI WinMain(
 	}
 
 	MSG msg;
-
 	SceneManager sceneManager;
 
 	sceneManager.Init(SceneID::eTitleScene);
-	//LoadResources::Load();
-
 
 	//ゲームループの開始
 	while (true)
@@ -50,10 +44,12 @@ int WINAPI WinMain(
 			}
 		}
 
-		//シーン更新
+		//!< シーンの更新
 		sceneManager.Update();
 
+		//!< シーンの描画
 		sceneManager.Draw();
+
 	}
 
 	sceneManager.End();
