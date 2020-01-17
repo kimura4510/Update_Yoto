@@ -9,6 +9,7 @@ public:
 	virtual ~Enemy() {}
 
 public:
+	void Update()override;
 	virtual void Draw() = 0;
 
 };

@@ -5,6 +5,7 @@
 #include "../UI/CalloutUI/CalloutUI.h"
 #include "../UI/HpUI/HpUI.h"
 #include "../UI/CutIn/CutIn.h"
+#include "../3DLibrary/3DLibrary/Engine/Collision.hpp"
 
 class CharacterManager {
 public:
@@ -19,8 +20,6 @@ public:
 
 	void DeleteCheck();
 
-	bool Nearby();
-
 	// ç≤ì°êÊê∂ÇÃÉRÅ[Éh
 	bool IsBattleFinish();
 	GAME_END GetGameEnd();
@@ -29,6 +28,7 @@ public:
 
 private:
 	void Create();
+	bool CollisionRect();
 
 private:
 	Character* m_p_player;
@@ -40,6 +40,7 @@ private:
 
 	CutIn::CutInType m_cutin_id;
 	ENEMY_ID m_enemy_id;
+	Collision m_collision;
 
 	bool m_player_trigger;
 	bool m_enemy_trigger;

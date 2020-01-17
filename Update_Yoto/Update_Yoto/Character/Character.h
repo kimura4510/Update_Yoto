@@ -10,11 +10,10 @@ public:
 
 public:
 	virtual void Draw() = 0;
-	void Update();
+	virtual void Update() = 0;
 
 	int GetHp();
 	void HpDown();
-
 
 	void SetQuickPressFlame();
 	int GetQuickPressFlame();
@@ -22,7 +21,11 @@ public:
 
 	void GoToApproach();
 	void StopApproach();
-	float GetPos();
+
+	float GetPosX();
+	float GetPosY();
+	float GetWidth();
+	float GetHeight();
 
 protected:
 

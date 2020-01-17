@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-<<<<<<< HEAD
     <Filter Include="ソース ファイル">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -124,7 +123,7 @@
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Sound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-<<<<<<< HEAD
+
     <ClCompile Include="DataBank\DataBank.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -132,19 +131,13 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="3DLibrary\3DLibrary\Scene\TransitionScene.cpp">
-=======
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\ClearScene.cpp">
->>>>>>> 837165f5f6e67c25841c98f297bcbfba5df748cb
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="3DLibrary\3DLibrary\Scene\GameoverScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="3DLibrary\3DLibrary\Scene\ClearScene.cpp">
-=======
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\TransitionScene.cpp">
->>>>>>> 837165f5f6e67c25841c98f297bcbfba5df748cb
+
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,7 +235,7 @@
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Sound.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-<<<<<<< HEAD
+
     <ClInclude Include="DataBank\DataBank.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -250,92 +243,14 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp">
-=======
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\ClearScene.hpp">
->>>>>>> 837165f5f6e67c25841c98f297bcbfba5df748cb
+
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="3DLibrary\3DLibrary\Scene\GameoverScene.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="3DLibrary\3DLibrary\Scene\ClearScene.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-=======
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-=======
-    <ClCompile Include="3DLibrary\3DLibrary\Engine\Camera.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Engine\Engine.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Engine\Graphics.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Engine\Input.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Engine\Sound.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Engine\Window.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Main.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\BaseScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\ClearScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\GameoverScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\GameScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\HelpScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Scene\TransitionScene.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
-    <ClCompile Include="BackGround\BackGround.cpp" />
-    <ClCompile Include="Character\Character.cpp" />
-    <ClCompile Include="Character\CharacterManager.cpp" />
-    <ClCompile Include="Character\Enemy\Enemies\Drawer.cpp" />
-    <ClCompile Include="Character\Enemy\Enemies\Fox.cpp" />
-    <ClCompile Include="Character\Enemy\Enemies\Hermit.cpp" />
-    <ClCompile Include="Character\Enemy\Enemies\Perry.cpp" />
-    <ClCompile Include="Character\Enemy\Enemies\Sinsengumi.cpp" />
-    <ClCompile Include="Character\Enemy\Enemy.cpp" />
-    <ClCompile Include="Character\Player\Player.cpp" />
-    <ClCompile Include="LoadResources\LoadResources.cpp" />
-    <ClCompile Include="UI\CalloutUI\CalloutUI.cpp" />
-    <ClCompile Include="UI\HpUI\HpUI.cpp" />
-    <ClCompile Include="3DLibrary\3DLibrary\Engine\Collision.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="3DLibrary\3DLibrary\Engine\Camera.h" />
-    <ClInclude Include="3DLibrary\3DLibrary\Engine\Engine.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Engine\Graphics.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Engine\Input.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Engine\Sound.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Engine\Window.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\GameDefinition.h" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\BaseScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\ClearScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameoverScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Size.hpp" />
-    <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp" />
-    <ClInclude Include="BackGround\BackGround.h" />
-    <ClInclude Include="Animation\AnimationBase\AnimationBase.h" />
-    <ClInclude Include="Animation\AnimationManager\AnimationManager.h" />
-    <ClInclude Include="Animation\AttackAnimation\AttackAnimation.h" />
-    <ClInclude Include="Animation\WaitAnimation\WaitAnimation.h" />
-    <ClInclude Include="Character\Character.h" />
-    <ClInclude Include="Character\CharacterID.h" />
-    <ClInclude Include="Character\CharacterManager.h" />
-    <ClInclude Include="Character\Enemy\Enemies\Drawer.h" />
-    <ClInclude Include="Character\Enemy\Enemies\Fox.h" />
-    <ClInclude Include="Character\Enemy\Enemies\Hermit.h" />
-    <ClInclude Include="Character\Enemy\Enemies\Perry.h" />
-    <ClInclude Include="Character\Enemy\Enemies\Sinsengumi.h" />
-    <ClInclude Include="Character\Enemy\Enemy.h" />
-    <ClInclude Include="Character\Player\Player.h" />
-    <ClInclude Include="LoadResources\LoadResources.h" />
-    <ClInclude Include="UI\CalloutUI\CalloutUI.h" />
-    <ClInclude Include="UI\HpUI\HpUI.h" />
-    <ClInclude Include="3DLibrary\3DLibrary\Engine\Collision.hpp" />
->>>>>>> UpdateCamera
->>>>>>> 837165f5f6e67c25841c98f297bcbfba5df748cb
   </ItemGroup>
 </Project>

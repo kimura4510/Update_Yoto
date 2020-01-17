@@ -238,7 +238,6 @@ void CharacterManager::Update()
 		//if (カウントが0になったら「押せ！」を描画)
 		if (m_p_callout_ui->IsOn() == true)
 		{
-
 			//「押せ！」を描画中にエネミーのカウントを減らす
 			if (m_pcutin_trigger == false) 
 			{
@@ -305,7 +304,7 @@ void CharacterManager::Update()
 		if (m_enemy_trigger == true)
 		{
 			//エネミーがプレイヤーに近づく
-			if (Nearby() == false)
+			if (CollisionRect() == false)
 			{
 				//エネミーがプレイヤーに近づく
 				m_p_enemy->GoToApproach();
@@ -328,7 +327,7 @@ void CharacterManager::Update()
 		if (m_player_trigger == true)
 		{
 			//if (プレイヤーがエネミーと近づいていなかったら)
-			if (Nearby() == true)
+			if (CollisionRect() == false)
 			{
 				//プレイヤーがエネミーに近づく
 				m_p_player->GoToApproach();
@@ -361,15 +360,32 @@ void CharacterManager::Update()
 	}
 }
 
-bool CharacterManager::Nearby()
+bool CharacterManager::CollisionRect() 
 {
-	// 当たり判定をしたい
-	if (m_p_player->GetPos() <= 0.0f || m_p_enemy->GetPos() >= 0.0f)
+	Rect rp ,re;
+	// プレイヤー
+	rp = {
+		m_p_player->GetPosX(),
+		m_p_player->GetPosY(),
+		m_p_player->GetWidth(),
+		m_p_player->GetHeight()
+	};
+	// エネミー
+	re = {
+		m_p_enemy->GetPosX(),
+		m_p_enemy->GetPosY(),
+		m_p_enemy->GetWidth(),
+		m_p_enemy->GetHeight()
+	};
+
+	if (m_collision.IsHitCaracter(rp, re) == true) 
 	{
+		// 衝突した場合
 		return true;
 	}
-	else
+	else 
 	{
+		// 衝突していない場合
 		return false;
 	}
 }

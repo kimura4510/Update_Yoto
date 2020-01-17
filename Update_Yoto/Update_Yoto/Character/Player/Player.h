@@ -9,6 +9,7 @@ public:
 	virtual ~Player() {}
 
 public:
+	void Update()override;
 	void Draw()override;
 
 };

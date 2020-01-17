@@ -4,9 +4,9 @@
 Fox::Fox() : Enemy()
 {
 	m_isdeth = false;
-	m_x = -256.0f;
+	m_x = 128.0f;
 	m_y = 100.0f;
-	m_z = 256.0f;
+	m_z = -256.0f;
 	m_width = 150.0f;
 	m_height = 170.0f;
 
@@ -23,7 +23,7 @@ void Fox::Draw()
 			0.0f,0.0f,
 			this->m_width, this->m_height,
 			0xffff,
-			0.0f,0.0f,180.0f,
+			0.0f,180.0f,180.0f,
 			0.5f,0.5f,
 		};
 		Graphics* gp = Graphics::GetGraphicInstance();

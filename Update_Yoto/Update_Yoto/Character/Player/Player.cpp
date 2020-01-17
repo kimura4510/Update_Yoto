@@ -16,6 +16,20 @@ Player::Player() : Character()
 	m_count = 0;
 }
 
+void Player::Update()
+{
+	if (m_approach == true)
+	{
+		m_x += 3.0f;
+		m_count += 0.5f;
+	}
+
+	if (GetHp() <= 0)
+	{
+		m_isdeth == true;
+	}
+}
+
 void Player::Draw()
 {
 	DrawingData3D player{

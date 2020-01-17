@@ -63,7 +63,11 @@ public:
 	int GetCutInType();
 
 private:
-	DataBank() { m_enemy_type = 0; }
+	DataBank() 
+	{ 
+		m_enemy_type = 0;
+		m_cutin_type = 1;
+	}
 	virtual ~DataBank() {}
 
 	// コピーコンストラクタの禁止

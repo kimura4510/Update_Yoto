@@ -33,24 +33,6 @@ Character::Character()
 	m_max_anim_num = 0;
 }
 
-void Character::Update()
-{
-	if (m_approach == true)
-	{
-		m_x += 3.0f;
-		m_count += 0.5f;
-		/*if (m_x >= 0.0f)
-		{
-			m_approach = false;
-		}*/
-	}
-
-	if (GetHp() <= 0)
-	{
-		m_isdeth == true;
-	}
-}
-
 void Character::AnimationCount() {
 
 
@@ -103,7 +85,20 @@ void Character::StopApproach()
 	m_approach = false;
 }
 
-float Character::GetPos()
+// キャラクターの座標と幅の情報
+float Character::GetPosX()
 {
 	return m_x;
+}
+float Character::GetPosY()
+{
+	return m_y;
+}
+float Character::GetWidth()
+{
+	return m_width;
+}
+float Character::GetHeight()
+{
+	return m_height;
 }
