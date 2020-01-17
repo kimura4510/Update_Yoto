@@ -17,11 +17,8 @@ int WINAPI WinMain(
 	HWND hW = window.MakeWindow(hI, 1920, 1080, "Update:Yoto");
 	
 	//ƒGƒ“ƒWƒ“‚Ì‰Šú‰»
-	if (engine.InitEngine(hI, hW) == false)
-	{
-		return 0;
-	}
-
+	engine.InitEngine(hI, hW);
+	
 	MSG msg;
 	SceneManager sceneManager;
 

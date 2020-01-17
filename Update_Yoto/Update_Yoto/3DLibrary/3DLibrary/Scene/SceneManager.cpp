@@ -48,6 +48,7 @@ void SceneManager::End()
 void SceneManager::Update()
 {
 	Input::GetInputInstance()->UpdateKeyState();
+	Input::GetInputInstance()->UpdateGamePad();
 
 	SceneID id;
 	id = m_CurrentScene->Control();

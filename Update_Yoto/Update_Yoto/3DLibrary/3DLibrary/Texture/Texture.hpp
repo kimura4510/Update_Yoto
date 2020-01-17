@@ -20,20 +20,6 @@ public:
 	void InitTexture();
 
 	/**
-	* @brief カテゴリー単位のテクスチャ解放関数@n
-	* 引数で指定されたカテゴリーのテクスチャを全て解放します
-	* @param[in] category_id 解放するカテゴリー
-	*/
-	void ReleaseCategoryTexture(int category_id);
-
-	/**
-	* @brief 全てのテクスチャの解放関数@n
-	* 読み込んでいる全てのテクスチャを解放します
-	* この関数はEndEngineで実行してるので、開発側が実行する必要はありません
-	*/
-	void AllReleaseTexture();
-
-	/**
 	* @brief 全てのテクスチャの解放関数@n
 	* 読み込んでいる全てのテクスチャを解放します
 	* この関数はEndEngineで実行してるので、開発側が実行する必要はありません
@@ -49,16 +35,6 @@ public:
 	bool ReleaseTexture(std::string key_name);
 
 	/**
-	* @brief テクスチャの読み込み関数@n
-	* 指定したパスのテクスチャを読み込み、カテゴリに登録します
-	* return 読み込み結果、成功の場合はtrue
-	* @param[in] file_name 読み込むテクスチャの名前(パスを含む)
-	* @param[in] category_id 登録するカテゴリー
-	* @param[in] texture_id カテゴリー内のテクスチャID
-	*/
-	bool LoadTexture(const char* file_name, TextureCategory id, int textureID);
-
-	/**
 	* @brief テクスチャ読み込み関数
 	* 指定したパスのテクスチャを読み込み、mapに登録します
 	* return 読み込み結果、成功の場合はtrue
@@ -66,15 +42,6 @@ public:
 	* @param[in] key_name 読み込むテクスチャに当てはめるキー
 	*/
 	bool LoadTexture(const char* file_name, std::string key_name);
-
-	/**
-	* @brief テクスチャデータの取得関数@n
-	* 指定されたカテゴリーのテクスチャデータを取得します
-	* @return テクスチャデータ、失敗した場合はnullptr
-	* @param[in] category_id 取得したいテクスチャのカテゴリ
-	* @param[in] texture_id 取得したいテクスチャのID
-	*/
-	Texture* GetTexture(TextureCategory categoryID, int textureID);
 
 	/**
 	* @brief テクスチャデータの取得関数
@@ -118,8 +85,6 @@ private:
 	//デストラクタ
 	~cTexture();
 
-	bool IsCategoryIDCheck(TextureCategory category_id, int texture_id);
-
 	/**
 	* @brief TextureListのキーチェック関数
 	* 引数で指定されたキーが登録されているかを確認します
@@ -132,20 +97,8 @@ private:
 	//Textureのインスタンス
 	static cTexture* p_TextureInstance;
 
-	//カテゴリのテクスチャ最大サイズの配列
-	Texture** m_ppTextureList[(int)TextureCategory::MaxTextureCategory];
-
 	//!< Texture構造体保存用ポインタ配列
 	std::unordered_map<std::string, Texture*> m_pTextureList;
-
-	const int TextureCategorySize[(int)TextureCategory::MaxTextureCategory] =
-	{
-		(int)TitleCategoryTextureList::MaxTitleTex,
-		(int)GameCategoryTextureList::MaxGameTex,
-		(int)HelpCategoryTextureList::MaxHelpTex,
-		(int)ClearCategoryTextureList::MaxClearTex,
-		(int)GameoverCategoryTextureList::MaxGameoverTex,
-	};
 };
 
 #endif

@@ -54,10 +54,10 @@ bool Input::InitInput(HINSTANCE hI, HWND hW)
 
 	hr = m_KeyDevice->Acquire();
 
-	//if (CreateGamePadDevice(hW) == false)
-	//{
-	//	return false;
-	//}
+	if (CreateGamePadDevice(hW) == false)
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -93,12 +93,6 @@ BOOL CALLBACK Input::EnumJoysticksCallback(LPCDIDEVICEINSTANCE pDevIns, LPVOID p
 	hr = param->GamePadDevList[param->FindCount]->SetCooperativeLevel(
 		param->windowhandle,
 		DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
-	if (FAILED(hr))
-	{
-		return DIENUM_STOP;
-	}
-
-	hr = param->GamePadDevList[param->FindCount]->Poll();
 	if (FAILED(hr))
 	{
 		return DIENUM_STOP;
@@ -162,7 +156,7 @@ bool Input::CreateGamePadDevice(HWND hw)
 	param.GamePadDevList = m_GamePadDevices;
 	param.windowhandle = hw;
 
-	m_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, this, DIEDFL_ATTACHEDONLY);
+	m_InputInterface->EnumDevices(DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback, reinterpret_cast<LPVOID>(&param), DIEDFL_ATTACHEDONLY);
 
 	if (param.FindCount == 0)
 	{
@@ -172,6 +166,10 @@ bool Input::CreateGamePadDevice(HWND hw)
 	//!< ゲームパッドの起動
 	for (int i = 0; i < param.FindCount; i++)
 	{
+		/*if (FAILED(m_GamePadDevices[i]->Poll()))
+		{
+			return false;
+		}*/
 		if (FAILED(m_GamePadDevices[i]->Acquire()))
 		{
 			return false;
@@ -231,11 +229,11 @@ void Input::UpdateGamePad()
 		{
 			isPush[static_cast<int>(GAMEPAD_BUTTONS::Right)] = true;
 		}
-		if (joy.lY < 0)
+		if (joy.lY > 0)
 		{
 			isPush[static_cast<int>(GAMEPAD_BUTTONS::Up)] = true;
 		}
-		else if (joy.lY > 0)
+		else if (joy.lY < 0)
 		{
 			isPush[static_cast<int>(GAMEPAD_BUTTONS::Down)] = true;
 		}
@@ -275,7 +273,7 @@ void Input::UpdateGamePad()
 			}
 		}
 
-		for (int j = 0; j < static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO); i++)
+		for (int j = 0; j < static_cast<int>(GAMEPAD_BUTTONS::MAX_INFO); j++)
 		{
 			if (isPush[j] == true)
 			{
