@@ -1,7 +1,7 @@
 #ifndef CHARACTER_ID_H_
 #define CHARACTER_ID_H_
 
-enum class ENEMY_ID {
+enum class ENEMY_ID : int {
 	DRAWER,
 	PERRY,
 	HERMIT,

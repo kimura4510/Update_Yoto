@@ -6,12 +6,10 @@
 class Drawer :public Enemy {
 public:
 	Drawer();
-	virtual ~Drawer(){}
+	virtual ~Drawer() {}
 
 public:
-	void Init()override;
 	void Draw()override;
-	void Update()override;
 
 };
 

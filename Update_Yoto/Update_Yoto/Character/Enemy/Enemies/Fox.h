@@ -9,9 +9,7 @@ public:
 	virtual ~Fox() {}
 
 public:
-	void Init()override;
 	void Draw()override;
-	void Update()override;
 
 };
 

@@ -3,15 +3,13 @@
 
 #include "../Character.h"
 
-class Enemy :public Character {
+class Enemy : public Character {
 public:
+	Enemy() :Character() {}
 	virtual ~Enemy() {}
 
 public:
-	virtual void Init() = 0;
 	virtual void Draw() = 0;
-	virtual void Update() = 0;
-
 
 };
 

@@ -6,6 +6,8 @@
 void ClearScene::Init()
 {
 	cTexture* tex = cTexture::GetTextureInstance();
+	tex->LoadTexture("Resource/GameEnd/Win1.png", win);
+
 	m_State = SceneState::eMain;
 }
 
@@ -19,6 +21,9 @@ void ClearScene::Update()
 
 SceneID ClearScene::End()
 {
+	cTexture* tex = cTexture::GetTextureInstance();
+	tex->ReleaseTexture(win);
+
 	m_State = SceneState::eInit;
 	return SceneID::eTitleScene;
 }
@@ -41,6 +46,7 @@ SceneID ClearScene::Control()
 
 void ClearScene::Draw()
 {
-	Graphics* gr = Graphics::GetGraphicInstance();
-
+	Graphics* gp = Graphics::GetGraphicInstance();
+	cTexture* tex = cTexture::GetTextureInstance();
+	gp->DrawTexture(0.0f, 0.0f, tex->GetTexture(win));
 }

@@ -6,19 +6,25 @@
 #include "Enemy/Enemies/Sinsengumi.h"
 #include "Enemy/Enemies/Fox.h"
 #include "../3DLibrary/3DLibrary/Engine/Input.hpp"
+#include "../DataBank/DataBank.h"
 
-CharacterManager::CharacterManager() : 
-	m_enemy_id(ENEMY_ID::DRAWER)
+CharacterManager::CharacterManager() :
+	m_enemy_id(ENEMY_ID::ENMEY_NONE),
+	m_cutin_id(CutIn::CutInType::TYPE_MAX)
 {
 	m_p_player = nullptr;
-	m_p_enemy = nullptr; 
+	m_p_enemy = nullptr;
 
 	m_p_callout_ui = nullptr;
-
 	for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 	{
+		m_p_cut_in[i] = nullptr;
 		m_p_hp_ui[i] = nullptr;
 	}
+	m_player_trigger = false;
+	m_enemy_trigger = false;
+	m_pcutin_trigger = false;
+	m_ecutin_trigger = false;
 }
 
 CharacterManager::~CharacterManager()
@@ -28,7 +34,7 @@ CharacterManager::~CharacterManager()
 		delete m_p_player;
 		m_p_player = nullptr;
 	}
-	
+
 	if (m_p_enemy != nullptr)
 	{
 		delete m_p_enemy;
@@ -43,60 +49,34 @@ CharacterManager::~CharacterManager()
 
 	for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 	{
+		if (m_p_cut_in[i] != nullptr)
+		{
+			delete m_p_cut_in[i];
+			m_p_cut_in[i] = nullptr;
+		}
 		if (m_p_hp_ui[i] != nullptr)
 		{
 			delete m_p_hp_ui[i];
 			m_p_hp_ui[i] = nullptr;
 		}
 	}
+	// シングルトンの実態を破棄
+	DataBank::DestroyInstance();
 }
 
 void CharacterManager::Init()
 {
-	if (m_p_player == nullptr)
-	{
-		m_p_player = new Player;
-	}
+	// シングルトンの実態を取得
+	DataBank::CreateInstance();
+	DataBank* p_db = DataBank::GetInstance();	// 実体を取得
 
-	if (m_p_enemy == nullptr)
-	{
-		m_p_enemy = new Drawer;
-	}
-
-	if (m_p_callout_ui == nullptr)
-	{
-		m_p_callout_ui = new CalloutUI;
-	}
-
-	// プレイヤーのHPゲージ
-	if (m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
-	{
-		m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new HpUI(
-			HpUI::DrawType::HP_MAX,
-			HpUI::DrawDirection::RIGHT,
-			0.0f,
-			0.0f);
-	}
-	// エネミーのHPゲージ
-	if (m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
-	{
-		m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new HpUI(
-			HpUI::DrawType::HP_MAX,
-			HpUI::DrawDirection::LEFT,
-			1320.0f,
-			0.0f);
-	}
-	m_p_enemy->SetQuickPressFlame();
-}
-
-void CharacterManager::Create()
-{
 	if (m_p_player == nullptr)
 	{
 		m_p_player = new Player;
 	}
 
 	// 敵の入れ替え処理
+	m_enemy_id = static_cast<ENEMY_ID>(p_db->GetEnemyType());
 	if (m_p_enemy == nullptr)
 	{
 		switch (m_enemy_id)
@@ -119,11 +99,30 @@ void CharacterManager::Create()
 		default:
 			break;
 		}
+		m_p_enemy->SetQuickPressFlame();
 	}
 
 	if (m_p_callout_ui == nullptr)
 	{
 		m_p_callout_ui = new CalloutUI;
+	}
+
+	m_cutin_id = static_cast<CutIn::CutInType>(p_db->GetCutInType());
+	// プレイヤーのカットイン
+	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
+	{
+		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new CutIn(
+			CutIn::DrawMethod::LEFT,
+			CutIn::CutInType::PLAYER,
+			0.0f, 300.0f);
+	}
+	// エネミーのカットイン
+	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
+	{
+		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+			CutIn::DrawMethod::RIGHT,
+			m_cutin_id,
+			896.0f, 300.0f);
 	}
 
 	// プレイヤーのHPゲージ
@@ -134,7 +133,88 @@ void CharacterManager::Create()
 			HpUI::DrawDirection::RIGHT,
 			0.0f,
 			0.0f);
-	} 
+	}
+	// エネミーのHPゲージ
+	if (m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
+	{
+		m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new HpUI(
+			HpUI::DrawType::HP_MAX,
+			HpUI::DrawDirection::LEFT,
+			1320.0f,
+			0.0f);
+	}
+}
+
+void CharacterManager::Create()
+{
+	// シングルトンの実態を取得
+	DataBank::CreateInstance();
+	DataBank* p_db = DataBank::GetInstance();	// 実体を取得
+
+	if (m_p_player == nullptr)
+	{
+		m_p_player = new Player;
+	}
+
+	// 敵の入れ替え処理
+	m_enemy_id = static_cast<ENEMY_ID>(p_db->GetEnemyType());
+	if (m_p_enemy == nullptr)
+	{
+		switch (m_enemy_id)
+		{
+		case ENEMY_ID::DRAWER:
+			m_p_enemy = new Drawer;
+			break;
+		case ENEMY_ID::PERRY:
+			m_p_enemy = new Perry;
+			break;
+		case ENEMY_ID::HERMIT:
+			m_p_enemy = new Hermit;
+			break;
+		case ENEMY_ID::SINSENGUMI:
+			m_p_enemy = new Sinsengumi;
+			break;
+		case ENEMY_ID::FOX:
+			m_p_enemy = new Fox;
+			break;
+		default:
+			break;
+		}
+		m_p_enemy->SetQuickPressFlame();
+	}
+
+	if (m_p_callout_ui == nullptr)
+	{
+		m_p_callout_ui = new CalloutUI;
+	}
+
+	m_cutin_id = static_cast<CutIn::CutInType>(p_db->GetCutInType());
+	// プレイヤーのカットイン
+	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
+	{
+		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new CutIn(
+			CutIn::DrawMethod::LEFT,
+			CutIn::CutInType::PLAYER,
+			0.0f, 300.0f);
+	}
+	// エネミーのカットイン
+	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
+	{
+		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+			CutIn::DrawMethod::RIGHT,
+			m_cutin_id,
+			896.0f, 300.0f);
+	}
+
+	// プレイヤーのHPゲージ
+	if (m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
+	{
+		m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new HpUI(
+			HpUI::DrawType::HP_MAX,
+			HpUI::DrawDirection::RIGHT,
+			0.0f,
+			0.0f);
+	}
 	// エネミーのHPゲージ
 	if (m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
 	{
@@ -150,33 +230,35 @@ void CharacterManager::Update()
 {
 	Create();
 
+	//if (プレイヤーとエネミーが生きていたら)
 	if (m_p_player != nullptr && m_p_enemy != nullptr)
 	{
-		/*CallOutUIの描画「押せ！」*/
+		//「押せ！」の描画までのカウントを始める
 		m_p_callout_ui->Update();
-		if(m_p_callout_ui->IsOn()==true)
+		//if (カウントが0になったら「押せ！」を描画)
+		if (m_p_callout_ui->IsOn() == true)
 		{
-			m_p_enemy->QuickPressFlameDown();
-			if (Input::GetInputInstance()->GetKeyDown(KEY_INFO::ENTER_KEY) == true)
-			{
-				// プレイヤーのカットインを描画
 
-				// エネミーのHPを減らす
-				m_p_enemy->HpDown();
-				HpUiManager(BATTLE_CHARACTER::BATTLE_ENEMY);
-				m_p_callout_ui->IsNotOn();
+			//「押せ！」を描画中にエネミーのカウントを減らす
+			if (m_pcutin_trigger == false) 
+			{
+				m_p_enemy->QuickPressFlameDown();
+			}
+
+			//if (プレイヤーがエンターキーを押したら)
+			if (Input::GetInputInstance()->GetKeyDown(KEY_INFO::ENTER_KEY) == true && m_pcutin_trigger == false)
+			{
+				m_pcutin_trigger = true;
+				// リセット
 				m_p_enemy->SetQuickPressFlame();
 			}
-			else if (m_p_enemy->GetQuickPressFlame() <= 0)
+			//if (エネミーのカウントが0以下になったら)
+			if (m_p_enemy->GetQuickPressFlame() <= 0 && m_ecutin_trigger == false)
 			{
-				// エネミーのカットインを描画
-
-				// プレイヤーのHPを減らす
-				m_p_player->HpDown();
-				HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
-				m_p_callout_ui->IsNotOn();
+				m_ecutin_trigger = true;
+				// リセット
 				m_p_enemy->SetQuickPressFlame();
-			}	
+			}
 		}
 		else
 		{
@@ -189,10 +271,87 @@ void CharacterManager::Update()
 				m_p_enemy->SetQuickPressFlame();
 			}
 		}
-		m_p_player->Update();
-		m_p_enemy->Update();
-	}
 
+		if (m_pcutin_trigger == true)
+		{
+			//プレイヤーのカットインを1秒描画
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->Update();
+			//if (プレイヤーのカットインの描画が終わったら)
+			if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->IsOn() == false)
+			{
+				//「押せ！」の描画を終了
+				m_p_callout_ui->IsNotOn();
+				//toriggerをonにする
+				m_player_trigger = true;
+				m_pcutin_trigger = false;
+			}
+		}
+		if (m_ecutin_trigger == true)
+		{
+			//エネミーのカットインを1秒描画
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->Update();
+			//if (エネミーのカットインの描画が終わったら)
+			if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->IsOn() == false)
+			{
+				//「押せ！」の描画を終了
+				m_p_callout_ui->IsNotOn();
+				//toriggerをonにする
+				m_enemy_trigger = true;
+				m_ecutin_trigger = false;
+			}
+		}
+		//m_is_triggerをonなら
+		//if (エネミーがプレイヤーと近づいていなかったら)
+		if (m_enemy_trigger == true)
+		{
+			//エネミーがプレイヤーに近づく
+			if (Nearby() == false)
+			{
+				//エネミーがプレイヤーに近づく
+				m_p_enemy->GoToApproach();
+			}
+			else
+			{
+				// 近づくのをやめる
+				m_p_enemy->StopApproach();
+				//プレイヤーのHPを減らす
+				m_p_player->HpDown();
+				//プレイヤーのHPUIを減らす
+				HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
+				//エネミーのカウントをリセット
+				m_p_enemy->SetQuickPressFlame();
+				//toriggerをoffにする
+				m_enemy_trigger = false;
+			}
+		}
+		//m_is_triggerをonなら
+		if (m_player_trigger == true)
+		{
+			//if (プレイヤーがエネミーと近づいていなかったら)
+			if (Nearby() == true)
+			{
+				//プレイヤーがエネミーに近づく
+				m_p_player->GoToApproach();
+			}
+			else
+			{
+				// 近づくのをやめる
+				m_p_player->StopApproach();
+				//エネミーのHPを減らす
+				m_p_enemy->HpDown();
+				//エネミーのHPUIを減らす
+				HpUiManager(BATTLE_CHARACTER::BATTLE_ENEMY);
+				//エネミーのカウントをリセット
+				m_p_enemy->SetQuickPressFlame();
+				//toriggerをoffにする
+				m_player_trigger = false;
+			}
+		}
+	}
+	m_p_player->Update();
+	m_p_enemy->Update();
+
+	// HPUIの描画
 	for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 	{
 		if (m_p_hp_ui[i] != nullptr)
@@ -200,11 +359,19 @@ void CharacterManager::Update()
 			m_p_hp_ui[i]->Update();
 		}
 	}
-	// m_p_enemyの中がnullptrになる前に次のエネミーのIDを取得しておく
-	// 2019/12/20 IDの切り替えはゲームシーン側で行う
-	//m_enemy_id = (ENEMY_ID)m_p_enemy->GetEnemyID();
+}
 
-	//DeleteCheck();
+bool CharacterManager::Nearby()
+{
+	// 当たり判定をしたい
+	if (m_p_player->GetPos() <= 0.0f || m_p_enemy->GetPos() >= 0.0f)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void CharacterManager::Draw()
@@ -226,6 +393,10 @@ void CharacterManager::Draw()
 
 	for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 	{
+		if (m_p_cut_in[i] != nullptr)
+		{
+			m_p_cut_in[i]->Draw();
+		}
 		if (m_p_hp_ui[i] != nullptr)
 		{
 			m_p_hp_ui[i]->Draw();
@@ -241,9 +412,15 @@ void CharacterManager::DeleteCheck()
 		{
 			for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 			{
+				delete m_p_cut_in[i];
+				m_p_cut_in[i] = nullptr;
+
 				delete m_p_hp_ui[i];
 				m_p_hp_ui[i] = nullptr;
 			}
+
+			delete m_p_callout_ui;
+			m_p_callout_ui = nullptr;
 
 			delete m_p_player;
 			m_p_player = nullptr;
@@ -299,9 +476,6 @@ void CharacterManager::HpUiManager(BATTLE_CHARACTER battle_character_)
 	}
 }
 
-
-
-
 bool CharacterManager::IsBattleFinish()
 {
 	if (m_p_player->GetHp() <= 0 || m_p_enemy->GetHp() <= 0)
@@ -310,7 +484,7 @@ bool CharacterManager::IsBattleFinish()
 	}
 	else
 	{
-		false;
+		return false;
 	}
 }
 
@@ -323,7 +497,11 @@ GAME_END CharacterManager::GetGameEnd()
 	if (m_p_enemy->GetHp() <= 0)
 	{
 		//次のキャラぎいなかったらクリアを返す
-		if (GetNextEnemyID() == ENEMY_ID::ENMEY_NONE)
+		/*if (GetNextEnemyID() == ENEMY_ID::ENMEY_NONE)
+		{
+			return GAME_END::GAME_CLEAR;
+		}*/
+		if (m_enemy_id == ENEMY_ID::FOX)
 		{
 			return GAME_END::GAME_CLEAR;
 		}
@@ -331,24 +509,41 @@ GAME_END CharacterManager::GetGameEnd()
 	return GAME_END::GAME_NONE;
 }
 
+// 敵が切り替わってからのカットインの描画変更がまだ
 ENEMY_ID CharacterManager::GetNextEnemyID()
 {
+	// シングルトンの実態を取得
+	DataBank::CreateInstance();
+	DataBank* p_db = DataBank::GetInstance();	// 実体を取得
+
 	switch (m_enemy_id)
 	{
 	case ENEMY_ID::DRAWER:
-		return ENEMY_ID::PERRY;
+		m_enemy_id = ENEMY_ID::PERRY;
+		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
+		m_cutin_id = CutIn::CutInType::PERRY;
+		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	case ENEMY_ID::PERRY:
-		return ENEMY_ID::HERMIT;
+		m_enemy_id = ENEMY_ID::HERMIT;
+		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
+		m_cutin_id = CutIn::CutInType::HERMIT;
+		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	case ENEMY_ID::HERMIT:
-		return ENEMY_ID::SINSENGUMI;
+		m_enemy_id = ENEMY_ID::SINSENGUMI;
+		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
+		m_cutin_id = CutIn::CutInType::SINSENGUMI;
+		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	case ENEMY_ID::SINSENGUMI:
-		return  ENEMY_ID::FOX;
+		m_enemy_id = ENEMY_ID::FOX;
+		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
+		m_cutin_id = CutIn::CutInType::FOX;
+		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	}
-	return ENEMY_ID::ENMEY_NONE;
+	return m_enemy_id;
 }
 
 void CharacterManager::ChangeNextEnemy()

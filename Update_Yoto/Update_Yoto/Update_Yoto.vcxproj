@@ -148,10 +148,13 @@
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Window.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Main.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\BaseScene.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\ClearScene.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\GameoverScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\GameScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\HelpScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\TransitionScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Texture\Texture.cpp" />
     <ClCompile Include="BackGround\BackGround.cpp" />
     <ClCompile Include="Character\Character.cpp" />
@@ -163,8 +166,10 @@
     <ClCompile Include="Character\Enemy\Enemies\Sinsengumi.cpp" />
     <ClCompile Include="Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Character\Player\Player.cpp" />
+    <ClCompile Include="DataBank\DataBank.cpp" />
     <ClCompile Include="LoadResources\LoadResources.cpp" />
     <ClCompile Include="UI\CalloutUI\CalloutUI.cpp" />
+    <ClCompile Include="UI\CutIn\CutIn.cpp" />
     <ClCompile Include="UI\HpUI\HpUI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,10 +181,13 @@
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Window.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\GameDefinition.h" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\BaseScene.hpp" />
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\ClearScene.hpp" />
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameoverScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp" />
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Texture\Texture.hpp" />
     <ClInclude Include="BackGround\BackGround.h" />
@@ -206,8 +214,10 @@
     <ClInclude Include="Character\Enemy\Enemies\Sinsengumi.h" />
     <ClInclude Include="Character\Enemy\Enemy.h" />
     <ClInclude Include="Character\Player\Player.h" />
+    <ClInclude Include="DataBank\DataBank.h" />
     <ClInclude Include="LoadResources\LoadResources.h" />
     <ClInclude Include="UI\CalloutUI\CalloutUI.h" />
+    <ClInclude Include="UI\CutIn\CutIn.h" />
     <ClInclude Include="UI\HpUI\HpUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

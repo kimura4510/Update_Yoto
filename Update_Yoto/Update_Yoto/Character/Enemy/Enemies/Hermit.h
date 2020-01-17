@@ -9,9 +9,7 @@ public:
 	virtual ~Hermit() {}
 
 public:
-	void Init()override;
 	void Draw()override;
-	void Update()override;
 
 };
 

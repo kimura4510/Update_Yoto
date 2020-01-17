@@ -2,6 +2,9 @@
 #define GAMEOVERSCENE_H_
 
 #include "BaseScene.hpp"
+#include <string>
+
+const std::string lose = "Lose";
 
 class GameoverScene : public BaseScene
 {

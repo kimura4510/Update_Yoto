@@ -120,6 +120,24 @@
     <ClCompile Include="BackGround\BackGround.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Engine\Sound.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBank\DataBank.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\CutIn\CutIn.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\TransitionScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\GameoverScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\ClearScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLibrary\3DLibrary\Size.hpp">
@@ -213,6 +231,24 @@
       <Filter>ソース ファイル\UI\CalloutUI</Filter>
     </ClInclude>
     <ClInclude Include="BackGround\BackGround.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Engine\Sound.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBank\DataBank.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\CutIn\CutIn.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\GameoverScene.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\ClearScene.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

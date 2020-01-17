@@ -4,11 +4,12 @@
 #include "Character.h"
 #include "../UI/CalloutUI/CalloutUI.h"
 #include "../UI/HpUI/HpUI.h"
+#include "../UI/CutIn/CutIn.h"
 
 class CharacterManager {
 public:
 	CharacterManager();
-	virtual ~CharacterManager();
+	~CharacterManager();
 
 public:
 	void Init();
@@ -18,6 +19,8 @@ public:
 
 	void DeleteCheck();
 
+	bool Nearby();
+
 	// ç≤ì°êÊê∂ÇÃÉRÅ[Éh
 	bool IsBattleFinish();
 	GAME_END GetGameEnd();
@@ -26,16 +29,22 @@ public:
 
 private:
 	void Create();
-	//void DeleteCheck();
 
 private:
 	Character* m_p_player;
 	Character* m_p_enemy;
 
 	CalloutUI* m_p_callout_ui;
+	CutIn* m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_MAX];
 	HpUI* m_p_hp_ui[(int)BATTLE_CHARACTER::BATTLE_MAX];
 
+	CutIn::CutInType m_cutin_id;
 	ENEMY_ID m_enemy_id;
+
+	bool m_player_trigger;
+	bool m_enemy_trigger;
+	bool m_pcutin_trigger;
+	bool m_ecutin_trigger;
 
 };
 

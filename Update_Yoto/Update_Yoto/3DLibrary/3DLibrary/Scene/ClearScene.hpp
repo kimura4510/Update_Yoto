@@ -2,6 +2,9 @@
 #define CLEARSCENE_H_
 
 #include "BaseScene.hpp"
+#include <string>
+
+const std::string win = "Win";
 
 class ClearScene : public BaseScene
 {

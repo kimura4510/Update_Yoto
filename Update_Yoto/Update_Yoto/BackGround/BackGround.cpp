@@ -55,7 +55,7 @@ void BackGround::Draw()
 	Graphics* gp = Graphics::GetGraphicInstance();
 	cTexture* tex = cTexture::GetTextureInstance();
 	gp->Draw3D(m_bg[0], tex->GetTexture(background));
-	gp->Draw3D(m_bg[1], tex->GetTexture(background));
+	gp->Draw3D(m_bg[1], tex->GetTexture(ground));
 	gp->Draw3D(m_bg[2], tex->GetTexture(background));
 	gp->Draw3D(m_bg[3], tex->GetTexture(background));
 }

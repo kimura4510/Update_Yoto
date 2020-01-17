@@ -9,9 +9,7 @@ public:
 	virtual ~Sinsengumi() {}
 
 public:
-	void Init()override;
 	void Draw()override;
-	void Update()override;
 
 };
 

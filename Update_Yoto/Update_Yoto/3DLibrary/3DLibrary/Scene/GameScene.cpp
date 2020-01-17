@@ -5,6 +5,7 @@
 #include "../Texture/Texture.hpp"
 #include "../GameDefinition.h"
 #include "../../../LoadResources/LoadResources.h"
+#include "../../../DataBank/DataBank.h"
 
 void GameScene::Init()
 {
@@ -13,7 +14,7 @@ void GameScene::Init()
 	m_State = SceneState::eMain;
 	Camera::CreateInstance();
 	Camera::GetCameraInstance()->InitCamera();
-	
+
 	LoadResources::Load();
 
 	m_bg.Init();
@@ -41,10 +42,10 @@ void GameScene::Update()
 			m_State = SceneState::eEnd;
 			break;
 		case GAME_END::GAME_NONE:
-			// ステージ移行シーンに移行
 			// トランジションシーンに移行
+			m_end_scene = END_SCENE::GAME_NONE;
+			m_State = SceneState::eEnd;
 			m_chmanager.ChangeNextEnemy();
-
 			break;
 		}
 	}
@@ -57,6 +58,8 @@ SceneID GameScene::End()
 	Camera::GetCameraInstance()->ReleaseCamera();
 	Camera::DestroyInstance();
 
+	m_State = SceneState::eInit;
+
 	// GameEnd処理
 	if (m_end_scene == END_SCENE::GAME_CLEAR)
 	{
@@ -66,15 +69,15 @@ SceneID GameScene::End()
 	{
 		return SceneID::eGameoverScene;
 	}
-	 
-	//m_State = SceneState::eInit;
-
-	//return SceneID::eTitleScene;
+	if (m_end_scene == END_SCENE::GAME_NONE)
+	{
+		return SceneID::eTransitionScene;
+	}
 }
 
 SceneID GameScene::Control()
 {
-	switch(m_State)
+	switch (m_State)
 	{
 	case SceneState::eInit:
 		Init();

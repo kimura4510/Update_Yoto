@@ -43,6 +43,7 @@ public:
 		if (IsCameraNull() == false)
 		{
 			delete p_CameraInstance;
+			p_CameraInstance = nullptr;
 		}
 	}
 
