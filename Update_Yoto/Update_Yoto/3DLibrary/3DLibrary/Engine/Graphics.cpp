@@ -103,7 +103,7 @@ void Graphics::DrawTexture(float x, float y, Texture* texture_data)
 		sizeof(CustomVertex));
 }
 
-void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY, int color=255)
+void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY, int color)
 {
 	int tmpX = spriteNumX - 1;
 	int tmpY = spriteNumY - 1;
