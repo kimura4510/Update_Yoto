@@ -8,7 +8,7 @@ BackGround::BackGround()
 
 	// Œã‚ë
 	m_bg[0] = {
-		-512.0f,-128.0f,512.0f,
+		0.0f,0.0f,1024.0f,
 		0.0f,0.0f,
 		1024.0f,1024.0f,
 		0xffff,
@@ -17,7 +17,7 @@ BackGround::BackGround()
 	};
 	// ‰º
 	m_bg[1] = {
-		-512.0f,512.0f,128.0f,
+		0.0f,0.0f,0.0f,
 		0.0f,0.0f,
 		1024.0f,1024.0f,
 		0xffff,
@@ -26,7 +26,7 @@ BackGround::BackGround()
 	};
 	// ¶
 	m_bg[2] = {
-		512.0f,-128.0f,512.0f,
+		0.0f,0.0f,0.0f,
 		0.0f,0.0f,
 		1024.0f,1024.0f,
 		0xffff,
@@ -35,7 +35,7 @@ BackGround::BackGround()
 	};
 	// ‰E
 	m_bg[3] = {
-		512.0f,-128.0f,512.0f,
+		0.0f,0.0f,0.0f,
 		0.0f,0.0f,
 		1024.0f,1024.0f,
 		0xffff,
@@ -49,9 +49,9 @@ void BackGround::Draw()
 	Graphics* gp = Graphics::GetGraphicInstance();
 	cTexture* tex = cTexture::GetTextureInstance();
 	gp->Draw3D(m_bg[0], tex->GetTexture(background));
-	gp->Draw3D(m_bg[1], tex->GetTexture(ground));
+	/*gp->Draw3D(m_bg[1], tex->GetTexture(ground));
 	gp->Draw3D(m_bg[2], tex->GetTexture(background));
-	gp->Draw3D(m_bg[3], tex->GetTexture(background));
+	gp->Draw3D(m_bg[3], tex->GetTexture(background));*/
 
 	gp->DrawTexture(m_x, m_y, tex->GetTexture(transition));
 }

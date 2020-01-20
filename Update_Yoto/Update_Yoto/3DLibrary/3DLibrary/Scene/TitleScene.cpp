@@ -60,7 +60,7 @@ void TitleScene::Update()
 SceneID TitleScene::End()
 {
 	cTexture* tex = cTexture::GetTextureInstance();
-	tex->ReleaseTexture(title);
+	tex->ReleaseTexture(title_base);
 	tex->ReleaseTexture(menu);
 
 	m_State = SceneState::eInit;
@@ -92,7 +92,7 @@ void TitleScene::Draw()
 	{
 	case DisplayState::Title:
 		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(title), 0.9375f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
+			tex->GetTexture(title_base), 0.9375f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
 		break;
 	case DisplayState::PvE:
 		graph->DrawIntegratedImage(0.0f, 0.0f,
