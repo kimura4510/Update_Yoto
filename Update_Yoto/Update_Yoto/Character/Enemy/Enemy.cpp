@@ -2,14 +2,16 @@
 
 void Enemy::Update()
 {
-	if (m_approach == true)
-	{
-		m_x -= 3.0f;
-		m_count += 0.5f;
-	}
+	m_up_count += 0.5f;
 
 	if (GetHp() <= 0)
 	{
 		m_isdeth == true;
+		m_fall_count += 0.5f;
+		if (m_fall_count >= 55.0f)
+		{
+			m_dead = true;
+			m_fall_count = m_reset_count;
+		}
 	}
 }

@@ -12,6 +12,8 @@ public:
 	void Update()override;
 	void Draw()override;
 
+private:
+	float m_standby_count;
 };
 
 #endif

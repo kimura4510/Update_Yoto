@@ -27,4 +27,19 @@ enum class GAME_END {
 	GAME_END_MAX,
 };
 
+enum class CHARACTER_STATE {
+	IS_WALK,			// ï‡Ç≠
+
+	IS_HOLD_WEAPON,		// ïêäÌÇç\Ç¶ÇÈ
+	IS_STAND_BY,		// ë“ã@Ç∑ÇÈ
+
+	IS_ATTACK,			// çUåÇÇ∑ÇÈ
+	IS_DEFEND,			// ñhå‰Ç∑ÇÈ
+
+	IS_KILL,			// éEÇ∑
+	IS_DIE,				// éÄÇ 
+
+	STATE_MAX
+};
+
 #endif

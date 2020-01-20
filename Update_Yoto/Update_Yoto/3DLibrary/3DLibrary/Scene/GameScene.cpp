@@ -17,7 +17,6 @@ void GameScene::Init()
 
 	LoadResources::Load();
 
-	m_bg.Init();
 	m_chmanager.Init();
 }
 
@@ -25,32 +24,35 @@ void GameScene::Update()
 {
 	Camera::GetCameraInstance()->UpdateCamera();
 
-	m_chmanager.Update();
+	//m_chmanager.Update();
 
-	if (m_chmanager.IsBattleFinish() == true)
-	{
-		switch (m_chmanager.GetGameEnd())
-		{
-		case GAME_END::GAME_CLEAR:
-			// ゲームクリアシーンに移行
-			m_end_scene = END_SCENE::GAME_CLEAR;
-			m_State = SceneState::eEnd;
-			break;
-		case GAME_END::GAME_OVER:
-			// ゲームオーバーシーンに移行
-			m_end_scene = END_SCENE::GAME_OVER;
-			m_State = SceneState::eEnd;
-			break;
-		case GAME_END::GAME_NONE:
-			// トランジションシーンに移行
-			m_end_scene = END_SCENE::GAME_NONE;
-			m_State = SceneState::eEnd;
-			m_chmanager.ChangeNextEnemy();
-			break;
-		}
-	}
-
-	m_chmanager.DeleteCheck();
+	//if (m_chmanager.IsBattleFinish() == true)
+	//{
+	//	m_bg.Update();
+	//	if (m_bg.TransitionSceneInstall() == true)
+	//	{
+	//		switch (m_chmanager.GetGameEnd())
+	//		{
+	//		case GAME_END::GAME_CLEAR:
+	//			// ゲームクリアシーンに移行
+	//			m_end_scene = END_SCENE::GAME_CLEAR;
+	//			m_State = SceneState::eEnd;
+	//			break;
+	//		case GAME_END::GAME_OVER:
+	//			// ゲームオーバーシーンに移行
+	//			m_end_scene = END_SCENE::GAME_OVER;
+	//			m_State = SceneState::eEnd;
+	//			break;
+	//		case GAME_END::GAME_NONE:
+	//			// トランジションシーンに移行
+	//			m_end_scene = END_SCENE::GAME_NONE;
+	//			m_State = SceneState::eEnd;
+	//			m_chmanager.ChangeNextEnemy();
+	//			break;
+	//		}
+	//		m_chmanager.DeleteCheck();
+	//	}
+	//}
 }
 
 SceneID GameScene::End()
@@ -97,8 +99,6 @@ void GameScene::Draw()
 	{
 		return;
 	}
-	// バックグラウンド
 	m_bg.Draw();
-
 	m_chmanager.Draw();
 }

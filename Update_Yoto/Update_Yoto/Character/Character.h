@@ -14,13 +14,16 @@ public:
 
 	int GetHp();
 	void HpDown();
+	bool Dead();
 
 	void SetQuickPressFlame();
 	int GetQuickPressFlame();
 	void QuickPressFlameDown();
 
+	void Wait();
 	void GoToApproach();
 	void StopApproach();
+	void HoldWeapon();
 
 	float GetPosX();
 	float GetPosY();
@@ -38,14 +41,22 @@ protected:
 	bool m_isdeth;
 	float m_x, m_y, m_z;
 	float m_width, m_height;
+
 	int m_hp;
+	bool m_dead;
 
 	float m_quick_press_flame;
 	float m_quick_press_flame_down;
 
+
+	//bool m_motion_state[static_cast<int>(CHARACTER_STATE::STATE_MAX)];
+
 	bool m_approach;
-	int m_approach_count;
-	float m_count;
+	float m_reset_count;
+	float m_up_count;
+	float m_fall_count;
+	bool m_walk_to_standby;
+	bool m_standby;
 
 	// 追加　アニメーション関連　前川
 

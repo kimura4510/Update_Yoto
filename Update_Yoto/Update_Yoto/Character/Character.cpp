@@ -10,13 +10,17 @@ Character::Character()
 	m_height = 0.0f;
 
 	m_hp = 0;
-	m_count = 0;
+	m_dead = false;
 
 	m_quick_press_flame = 0;
 	m_quick_press_flame_down = 0;
 
 	m_approach = false;
-	m_approach_count = 0;
+	m_reset_count = 0;
+	m_up_count = 0;
+	m_fall_count = 0;
+	m_walk_to_standby = false;
+	m_standby = false;
 
 
 	// 追加　アニメーション関連　前川
@@ -60,6 +64,18 @@ void Character::HpDown()
 	m_hp--;
 }
 
+bool Character::Dead()
+{
+	if (m_dead == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Character::SetQuickPressFlame()
 {
 	m_quick_press_flame_down = m_quick_press_flame;
@@ -75,14 +91,21 @@ void Character::QuickPressFlameDown()
 	m_quick_press_flame_down--;
 }
 
+// 近づく
 void Character::GoToApproach()
 {
 	m_approach = true;
 }
-
+// 近づくのをやめる
 void Character::StopApproach()
 {
+	m_up_count = m_reset_count;
 	m_approach = false;
+}
+// 武器を構える
+void Character::HoldWeapon()
+{
+	m_walk_to_standby = true;
 }
 
 // キャラクターの座標と幅の情報

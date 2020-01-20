@@ -6,16 +6,18 @@
 class BackGround {
 public:
 	BackGround();
-	~BackGround();
+	~BackGround() {}
 
 public:
-	void Init();
-	//void Update();
+	void Update();
 	void Draw();
+
+	bool TransitionSceneInstall();
 
 private:
 	DrawingData3D m_bg[4];
 
+	float m_x, m_y;
 };
 
 #endif
