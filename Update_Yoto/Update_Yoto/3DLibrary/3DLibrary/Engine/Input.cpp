@@ -134,11 +134,30 @@ bool Input::SetGamePadPropaty(LPDIRECTINPUTDEVICE8 device)
 	dipran.diph.dwObj = DIJOFS_X;
 	dipran.lMin = -1000;
 	dipran.lMax = 1000;
-	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)));
+	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)))
+	{
+		return false;
+	}
 
 	//!< Y軸の値の範囲設定
 	dipran.diph.dwObj = DIJOFS_Y;
-	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)));
+	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)))
+	{
+		return false;
+	}
+
+
+	//!< 上記の設定を右スティックにも設定
+	dipran.diph.dwObj = DIJOFS_RX;
+	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)))
+	{
+		return false;
+	}
+	dipran.diph.dwObj = DIJOFS_RY;
+	if (FAILED(device->SetProperty(DIPROP_RANGE, &dipran.diph)))
+	{
+		return false;
+	}
 
 	//!< BufferSizeの設定
 	ZeroMemory(&diprop, sizeof(diprop));
@@ -225,22 +244,40 @@ void Input::UpdateGamePad()
 			RestartGamePad(m_GamePadDevices[i], i);
 		}
 
-		//!< スティックの入力確認
+		//!< 左スティックの入力確認
 		if (joy.lX < -Unresponsive_Range)
 		{
-			isPush[static_cast<int>(GAMEPAD_BUTTONS::Left)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::lLeft)] = true;
 		}
 		else if (joy.lX > Unresponsive_Range)
 		{
-			isPush[static_cast<int>(GAMEPAD_BUTTONS::Right)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::lRight)] = true;
 		}
 		if (joy.lY > Unresponsive_Range)
 		{
-			isPush[static_cast<int>(GAMEPAD_BUTTONS::Down)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::lDown)] = true;
 		}
 		else if (joy.lY < -Unresponsive_Range)
 		{
-			isPush[static_cast<int>(GAMEPAD_BUTTONS::Up)] = true;
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::lUp)] = true;
+		}
+
+		//!< 右スティックの入力確認
+		if (joy.lRx < -Unresponsive_Range)
+		{
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::rLeft)] = true;
+		}
+		else if (joy.lRx > Unresponsive_Range)
+		{
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::rRight)] = true;
+		}
+		if (joy.lRy > Unresponsive_Range)
+		{
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::rDown)] = true;
+		}
+		else if (joy.lRy < -Unresponsive_Range)
+		{
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::rUp)] = true;
 		}
 
 		//!< 十字キーの入力確認
@@ -274,7 +311,7 @@ void Input::UpdateGamePad()
 		{
 			if (joy.rgbButtons[j] == 0x80)
 			{
-				isPush[j + 8] = true;
+				isPush[j] = true;
 			}
 		}
 

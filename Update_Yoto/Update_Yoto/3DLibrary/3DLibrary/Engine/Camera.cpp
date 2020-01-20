@@ -49,23 +49,44 @@ void Camera::InitCamera()
 
 void Camera::MoveCamera()
 {
-	if (Input::GetInputInstance()->GetKey(KEY_INFO::UP_KEY) == true)
+	float speed = 5.0f;
+	Input* INP = Input::GetInputInstance();
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lUp) == INPUT_STATE::PUSH)
 	{
-		camera_param.m_pos_z += 1.0f;
+		camera_param.m_pos_z += speed;
+		camera_param.m_eye_z += speed;
 	}
-	if (Input::GetInputInstance()->GetKey(KEY_INFO::DOWN_KEY) == true)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lDown) == INPUT_STATE::PUSH)
 	{
-		camera_param.m_pos_z -= 1.0f;
+		camera_param.m_pos_z -= speed;
+		camera_param.m_eye_z -= speed;
 	}
-	if (Input::GetInputInstance()->GetKey(KEY_INFO::RIGHT_KEY) == true)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lRight) == INPUT_STATE::PUSH)
 	{
-		camera_param.m_pos_x += 1.0f;
-		camera_param.m_eye_x += 1.0f;
+		camera_param.m_pos_x += speed;
+		camera_param.m_eye_x += speed;
 	}
-	if (Input::GetInputInstance()->GetKey(KEY_INFO::LEFT_KEY) == true)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lLeft) == INPUT_STATE::PUSH)
 	{
-		camera_param.m_pos_x -= 1.0f;
-		camera_param.m_eye_x -= 1.0f;
+		camera_param.m_pos_x -= speed;
+		camera_param.m_eye_x -= speed;
+	}
+
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rRight) == INPUT_STATE::PUSH)
+	{
+		camera_param.m_eye_x += speed;
+	}
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rLeft) == INPUT_STATE::PUSH)
+	{
+		camera_param.m_eye_x -= speed;
+	}
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rUp) == INPUT_STATE::PUSH)
+	{
+		camera_param.m_eye_y += speed;
+	}
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rDown) == INPUT_STATE::PUSH)
+	{
+		camera_param.m_eye_y -= speed;
 	}
 }
 
@@ -116,4 +137,3 @@ void Camera::ChangeClearPos()
 void Camera::ReleaseCamera()
 {
 }
-

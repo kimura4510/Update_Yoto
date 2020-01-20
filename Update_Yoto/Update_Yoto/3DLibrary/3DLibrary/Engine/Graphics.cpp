@@ -1,6 +1,7 @@
 #include "Graphics.hpp"
 #include <d3d9.h>
 #include <d3dx9.h>
+#include "Camera.h"
 #include "../Size.hpp"
 
 // 静的ライブラリ
@@ -131,14 +132,14 @@ void Graphics::Draw3D(const DrawingData3D& v3d, Texture* texture_data)
 	{
 		v[i].color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	}
-	v[0].m_x = v3d.m_x; v[0].m_y = v3d.m_y; v[0].m_z = v3d.m_z;
-	v[0].tu = 0.0f;	v[0].tv = 0.0f;
-	v[1].m_x = v3d.m_x + v3d.m_width; v[1].m_y = v3d.m_y; v[1].m_z = v3d.m_z;
-	v[1].tu = 1.0f;	v[1].tv = 0.0f;
-	v[2].m_x = v3d.m_x; v[2].m_y = v3d.m_y + v3d.m_height; v[2].m_z = v3d.m_z;
+	v[0].m_x = v3d.m_x;					v[0].m_y = v3d.m_y + v3d.m_height;	v[0].m_z = v3d.m_z;
+	v[0].tu = 0.0f;						v[0].tv = 0.0f;
+	v[1].m_x = v3d.m_x + v3d.m_width;	v[1].m_y = v3d.m_y + v3d.m_height;	v[1].m_z = v3d.m_z;
+	v[1].tu = 1.0f;						v[1].tv = 0.0f;
+	v[2].m_x = v3d.m_x;					v[2].m_y = v3d.m_y;					v[2].m_z = v3d.m_z;
 	v[2].tu = 0.0f;	v[2].tv = 1.0f;
-	v[3].m_x = v3d.m_x + v3d.m_width; v[3].m_y = v3d.m_y + v3d.m_height; v[3].m_z = v3d.m_z;	
-	v[3].tu = 1.0f;	v[3].tv = 1.0;
+	v[3].m_x = v3d.m_x + v3d.m_width;	v[3].m_y = v3d.m_y;					v[3].m_z = v3d.m_z;	
+	v[3].tu = 1.0f;						v[3].tv = 1.0;
 	// ポリゴンのローカル座標の位置を指定 end
 
 	//ワールド座標変換用の行列の算出 start
@@ -190,14 +191,14 @@ void Graphics::DrawIntegratedImage3D(const DrawingData3D& v3d, Texture* texture_
 	{
 		v[i].color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	}
-	v[0].m_x = v3d.m_x;	v[0].m_y = v3d.m_y;	v[0].m_z = v3d.m_z;
-	v[0].tu = tu * tmpX;	v[0].tv = tv * tmpY;
-	v[1].m_x = v3d.m_x + spriteX; v[1].m_y = v3d.m_y; v[1].m_z = v3d.m_z;
-	v[1].tu = tu * spriteNumX;	v[1].tv = tv * tmpY;
-	v[2].m_x = v3d.m_x; v[2].m_y = v3d.m_y + spriteY; v[2].m_z = v3d.m_z;
-	v[2].tu = tu * tmpX;	v[2].tv = tv * spriteNumY;
-	v[3].m_x = v3d.m_x + spriteX; v[3].m_y = v3d.m_y + spriteY; v[3].m_z = v3d.m_z;
-	v[3].tu = tu * spriteNumX;	v[3].tv = tv * spriteNumY;
+	v[0].m_x = v3d.m_x;				v[0].m_y = v3d.m_y + spriteY;	v[0].m_z = v3d.m_z;
+	v[0].tu = tu * tmpX;			v[0].tv = tv * tmpY;
+	v[1].m_x = v3d.m_x + spriteX;	v[1].m_y = v3d.m_y + spriteY;	v[1].m_z = v3d.m_z;
+	v[1].tu = tu * spriteNumX;		v[1].tv = tv * tmpY;
+	v[2].m_x = v3d.m_x;				v[2].m_y = v3d.m_y;				v[2].m_z = v3d.m_z;
+	v[2].tu = tu * tmpX;			v[2].tv = tv * spriteNumY;
+	v[3].m_x = v3d.m_x + spriteX;	v[3].m_y = v3d.m_y;	v[3].m_z = v3d.m_z;
+	v[3].tu = tu * spriteNumX;		v[3].tv = tv * spriteNumY;
 	// ポリゴンのローカル座標の位置を指定 end
 	
 		//ワールド座標変換用の行列の算出 start
@@ -284,7 +285,7 @@ void Graphics::Animation3D(
 
 
 	// 3D統合画像関数を扱う
-	DrawIntegratedImage3D(
+	DrawBillboard(
 		drawing_data_3d,
 		p_texture,
 		set_tu,
@@ -307,46 +308,48 @@ void Graphics::DrawBillboard(const DrawingData3D& v3d, Texture* texture_data, fl
 	{
 		v[i].color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	}
-	v[0].m_x = v3d.m_x;	v[0].m_y = v3d.m_y;	v[0].m_z = v3d.m_z;
-	v[0].tu = tu * tmpX;	v[0].tv = tv * tmpY;
-	v[1].m_x = v3d.m_x + spriteX; v[1].m_y = v3d.m_y; v[1].m_z = v3d.m_z;
-	v[1].tu = tu * spriteNumX;	v[1].tv = tv * tmpY;
-	v[2].m_x = v3d.m_x; v[2].m_y = v3d.m_y + spriteY; v[2].m_z = v3d.m_z;
-	v[2].tu = tu * tmpX;	v[2].tv = tv * spriteNumY;
-	v[3].m_x = v3d.m_x + spriteX; v[3].m_y = v3d.m_y + spriteY; v[3].m_z = v3d.m_z;
-	v[3].tu = tu * spriteNumX;	v[3].tv = tv * spriteNumY;
+	v[0].m_x = v3d.m_x;				v[0].m_y = v3d.m_y + spriteY;	v[0].m_z = v3d.m_z;
+	v[0].tu = tu * tmpX;			v[0].tv = tv * tmpY;
+	v[1].m_x = v3d.m_x + spriteX;	v[1].m_y = v3d.m_y + spriteY;	v[1].m_z = v3d.m_z;
+	v[1].tu = tu * spriteNumX;		v[1].tv = tv * tmpY;
+	v[2].m_x = v3d.m_x;				v[2].m_y = v3d.m_y;				v[2].m_z = v3d.m_z;
+	v[2].tu = tu * tmpX;			v[2].tv = tv * spriteNumY;
+	v[3].m_x = v3d.m_x + spriteX;	v[3].m_y = v3d.m_y;	v[3].m_z = v3d.m_z;
+	v[3].tu = tu * spriteNumX;		v[3].tv = tv * spriteNumY;
 	// ポリゴンのローカル座標の位置を指定 end
 
 		//ワールド座標変換用の行列の算出 start
-	D3DXMATRIX mat_world, mat_trans, mat_scale, view_mat;
+	D3DXMATRIX mat_world, mat_trans, mat_scale, view_mat, inv_mat;
 	D3DXMatrixIdentity(&mat_world);
 	D3DXMatrixIdentity(&mat_trans);
 	D3DXMatrixIdentity(&mat_scale);
 	D3DXMatrixIdentity(&view_mat);
+	D3DXMatrixIdentity(&inv_mat);
 
 	// 移動
 	D3DXMatrixTranslation(&mat_trans, 0.0f, 0.0f, 10.0f);
 
 	// カメラビュー行列の逆行列を作成
-	g_D3DDevice->SetTransform(D3DTS_VIEW,&view_mat);
-	D3DXMatrixInverse(&view_mat, NULL, &view_mat);
+	g_D3DDevice->GetTransform(D3DTS_VIEW, &view_mat);
+	D3DXMatrixInverse(&inv_mat, NULL, &view_mat);
 	
 	// 移動情報の打ち消し
-	view_mat._41 = 0.0f;
-	view_mat._42 = 0.0f;
-	view_mat._43 = 0.0f;
+	inv_mat._41 = 0.0f;
+	inv_mat._42 = 0.0f;
+	inv_mat._43 = 0.0f;
 
 	// 拡大
 	D3DXMatrixScaling(&mat_scale, v3d.m_scalex, v3d.m_scaley, 1.0f);
 
 	// 掛け合わせ(拡縮 * 回転 * 移動)
-	mat_world *= mat_scale * view_mat * mat_trans;
+	mat_world *= mat_scale * inv_mat * mat_trans;
 
 	g_D3DDevice->SetTransform(D3DTS_WORLD, &mat_world);
 	//ワールド座標変換用の行列の算出 end
 
+	g_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	g_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
-
+	g_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
 
 	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(CustomVertex3D));

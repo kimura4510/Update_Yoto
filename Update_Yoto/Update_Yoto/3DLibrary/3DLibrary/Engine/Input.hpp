@@ -25,14 +25,6 @@ enum KEY_INFO
 //!< @brief ゲームパッドの入力種類
 enum class GAMEPAD_BUTTONS
 {
-	Up,
-	Down,
-	Left,
-	Right,
-	UpArrow,
-	DownArrow,
-	LeftArrow,
-	RightArrow,
 	A,
 	B,
 	X,
@@ -40,7 +32,19 @@ enum class GAMEPAD_BUTTONS
 	R1,
 	R2,
 	L1,
-	L2,
+	L2, 
+	lUp,
+	lDown,
+	lLeft,
+	lRight,
+	rUp,
+	rDown,
+	rLeft,
+	rRight,
+	UpArrow,
+	DownArrow,
+	LeftArrow,
+	RightArrow,
 	MAX_INFO,
 };
 
