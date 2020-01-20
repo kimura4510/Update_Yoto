@@ -31,7 +31,7 @@ void TitleScene::Update()
 	}
 	else if (m_DisplayState != DisplayState::Title)
 	{
-		if (inpt->GetKeyDown(KEY_INFO::UP_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::UpArrow) == INPUT_STATE::PUSH_DOWN)
+		if (inpt->GetKeyDown(KEY_INFO::UP_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::Up) == INPUT_STATE::PUSH_DOWN)
 		{
 			if (m_DisplayNum > 1)
 			{
@@ -40,7 +40,7 @@ void TitleScene::Update()
 			}
 		}
 	
-		if (inpt->GetKeyDown(KEY_INFO::DOWN_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::DownArrow) == INPUT_STATE::PUSH_DOWN)
+		if (inpt->GetKeyDown(KEY_INFO::DOWN_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::Down) == INPUT_STATE::PUSH_DOWN)
 		{
 			if (m_DisplayNum < 3)
 			{

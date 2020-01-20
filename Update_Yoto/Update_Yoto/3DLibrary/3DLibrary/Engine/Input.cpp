@@ -89,6 +89,12 @@ BOOL CALLBACK Input::EnumJoysticksCallback(LPCDIDEVICEINSTANCE pDevIns, LPVOID p
 		return DIENUM_STOP;
 	}
 
+	//!< プロパティの設定
+	if (SetGamePadPropaty(param->GamePadDevList[param->FindCount]) == false)
+	{
+		return DIENUM_STOP;
+	}
+
 	//!< 協調レベルの設定
 	hr = param->GamePadDevList[param->FindCount]->SetCooperativeLevel(
 		param->windowhandle,
@@ -166,13 +172,12 @@ bool Input::CreateGamePadDevice(HWND hw)
 	//!< ゲームパッドの起動
 	for (int i = 0; i < param.FindCount; i++)
 	{
-		/*if (FAILED(m_GamePadDevices[i]->Poll()))
+		if (FAILED(m_GamePadDevices[i]->Poll()))
 		{
-			return false;
-		}*/
-		if (FAILED(m_GamePadDevices[i]->Acquire()))
-		{
-			return false;
+			if (FAILED(m_GamePadDevices[i]->Acquire()))
+			{
+				return false;
+			}
 		}
 	}
 
@@ -221,21 +226,21 @@ void Input::UpdateGamePad()
 		}
 
 		//!< スティックの入力確認
-		if (joy.lX < 0)
+		if (joy.lX < -Unresponsive_Range)
 		{
 			isPush[static_cast<int>(GAMEPAD_BUTTONS::Left)] = true;
 		}
-		else if (joy.lX > 0)
+		else if (joy.lX > Unresponsive_Range)
 		{
 			isPush[static_cast<int>(GAMEPAD_BUTTONS::Right)] = true;
 		}
-		if (joy.lY > 0)
-		{
-			isPush[static_cast<int>(GAMEPAD_BUTTONS::Up)] = true;
-		}
-		else if (joy.lY < 0)
+		if (joy.lY > Unresponsive_Range)
 		{
 			isPush[static_cast<int>(GAMEPAD_BUTTONS::Down)] = true;
+		}
+		else if (joy.lY < -Unresponsive_Range)
+		{
+			isPush[static_cast<int>(GAMEPAD_BUTTONS::Up)] = true;
 		}
 
 		//!< 十字キーの入力確認

@@ -172,12 +172,13 @@ public:
 private:
 	static BOOL CALLBACK EnumJoysticksCallback(const LPCDIDEVICEINSTANCE pdevins, LPVOID pContext);
 
-	bool SetGamePadPropaty(LPDIRECTINPUTDEVICE8 device);
+	static bool SetGamePadPropaty(LPDIRECTINPUTDEVICE8 device);
 
 	bool RestartGamePad(LPDIRECTINPUTDEVICE8 device, int num);
 
 private:
 	static const int MaxGamePadNum = 2;
+	static const int Unresponsive_Range = 200;
 
 	static LPDIRECTINPUT8 m_InputInterface;	// インプットインターフェイス
 	LPDIRECTINPUTDEVICE8 m_KeyDevice;	// インプットデバイス(キーボード)
