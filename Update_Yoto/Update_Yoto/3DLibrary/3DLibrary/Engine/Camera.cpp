@@ -44,12 +44,12 @@ void Camera::InitCamera()
 	camera_param.m_eye_z = 0.0f;
 	camera_param.m_pos_x = 0.0f;
 	camera_param.m_pos_y = 0.0f;
-	camera_param.m_pos_z = -100.0f;
+	camera_param.m_pos_z = -50.0f;
 }
 
 void Camera::MoveCamera()
 {
-	float speed = 5.0f;
+	const float speed = 3.0f;
 	Input* INP = Input::GetInputInstance();
 	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lUp) == INPUT_STATE::PUSH)
 	{

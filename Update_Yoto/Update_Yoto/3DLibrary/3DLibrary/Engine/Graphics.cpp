@@ -103,20 +103,20 @@ void Graphics::DrawTexture(float x, float y, Texture* texture_data)
 		sizeof(CustomVertex));
 }
 
-void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY)
+void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY, int color=255)
 {
 	int tmpX = spriteNumX - 1;
 	int tmpY = spriteNumY - 1;
 	CustomVertex TriStr[] =
 	{
-		{x, y, 0.0f, 1.0f, tu * tmpX, tv * tmpY},
-		{x + spriteX, y, 0.0f, 1.0f, tu * spriteNumX, tv * tmpY},
-		{x, y + spriteY, 0.0f, 1.0f, tu * tmpX, tv * spriteNumY},
-		{x + spriteX, y + spriteY, 0.0f, 1.0f, tu * spriteNumX, tv * spriteNumY}
+		{x, y, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, color), tu * tmpX, tv * tmpY},
+		{x + spriteX, y, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, color), tu * spriteNumX, tv * tmpY},
+		{x, y + spriteY, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, color), tu * tmpX, tv * spriteNumY},
+		{x + spriteX, y + spriteY, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, color), tu * spriteNumX, tv * spriteNumY}
 	};
 
 	//’¸“_\‘¢‚ÌŽw’è
-	g_D3DDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
+	g_D3DDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
 	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
 		2,

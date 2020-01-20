@@ -34,6 +34,8 @@ struct CustomVertex
 	float y;	//y座標
 	float z;	//z座標
 	float rhw;	//除算数
+	
+	D3DCOLOR color;
 
 	float tu;	//テクスチャ座標x
 	float tv;	//テクスチャ座標y
@@ -128,7 +130,7 @@ public:
 	* @param[in] spriteNumX 描画したいスプライトが左から何番目か
 	* @param[in] spriteNumY 描画したいスプライトが上から何番目か
 	*/
-	void DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY);
+	void DrawIntegratedImage(float x, float y, Texture* texture_data, float tu, float tv, float spriteX, float spriteY, int spriteNumX, int spriteNumY, int color=255);
 
 
 	/**
