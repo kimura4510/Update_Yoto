@@ -59,14 +59,10 @@ public:
 	void SetEnemyType(int enemy_type_);
 	int GetEnemyType();
 
-	void SetCutInType(int cutn_type_);
-	int GetCutInType();
-
 private:
 	DataBank() 
 	{ 
-		m_enemy_type = 0;
-		m_cutin_type = 1;
+		m_enemy_type = 1;
 	}
 	virtual ~DataBank() {}
 
@@ -78,7 +74,6 @@ private:
 
 private:
 	int m_enemy_type;
-	int m_cutin_type;
 
 };
 

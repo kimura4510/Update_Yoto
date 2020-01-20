@@ -70,31 +70,52 @@ void CharacterManager::Init()
 	DataBank::CreateInstance();
 	DataBank* p_db = DataBank::GetInstance();	// 実体を取得
 
-	if (m_p_player == nullptr)
+	if (m_p_player == nullptr && m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
 	{
 		m_p_player = new Player;
+		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
+		{
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new CutIn(
+			CutIn::DrawMethod::LEFT,
+			CutIn::CutInType::PLAYER);
+		}
 	}
 
 	// 敵の入れ替え処理
 	m_enemy_id = static_cast<ENEMY_ID>(p_db->GetEnemyType());
-	if (m_p_enemy == nullptr)
+	if (m_p_enemy == nullptr && m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
 	{
 		switch (m_enemy_id)
 		{
 		case ENEMY_ID::DRAWER:
 			m_p_enemy = new Drawer;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+			CutIn::DrawMethod::RIGHT,
+			CutIn::CutInType::DRAWER);
 			break;
 		case ENEMY_ID::PERRY:
 			m_p_enemy = new Perry;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+			CutIn::DrawMethod::RIGHT,
+			CutIn::CutInType::PERRY);
 			break;
 		case ENEMY_ID::HERMIT:
 			m_p_enemy = new Hermit;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+			CutIn::DrawMethod::RIGHT,
+			CutIn::CutInType::HERMIT);
 			break;
 		case ENEMY_ID::SINSENGUMI:
 			m_p_enemy = new Sinsengumi;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+			CutIn::DrawMethod::RIGHT,
+			CutIn::CutInType::SINSENGUMI);
 			break;
 		case ENEMY_ID::FOX:
 			m_p_enemy = new Fox;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+			CutIn::DrawMethod::RIGHT,
+			CutIn::CutInType::FOX);
 			break;
 		default:
 			break;
@@ -105,24 +126,6 @@ void CharacterManager::Init()
 	if (m_p_callout_ui == nullptr)
 	{
 		m_p_callout_ui = new CalloutUI;
-	}
-
-	m_cutin_id = static_cast<CutIn::CutInType>(p_db->GetCutInType());
-	// プレイヤーのカットイン
-	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
-	{
-		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new CutIn(
-			CutIn::DrawMethod::LEFT,
-			CutIn::CutInType::PLAYER,
-			0.0f, 300.0f);
-	}
-	// エネミーのカットイン
-	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
-	{
-		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
-			CutIn::DrawMethod::RIGHT,
-			m_cutin_id,
-			896.0f, 300.0f);
 	}
 
 	// プレイヤーのHPゲージ
@@ -151,31 +154,52 @@ void CharacterManager::Create()
 	DataBank::CreateInstance();
 	DataBank* p_db = DataBank::GetInstance();	// 実体を取得
 
-	if (m_p_player == nullptr)
+	if (m_p_player == nullptr && m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
 	{
 		m_p_player = new Player;
+		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
+		{
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new CutIn(
+				CutIn::DrawMethod::LEFT,
+				CutIn::CutInType::PLAYER);
+		}
 	}
 
 	// 敵の入れ替え処理
 	m_enemy_id = static_cast<ENEMY_ID>(p_db->GetEnemyType());
-	if (m_p_enemy == nullptr)
+	if (m_p_enemy == nullptr && m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
 	{
 		switch (m_enemy_id)
 		{
 		case ENEMY_ID::DRAWER:
 			m_p_enemy = new Drawer;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+				CutIn::DrawMethod::RIGHT,
+				CutIn::CutInType::DRAWER);
 			break;
 		case ENEMY_ID::PERRY:
 			m_p_enemy = new Perry;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+				CutIn::DrawMethod::RIGHT,
+				CutIn::CutInType::PERRY);
 			break;
 		case ENEMY_ID::HERMIT:
 			m_p_enemy = new Hermit;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+				CutIn::DrawMethod::RIGHT,
+				CutIn::CutInType::HERMIT);
 			break;
 		case ENEMY_ID::SINSENGUMI:
 			m_p_enemy = new Sinsengumi;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+				CutIn::DrawMethod::RIGHT,
+				CutIn::CutInType::SINSENGUMI);
 			break;
 		case ENEMY_ID::FOX:
 			m_p_enemy = new Fox;
+			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
+				CutIn::DrawMethod::RIGHT,
+				CutIn::CutInType::FOX);
 			break;
 		default:
 			break;
@@ -186,24 +210,6 @@ void CharacterManager::Create()
 	if (m_p_callout_ui == nullptr)
 	{
 		m_p_callout_ui = new CalloutUI;
-	}
-
-	m_cutin_id = static_cast<CutIn::CutInType>(p_db->GetCutInType());
-	// プレイヤーのカットイン
-	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] == nullptr)
-	{
-		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER] = new CutIn(
-			CutIn::DrawMethod::LEFT,
-			CutIn::CutInType::PLAYER,
-			0.0f, 300.0f);
-	}
-	// エネミーのカットイン
-	if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] == nullptr)
-	{
-		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
-			CutIn::DrawMethod::RIGHT,
-			m_cutin_id,
-			896.0f, 300.0f);
 	}
 
 	// プレイヤーのHPゲージ
@@ -233,11 +239,19 @@ void CharacterManager::Update()
 	//if (プレイヤーとエネミーが生きていたら)
 	if (m_p_player != nullptr && m_p_enemy != nullptr)
 	{
-		//「押せ！」の描画までのカウントを始める
-		m_p_callout_ui->Update();
+		// プレイヤーを所定の位置に移動させる
+		m_p_player->GoToApproach();
+		if (m_p_enemy->GetHp() >= 1 && m_p_player->GetPosX() >= -256.0f)
+		{
+			m_p_player->StopApproach();
+			m_p_player->HoldWeapon();
+			//「押せ！」の描画までのカウントを始める
+			m_p_callout_ui->Update();
+		}
 		//if (カウントが0になったら「押せ！」を描画)
 		if (m_p_callout_ui->IsOn() == true)
 		{
+			// プレイヤーがエンターキーを押していなかったら
 			//「押せ！」を描画中にエネミーのカウントを減らす
 			if (m_pcutin_trigger == false) 
 			{
@@ -249,7 +263,7 @@ void CharacterManager::Update()
 			{
 				m_pcutin_trigger = true;
 				// リセット
-				m_p_enemy->SetQuickPressFlame();
+				//m_p_enemy->SetQuickPressFlame();
 			}
 			//if (エネミーのカウントが0以下になったら)
 			if (m_p_enemy->GetQuickPressFlame() <= 0 && m_ecutin_trigger == false)
@@ -299,31 +313,18 @@ void CharacterManager::Update()
 				m_ecutin_trigger = false;
 			}
 		}
-		//m_is_triggerをonなら
-		//if (エネミーがプレイヤーと近づいていなかったら)
+
 		if (m_enemy_trigger == true)
 		{
-			//エネミーがプレイヤーに近づく
-			if (CollisionRect() == false)
-			{
-				//エネミーがプレイヤーに近づく
-				m_p_enemy->GoToApproach();
-			}
-			else
-			{
-				// 近づくのをやめる
-				m_p_enemy->StopApproach();
-				//プレイヤーのHPを減らす
-				m_p_player->HpDown();
-				//プレイヤーのHPUIを減らす
-				HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
-				//エネミーのカウントをリセット
-				m_p_enemy->SetQuickPressFlame();
-				//toriggerをoffにする
-				m_enemy_trigger = false;
-			}
+			//プレイヤーのHPを減らす
+			m_p_player->HpDown();
+			//プレイヤーのHPUIを減らす
+			HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
+			//エネミーのカウントをリセット
+			m_p_enemy->SetQuickPressFlame();
+			//toriggerをoffにする
+			m_enemy_trigger = false;
 		}
-		//m_is_triggerをonなら
 		if (m_player_trigger == true)
 		{
 			//if (プレイヤーがエネミーと近づいていなかったら)
@@ -344,6 +345,19 @@ void CharacterManager::Update()
 				m_p_enemy->SetQuickPressFlame();
 				//toriggerをoffにする
 				m_player_trigger = false;
+			}
+		}
+		if (m_p_enemy->GetHp() <= 0)
+		{
+			// エネミーが倒れるアニメーション
+			if (m_p_enemy->Dead() == true)
+			{
+				// プレイヤーが画面が今で出ていくアニメーション
+				m_p_player->GoToApproach();
+				if (m_p_player->GetPosX() >= 1024.0f)
+				{
+					m_p_player->StopApproach();
+				}
 			}
 		}
 	}
@@ -424,7 +438,7 @@ void CharacterManager::DeleteCheck()
 {
 	if (m_p_player != nullptr && m_p_enemy != nullptr)
 	{
-		if (m_p_player->GetHp() <= 0 || m_p_enemy->GetHp() <= 0)
+		if (m_p_player->GetHp() <= 0 || m_p_player->GetPosX() >= 1000.0f)
 		{
 			for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 			{
@@ -494,7 +508,7 @@ void CharacterManager::HpUiManager(BATTLE_CHARACTER battle_character_)
 
 bool CharacterManager::IsBattleFinish()
 {
-	if (m_p_player->GetHp() <= 0 || m_p_enemy->GetHp() <= 0)
+	if (m_p_player->GetHp() <= 0 || m_p_player->GetPosX() >= 1000.0f)//m_p_enemy->GetHp() <= 0)
 	{
 		return true;
 	}
@@ -513,10 +527,6 @@ GAME_END CharacterManager::GetGameEnd()
 	if (m_p_enemy->GetHp() <= 0)
 	{
 		//次のキャラぎいなかったらクリアを返す
-		/*if (GetNextEnemyID() == ENEMY_ID::ENMEY_NONE)
-		{
-			return GAME_END::GAME_CLEAR;
-		}*/
 		if (m_enemy_id == ENEMY_ID::FOX)
 		{
 			return GAME_END::GAME_CLEAR;
@@ -537,26 +547,18 @@ ENEMY_ID CharacterManager::GetNextEnemyID()
 	case ENEMY_ID::DRAWER:
 		m_enemy_id = ENEMY_ID::PERRY;
 		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
-		m_cutin_id = CutIn::CutInType::PERRY;
-		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	case ENEMY_ID::PERRY:
 		m_enemy_id = ENEMY_ID::HERMIT;
 		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
-		m_cutin_id = CutIn::CutInType::HERMIT;
-		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	case ENEMY_ID::HERMIT:
 		m_enemy_id = ENEMY_ID::SINSENGUMI;
 		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
-		m_cutin_id = CutIn::CutInType::SINSENGUMI;
-		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	case ENEMY_ID::SINSENGUMI:
 		m_enemy_id = ENEMY_ID::FOX;
 		p_db->SetEnemyType(static_cast<int>(m_enemy_id));
-		m_cutin_id = CutIn::CutInType::FOX;
-		p_db->SetCutInType(static_cast<int>(m_cutin_id));
 		break;
 	}
 	return m_enemy_id;

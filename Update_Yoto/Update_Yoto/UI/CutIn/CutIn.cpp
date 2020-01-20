@@ -1,24 +1,22 @@
 #include "CutIn.h"
 #include "../../3DLibrary/3DLibrary/Engine/Graphics.hpp"
 
-CutIn::CutIn(DrawMethod method_, CutInType type_, float x_, float y_)
+CutIn::CutIn(DrawMethod method_, CutInType type_)
 {
 	m_method = method_;
 	m_type = type_;
-	m_x = x_;
-	m_y = y_;
-	m_p_tex = cTexture::GetTextureInstance()->
-		GetTexture(r_cutin_tex);
-	m_tu = 0.11621094f;
-	m_tv = 0.52441406f;
-	m_sprite_width = 952.0f;		// (1/8192)*952	
-	m_sprite_height = 537.0f;		// (1/1024)*537
-	m_sprite_num_x = 1;
-	m_sprite_num_y = 1;
+	m_x = 0.0f;
+	m_y = 0.0f;
+	m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_fox_tex);
+	m_tu = 0.1953125;				// (1/8192)*1600
+	m_tv = 0.5f;					// 1/2
+	m_sprite_width = 1600.0f;		//38.4
+	m_sprite_height = 1024.0f;
+	m_sprite_x = 5;
+	m_sprite_y = 2;
 
 	m_ison = false;
-	m_set_count = 60;
-	m_down_count = 60;
+	m_count = 0.0f;
 }
 
 void CutIn::Update()
@@ -26,11 +24,11 @@ void CutIn::Update()
 	m_ison = true;
 	if (m_ison == true)
 	{
-		m_down_count--;
-		if (m_down_count <= 0)
+		m_count += 0.15f;
+		if (m_count >= 9.0f)
 		{
 			m_ison = false;
-			m_down_count = m_set_count;
+			m_count = 0.0f;
 		}
 	}
 }
@@ -39,26 +37,26 @@ void CutIn::Draw()
 {
 	if (m_method == DrawMethod::RIGHT)
 	{
-		m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_tex);
+		m_x = 192.0f;
 		switch (m_type)
 		{
 		case CutInType::PLAYER:
-			m_sprite_num_x = 1;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_player_tex);
 			break;
 		case CutInType::DRAWER:
-			m_sprite_num_x = 2;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_drawer_tex);
 			break;
 		case CutInType::PERRY:
-			m_sprite_num_x = 3;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_perry_tex);
 			break;
 		case CutInType::HERMIT:
-			m_sprite_num_x = 4;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_hermit_tex);
 			break;
 		case CutInType::SINSENGUMI:
-			m_sprite_num_x = 5;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_sinsengumi_tex);
 			break;
 		case CutInType::FOX:
-			m_sprite_num_x = 6;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(r_cutin_fox_tex);
 			break;
 		default:
 			break;
@@ -66,26 +64,25 @@ void CutIn::Draw()
 	}
 	else
 	{
-		m_p_tex = cTexture::GetTextureInstance()->GetTexture(l_cutin_tex);
 		switch (m_type)
 		{
 		case CutInType::PLAYER:
-			m_sprite_num_x = 1;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(l_cutin_player_tex);
 			break;
 		case CutInType::DRAWER:
-			m_sprite_num_x = 2;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(l_cutin_drawer_tex);
 			break;
 		case CutInType::PERRY:
-			m_sprite_num_x = 3;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(l_cutin_perry_tex);
 			break;
 		case CutInType::HERMIT:
-			m_sprite_num_x = 4;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(l_cutin_hermit_tex);
 			break;
 		case CutInType::SINSENGUMI:
-			m_sprite_num_x = 5;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(l_cutin_sinsengumi_tex);
 			break;
 		case CutInType::FOX:
-			m_sprite_num_x = 6;
+			m_p_tex = cTexture::GetTextureInstance()->GetTexture(l_cutin_fox_tex);
 			break;
 		default:
 			break;
@@ -96,12 +93,14 @@ void CutIn::Draw()
 	cTexture* tex = cTexture::GetTextureInstance();
 	if (m_ison == true)
 	{
-		gp->DrawIntegratedImage(
+		gp->Animation2D(
 			m_x, m_y,
 			m_p_tex,
 			m_tu, m_tv,
 			m_sprite_width, m_sprite_height,
-			m_sprite_num_x, m_sprite_num_y);
+			m_sprite_x, m_sprite_y,
+			(int)m_count % 9
+		);
 	}
 }
 

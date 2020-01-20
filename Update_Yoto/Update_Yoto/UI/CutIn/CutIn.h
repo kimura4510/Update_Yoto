@@ -24,7 +24,7 @@ public:
 	};
 
 public:
-	CutIn(DrawMethod method_, CutInType type_, float x_, float y_);
+	CutIn(DrawMethod method_, CutInType type_);
 
 public:
 	void Update();
@@ -41,11 +41,11 @@ private:
 	Texture* m_p_tex;
 	float m_tu, m_tv;
 	float m_sprite_width, m_sprite_height;
-	int m_sprite_num_x, m_sprite_num_y;
+	int m_sprite_x, m_sprite_y;
 
 	bool m_ison;
-	int m_set_count;
-	int m_down_count;
+	float m_count;
+	//int m_down_count;
 
 };
 
