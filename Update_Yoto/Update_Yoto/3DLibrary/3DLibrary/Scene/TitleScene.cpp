@@ -10,7 +10,8 @@ void TitleScene::Init()
 	m_DisplayNum = 0;
 
 	cTexture* tex = cTexture::GetTextureInstance();
-	tex->LoadTexture("Resource/Title/title.png", title);
+	tex->LoadTexture("Resource/Title/title.png", title_base);
+	tex->LoadTexture("Resource/Title/title.png", title_button);
 	tex->LoadTexture("Resource/Title/menu.png", menu);
 
 	m_State = SceneState::eMain;

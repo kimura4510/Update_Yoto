@@ -9,7 +9,7 @@ const std::string texture_name = "ex.Update_Yoto";
 // タイトルシーン
 const std::string title_base = "TitleBase";
 const std::string title_button = "TitleButton";
-//const std::string menu = "Menu";
+const std::string menu = "Menu";
 
 
 // トランジションシーン
