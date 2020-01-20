@@ -17,7 +17,7 @@ struct CameraParam
 class Camera
 {
 public:
-	void InitCamera();
+	void InitCamera(float x_, float y_, float z_);
 	void ReleaseCamera();
 	void UpdateCamera();
 
