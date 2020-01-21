@@ -20,13 +20,13 @@ namespace LoadResources {
 				// 仮
 		tex->LoadTexture("Resource/Character/LeftCharacter/CharaAnime.png", chara_anime);
 				// プレイヤー
-		tex->LoadTexture("Resource/Character/LeftCharacter/walk.png", walk_anime);
-		tex->LoadTexture("Resource/Character/LeftCharacter/walk_to_standby.png", walk_to_standby_anime);
-		tex->LoadTexture("Resource/Character/LeftCharacter/standby.png", standby_anime);
+		tex->LoadTexture("Resource/Character/LeftCharacter/Walk.png", walk_anime);
+		tex->LoadTexture("Resource/Character/LeftCharacter/WalkWait.png", walk_to_standby_anime);
+		tex->LoadTexture("Resource/Character/LeftCharacter/Wait.png", standby_anime);
 
 			// 右側
 				// 絵描き
-		tex->LoadTexture("Resource/Character/RightCharacter/Drawer/Drawer.png", drawer_tex);
+		tex->LoadTexture("Resource/Character/RightCharacter/Drawer/Wait.png", drawer_wait_anime);
 				// ペリー
 		tex->LoadTexture("Resource/Character/RightCharacter/Perry/Wait.png", perry_wait_anime);
 		tex->LoadTexture("Resource/Character/RightCharacter/Perry/RightDeath.png", perry_die_anime);
