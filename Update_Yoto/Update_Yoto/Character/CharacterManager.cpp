@@ -234,6 +234,8 @@ void CharacterManager::Create()
 
 void CharacterManager::Update()
 {
+	Input* input = Input::GetInputInstance();
+
 	Create();
 
 	//if (プレイヤーとエネミーが生きていたら)
@@ -259,7 +261,9 @@ void CharacterManager::Update()
 			}
 
 			//if (プレイヤーがエンターキーを押したら)
-			if (Input::GetInputInstance()->GetKeyDown(KEY_INFO::ENTER_KEY) == true && m_pcutin_trigger == false)
+			if ((input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
+				input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN) &&
+				m_pcutin_trigger == false)
 			{
 				m_pcutin_trigger = true;
 				// リセット
@@ -276,7 +280,8 @@ void CharacterManager::Update()
 		else
 		{
 			// お手付き
-			if (Input::GetInputInstance()->GetKeyDown(KEY_INFO::ENTER_KEY) == true)
+			if (input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
+				input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
 			{
 				// プレイヤーのHPを減らす
 				m_p_player->HpDown();
