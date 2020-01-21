@@ -49,10 +49,10 @@ public:
 	void ChangeCameraPos(CameraState state_);
 
 private:
-	void ChangeBattlePos();
+	void ChangeBattleMovement();
 	void ChangeWinPos();
 	void ChangeLosePos();
-	void ChangeClearPos();
+	void ChangeClearMovement();
 
 public:
 	//シングルトン
@@ -96,5 +96,6 @@ private:
 	static Camera* p_CameraInstance;	//インスタンス
 
 	CameraParam camera_param;
+	/*static const float Length = */
 };
 #endif // !CAMERA_H_

@@ -51,40 +51,40 @@ void Camera::MoveCamera()
 {
 	const float speed = 3.0f;
 	Input* INP = Input::GetInputInstance();
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lUp) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lUp) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::UP_KEY) == true)
 	{
 		camera_param.m_pos_z += speed;
 		camera_param.m_eye_z += speed;
 	}
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lDown) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lDown) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::DOWN_KEY) == true)
 	{
 		camera_param.m_pos_z -= speed;
 		camera_param.m_eye_z -= speed;
 	}
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lRight) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lRight) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::RIGHT_KEY) == true)
 	{
 		camera_param.m_pos_x += speed;
 		camera_param.m_eye_x += speed;
 	}
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lLeft) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lLeft) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::LEFT_KEY) == true)
 	{
 		camera_param.m_pos_x -= speed;
 		camera_param.m_eye_x -= speed;
 	}
 
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rRight) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rRight) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::D_KEY) == true)
 	{
 		camera_param.m_eye_x += speed;
 	}
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rLeft) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rLeft) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::A_KEY) == true)
 	{
 		camera_param.m_eye_x -= speed;
 	}
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rUp) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rUp) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::W_KEY) == true)
 	{
 		camera_param.m_eye_y += speed;
 	}
-	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rDown) == INPUT_STATE::PUSH)
+	if (INP->GetGamePadBottonState(0, GAMEPAD_BUTTONS::rDown) == INPUT_STATE::PUSH || INP->GetKey(KEY_INFO::S_KEY) == true)
 	{
 		camera_param.m_eye_y -= speed;
 	}
@@ -95,7 +95,7 @@ void Camera::ChangeCameraPos(CameraState state_)
 	switch (state_)
 	{
 	case CameraState::Battle:
-		ChangeBattlePos();
+		ChangeBattleMovement();
 		break;
 	case CameraState::WinningPlayer:
 		ChangeWinPos();
@@ -104,24 +104,23 @@ void Camera::ChangeCameraPos(CameraState state_)
 		ChangeLosePos();
 		break;
 	case CameraState::GameClear:
-		ChangeClearPos();
+		ChangeClearMovement();
 		break;
 	}
 }
 
-void Camera::ChangeBattlePos()
+void Camera::ChangeBattleMovement()
 {
-	camera_param.m_pos_x = 0.0f;
-	camera_param.m_pos_y = 0.0f;
-	camera_param.m_pos_z = 0.0f;
-	camera_param.m_eye_x = 0.0f;
-	camera_param.m_eye_y = 0.0f;
-	camera_param.m_eye_z = 0.0f;
 }
 
 void Camera::ChangeWinPos()
 {
-
+	//camera_param.m_pos_x =
+	//	camera_param.m_pos_x =
+	//	camera_param.m_pos_x =
+	//	camera_param.m_pos_x =
+	//	camera_param.m_pos_x =
+	//	camera_param.m_pos_x =
 }
 
 void Camera::ChangeLosePos()
@@ -129,7 +128,7 @@ void Camera::ChangeLosePos()
 
 }
 
-void Camera::ChangeClearPos()
+void Camera::ChangeClearMovement()
 {
 
 }
