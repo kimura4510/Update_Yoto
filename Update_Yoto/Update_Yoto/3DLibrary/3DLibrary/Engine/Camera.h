@@ -17,16 +17,44 @@ struct CameraParam
 class Camera
 {
 public:
-	void InitCamera(float x_, float y_, float z_);
+
+	/**
+	* @brief カメラの初期化関数
+	* カメラのパラメータ(座標と注視点)を初期化します
+	* @param[in] x_ x座標
+	* @param[in] y_ y座標
+	* @param[in] z_ z座標
+	* @param[in] ex 注視点x座標
+	* @param[in] ey 注視点y座標
+	* @param[in] ez 注視点z座標
+	*/
+	void InitCamera(float x_, float y_, float z_, float ex=0.0f, float ey=0.0f, float ez=0.0f);
+	
+	/**
+	* @biref カメラの開放関数
+	*/
 	void ReleaseCamera();
+
+	/**
+	* @biref カメラの更新関数
+	* カメラの座標や注視点の更新を行います。毎フレーム実行してください。
+	*/
 	void UpdateCamera();
 
+	/**
+	* @biref カメラの座標変更関数
+	* 状態に応じてカメラの座標を変更します
+	* param[in] state_ 変更したいカメラの状態
+	*/
 	void ChangeCameraPos(CameraState state_);
+
+private:
 	void ChangeBattlePos();
 	void ChangeWinPos();
 	void ChangeLosePos();
 	void ChangeClearPos();
 
+public:
 	//シングルトン
 	//実体を生成する関数
 	static void CreateInstance()

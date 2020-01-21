@@ -37,11 +37,11 @@ void Camera::UpdateCamera()
 	//射影座標変換用の行列算出終了
 }
 
-void Camera::InitCamera(float x_, float y_, float z_)
+void Camera::InitCamera(float x_, float y_, float z_, float ex, float ey, float ez)
 {
-	camera_param.m_eye_x = 512.0f;
-	camera_param.m_eye_y = 512.0f;
-	camera_param.m_eye_z = 500.0f;
+	camera_param.m_eye_x = ex;
+	camera_param.m_eye_y = ey;
+	camera_param.m_eye_z = ez;
 	camera_param.m_pos_x = x_;
 	camera_param.m_pos_y = y_;
 	camera_param.m_pos_z = z_;
