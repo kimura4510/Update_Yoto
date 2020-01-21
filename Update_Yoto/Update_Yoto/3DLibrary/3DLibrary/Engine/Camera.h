@@ -96,6 +96,8 @@ private:
 	static Camera* p_CameraInstance;	//インスタンス
 
 	CameraParam camera_param;
+	CameraState camera_state;
+	int counter;
 	/*static const float Length = */
 };
 #endif // !CAMERA_H_
