@@ -45,6 +45,9 @@ void Camera::InitCamera(float x_, float y_, float z_, float ex, float ey, float 
 	camera_param.m_pos_x = x_;
 	camera_param.m_pos_y = y_;
 	camera_param.m_pos_z = z_;
+
+	camera_state = CameraState::Battle;
+	counter = 0;
 }
 
 void Camera::MoveCamera()
@@ -115,22 +118,51 @@ void Camera::ChangeBattleMovement()
 
 void Camera::ChangeWinPos()
 {
-	//camera_param.m_pos_x =
-	//	camera_param.m_pos_x =
-	//	camera_param.m_pos_x =
-	//	camera_param.m_pos_x =
-	//	camera_param.m_pos_x =
-	//	camera_param.m_pos_x =
+	D3DVECTOR vec;
+	// vec = GetCharaPos();
+	// camera_param.m_pos_x = vec.x - Length * cos(D3DXToRadian(60));
+	//	camera_param.m_pos_y = 
+	//	camera_param.m_pos_z = vec.z + Length * sin(D3DXToRadian(60));
+	
+	//	camera_param.m_eye_x = vec.x + Length * cos(D3DXToRadian(60));
+	//	camera_param.m_eye_y =
+	//	camera_param.m_eye_z = vec.z - Length * sin(D3DXToRadian(60));
 }
 
 void Camera::ChangeLosePos()
 {
+	D3DVECTOR vec;
+	// vec = GetCharaPos();
+	// camera_param.m_pos_x = vec.x + Length * cos(D3DXToRadian(60));
+	//	camera_param.m_pos_y = 
+	//	camera_param.m_pos_z = vec.z + Length * sin(D3DXToRadian(60));
 
+	//	camera_param.m_eye_x = vec.x - Length * cos(D3DXToRadian(60));
+	//	camera_param.m_eye_y =
+	//	camera_param.m_eye_z = vec.z - Length * sin(D3DXToRadian(60));
 }
 
 void Camera::ChangeClearMovement()
 {
-
+	counter++;
+	if (counter >= 102)
+	{
+		camera_state = CameraState::Battle;
+	}
+	else if (counter >= 80)
+	{
+		const float rot = 5.5 / 60;
+		D3DVECTOR vec; //= GetCharaPos();
+		// camera_param.m_pos_x = vec.x * cos(D3DXToRadian(rot)) + vec.z * sin(D3DXToRadian(rot)); 
+		// camera_param.m_pos_z = -vec.x * sin(D3DXToRadian(rot)) + vec.z * cos(D3DXToRadian(rot));
+	}
+	else
+	{
+		const float rot = 54.5 / 60;
+		D3DVECTOR vec; //= GetCharaPos();
+		// camera_param.m_pos_x = vec.x * cos(D3DXToRadian(rot)) + vec.z * sin(D3DXToRadian(rot)); 
+		// camera_param.m_pos_z = -vec.x * sin(D3DXToRadian(rot)) + vec.z * cos(D3DXToRadian(rot));
+	}
 }
 
 void Camera::ReleaseCamera()
