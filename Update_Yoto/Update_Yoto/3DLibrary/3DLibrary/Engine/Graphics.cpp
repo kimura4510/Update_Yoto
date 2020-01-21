@@ -308,13 +308,13 @@ void Graphics::DrawBillboard(const DrawingData3D& v3d, Texture* texture_data, fl
 	{
 		v[i].color = D3DCOLOR_ARGB(255, 255, 255, 255);
 	}
-	v[0].m_x = v3d.m_x;				v[0].m_y = v3d.m_y + spriteY;	v[0].m_z = v3d.m_z;
+	v[0].m_x = 0.0f;				v[0].m_y = 0.0f + spriteY;	v[0].m_z = 0.0f;
 	v[0].tu = tu * tmpX;			v[0].tv = tv * tmpY;
-	v[1].m_x = v3d.m_x + spriteX;	v[1].m_y = v3d.m_y + spriteY;	v[1].m_z = v3d.m_z;
+	v[1].m_x = 0.0f + spriteX;		v[1].m_y = 0.0f + spriteY;	v[1].m_z = 0.0f;
 	v[1].tu = tu * spriteNumX;		v[1].tv = tv * tmpY;
-	v[2].m_x = v3d.m_x;				v[2].m_y = v3d.m_y;				v[2].m_z = v3d.m_z;
+	v[2].m_x = 0.0f;				v[2].m_y = 0.0f;			v[2].m_z = 0.0f;
 	v[2].tu = tu * tmpX;			v[2].tv = tv * spriteNumY;
-	v[3].m_x = v3d.m_x + spriteX;	v[3].m_y = v3d.m_y;	v[3].m_z = v3d.m_z;
+	v[3].m_x = 0.0f + spriteX;		v[3].m_y = 0.0f;			v[3].m_z = 0.0f;
 	v[3].tu = tu * spriteNumX;		v[3].tv = tv * spriteNumY;
 	// ポリゴンのローカル座標の位置を指定 end
 
@@ -327,7 +327,7 @@ void Graphics::DrawBillboard(const DrawingData3D& v3d, Texture* texture_data, fl
 	D3DXMatrixIdentity(&inv_mat);
 
 	// 移動
-	D3DXMatrixTranslation(&mat_trans, 0.0f, 0.0f, 10.0f);
+	D3DXMatrixTranslation(&mat_trans, v3d.m_x, v3d.m_y, v3d.m_z);
 
 	// カメラビュー行列の逆行列を作成
 	g_D3DDevice->GetTransform(D3DTS_VIEW, &view_mat);

@@ -19,6 +19,10 @@ enum KEY_INFO
 	ENTER_KEY,
 	ESCAPE_KEY,
 	SPACE_KEY,
+	W_KEY,
+	A_KEY,
+	S_KEY,
+	D_KEY,
 	MAX_KEY_INFO,
 };
 
@@ -189,7 +193,7 @@ private:
 	LPDIRECTINPUTDEVICE8 m_GamePadDevices[MaxGamePadNum];	// インプットデバイス(ジョイスティック)
 
 	INPUT_STATE g_InputState[KEY_INFO::MAX_KEY_INFO];
-	int g_KeyInfo[7] = {
+	int g_KeyInfo[11] = {
 		DIK_UP,
 		DIK_DOWN,
 		DIK_RIGHT,
@@ -197,6 +201,10 @@ private:
 		DIK_RETURN,
 		DIK_ESCAPE,
 		DIK_SPACE,
+		DIK_W,
+		DIK_A,
+		DIK_S,
+		DIK_D,
 	};
 
 	//!< ゲームパッドの入力状態保持配列
