@@ -39,8 +39,8 @@ void Camera::UpdateCamera()
 
 void Camera::InitCamera(float x_, float y_, float z_)
 {
-	camera_param.m_eye_x = 0.0f;
-	camera_param.m_eye_y = 0.0f;
+	camera_param.m_eye_x = 512.0f;
+	camera_param.m_eye_y = 512.0f;
 	camera_param.m_eye_z = 500.0f;
 	camera_param.m_pos_x = x_;
 	camera_param.m_pos_y = y_;
