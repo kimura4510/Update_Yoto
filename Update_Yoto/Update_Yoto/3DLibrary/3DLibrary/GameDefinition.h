@@ -29,9 +29,10 @@ const std::string chara_anime				= "CharaAnime";	// プレイヤーのアニメーション（
 const std::string walk_anime				= "WalkAnime";	// プレイヤーの歩くアニメーション（仮）
 const std::string walk_to_standby_anime		= "WalkToStanadbyAnime";	// プレイヤーが歩いてきて構えるまでのアニメーション（仮）
 const std::string standby_anime				= "StandbyAnime";		// プレイヤーの構えている状態のアニメーション（仮）
-
-const std::string drawer_tex				= "Drawer";		// 絵描き
-	// ペリーの待っているときのアニメーション
+	// 絵描き
+const std::string drawer_wait_anime			= "DrawerWait";		// 絵描き：待つアニメーション
+const std::string drawer_die_anime			= "DrawerDie";		// 絵描き：死ぬアニメーション
+	// ペリー
 const std::string perry_wait_anime			= "PerryWait";		// ペリー：待つアニメーション
 const std::string perry_die_anime			= "PerryDie";		// ペリー：死ぬアニメーション
 

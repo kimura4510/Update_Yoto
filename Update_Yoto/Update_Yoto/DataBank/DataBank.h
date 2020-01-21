@@ -62,7 +62,7 @@ public:
 private:
 	DataBank() 
 	{ 
-		m_enemy_type = 1;
+		m_enemy_type = 0;
 	}
 	virtual ~DataBank() {}
 

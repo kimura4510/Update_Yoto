@@ -4,9 +4,9 @@
 Perry::Perry() : Enemy()
 {
 	m_isdeth = false;
-	m_x = 128.0f;
-	m_y = 100.0f;
-	m_z = -256.0f;
+	m_x = 1280.0f;
+	m_y = 0.0f;
+	m_z = 512.0f;
 	m_width = 256.0f;
 	m_height = 256.0f;
 

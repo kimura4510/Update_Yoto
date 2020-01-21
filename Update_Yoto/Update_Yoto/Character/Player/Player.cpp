@@ -6,11 +6,11 @@
 Player::Player() : Character()
 {
 	m_isdeth = false;
-	m_x = -1024.0f;		// 「player.png」の描画だけなら→ //128.0f;
-	m_y = 80.0f;
-	m_z = -256.0f;		// 「player.png」の描画だけなら→ //256.0f;
-	m_width = 64.0f * 2.0f;
-	m_height = 128.0f * 2.0f;
+	m_x = 0.0f;		// 「player.png」の描画だけなら→ //128.0f;
+	m_y = 0.0f;
+	m_z = 512.0f;			// 「player.png」の描画だけなら→ //256.0f;
+	m_width = 256.0f;
+	m_height = 256.0f;
 
 	m_hp = 3;
 
@@ -42,11 +42,11 @@ void Player::Update()
 	if (GetHp() <= 0)
 	{
 		m_isdeth == true;
-		/*if (m_up_count <= 55.0f)
+		if (m_up_count <= 55.0f)
 		{
 			m_up_count += 0.5f;
 			m_dead = true;
-		}*/
+		}
 	}
 }
 
@@ -57,7 +57,7 @@ void Player::Draw()
 		0.0f,0.0f,
 		this->m_width,this->m_height,
 		0xffff,
-		0.0f,180.0f,180.0f,
+		0.0f,0.0f,0.0f,
 		0.5f,0.5f,
 	};
 	if (m_isdeth == false)
@@ -70,10 +70,10 @@ void Player::Draw()
 			Graphics::GetGraphicInstance()->Animation3D(
 				player,
 				tex,
-				0.0625f, 0.25f,
+				0.25f, 0.0625f,
 				this->m_width, this->m_height,
-				16,
-				(int)m_up_count % (16 * 2) + 4
+				4,
+				(int)m_up_count % (4 * 9)
 			);
 		}
 		if (m_walk_to_standby == true && m_standby == false)
@@ -82,10 +82,10 @@ void Player::Draw()
 			Graphics::GetGraphicInstance()->Animation3D(
 				player,
 				tex,
-				0.0625f, 0.5f,
+				0.25f, 0.125f,
 				this->m_width, this->m_height,
-				16,
-				(int)m_standby_count % (16 * 1) + 2
+				4,
+				(int)m_standby_count % (4 * 4) + 2
 			);
 		}
 		if (m_walk_to_standby == true && m_standby == true)
@@ -94,10 +94,10 @@ void Player::Draw()
 			Graphics::GetGraphicInstance()->Animation3D(
 				player,
 				tex,
-				0.0625f, 0.25f,
+				0.25f, 0.0625f,
 				this->m_width, this->m_height,
-				16,
-				(int)m_standby_count % (16 * 2) + 2
+				4,
+				(int)m_standby_count % (4 * 8) + 2
 			);
 		}
 	}

@@ -243,7 +243,7 @@ void CharacterManager::Update()
 	{
 		// プレイヤーを所定の位置に移動させる
 		m_p_player->GoToApproach();
-		if (m_p_enemy->GetHp() >= 1 && m_p_player->GetPosX() >= -256.0f)
+		if (m_p_enemy->GetHp() >= 1 && m_p_player->GetPosX() >= 684.0f)
 		{
 			m_p_player->StopApproach();
 			m_p_player->HoldWeapon();
