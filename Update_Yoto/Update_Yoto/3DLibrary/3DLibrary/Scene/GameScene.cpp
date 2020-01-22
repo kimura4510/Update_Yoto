@@ -13,7 +13,7 @@ void GameScene::Init()
 
 	m_State = SceneState::eMain;
 	Camera::CreateInstance();
-	Camera::GetCameraInstance()->InitCamera(512.0f, 64.0f, 300.0f, 512.0f, 0.0f, 1024.0f);
+	Camera::GetCameraInstance()->InitCamera(512.0f, 64.0f, 300.0f, 512.0f, 32.0f, 1024.0f);
 
 	LoadResources::Load();
 

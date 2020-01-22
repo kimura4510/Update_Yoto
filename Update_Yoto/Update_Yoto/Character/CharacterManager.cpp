@@ -249,6 +249,7 @@ void CharacterManager::Update()
 			// エネミーが倒れるアニメーション
 			if (m_p_enemy->Dead() == false)
 			{
+				Camera::GetCameraInstance()->ChangeCameraPos(CameraState::GameClear);
 				m_p_enemy->Fall();
 			}
 			else
@@ -366,6 +367,7 @@ void CharacterManager::Battle()
 	{
 		//エネミーのカットインを描画
 		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->Update();
+		Camera::GetCameraInstance()->ChangeCameraPos(CameraState::LosingPlayer);
 		//if (エネミーのカットインの描画が終わったら)
 		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->IsOn() == false)
 		{

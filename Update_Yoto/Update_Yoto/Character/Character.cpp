@@ -14,11 +14,7 @@ Character::Character()
 	m_quick_press_flame = 0;
 	m_quick_press_flame_down = 0;
 
-	m_walk = false;
-	m_walk_to_standby = false;
-	m_wait = false;
-	m_attacked = false;
-	m_attack1 = false;
+	m_character_state[static_cast<int>(CHARACTER_STATE::STATE_MAX)] = false;
 
 	m_reset_count = 0;
 	m_walk_count = 0;
@@ -87,25 +83,26 @@ void Character::QuickPressFlameDown()
 // ë“ã@Ç∑ÇÈ
 void Character::Wait()
 {
-	m_wait = true;
+	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = true;
 }
-// ãﬂÇ√Ç≠
+// ï‡Ç≠
 void Character::Walk()
 {
-	m_walk = true;
+	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = true;
 }
 // ãﬂÇ√Ç≠ÇÃÇÇ‚ÇﬂÇÈ
 void Character::StopWalk()
 {
 	m_walk_count = m_reset_count;
-	m_walk = false;
+	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = false;
 }
 // ïêäÌÇç\Ç¶ÇÈ
 bool Character::HoldWeapon()
 {
-	if (m_wait == false)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == false)
 	{
-		m_walk_to_standby = true;
+		//m_walk_to_standby = true;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = true;
 		return false;
 	}
 	else
@@ -116,14 +113,14 @@ bool Character::HoldWeapon()
 // çUåÇÇ∑ÇÈ(1âÒñ⁄ÇÃó\íË)
 bool Character::Attack()
 {
-	if (m_attacked == true)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] == true)
 	{
-		m_attacked = false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] = false;
 		return true;
 	}
 	else
 	{
-		m_attack1 = true;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] = true;
 		return false;
 	}
 }

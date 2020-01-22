@@ -49,13 +49,7 @@ protected:
 	float m_quick_press_flame;
 	float m_quick_press_flame_down;
 
-	//bool m_character_state[CHARACTER_STATE::STATE_MAX]
-
-	bool m_walk;
-	bool m_walk_to_standby;
-	bool m_wait;
-	bool m_attacked;
-	bool m_attack1;
+	bool m_character_state[static_cast<int>(CHARACTER_STATE::STATE_MAX)];
 
 	float m_reset_count;
 	float m_walk_count;

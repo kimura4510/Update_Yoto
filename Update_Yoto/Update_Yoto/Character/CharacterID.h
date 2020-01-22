@@ -27,17 +27,25 @@ enum class GAME_END {
 	GAME_END_MAX,
 };
 
-enum class CHARACTER_STATE {
-	IS_WALK,			// •à‚­
+enum class CHARACTER_STATE : int{
+	IS_WALK,				// •à‚­
 
-	IS_HOLD_WEAPON,		// •Ší‚ð\‚¦‚é
-	IS_STAND_BY,		// ‘Ò‹@‚·‚é
+	IS_HOLD_WEAPON,			// •Ší‚ð\‚¦‚é
+	IS_WAIT,				// ‘Ò‹@‚·‚é
 
-	IS_ATTACK,			// UŒ‚‚·‚é
-	IS_DEFEND,			// –hŒä‚·‚é
+	IS_ATTACK_01,			// 1‰ñ–Ú‚ÌUŒ‚‚·‚é
+	IS_ATTACK_02,			// 2‰ñ–Ú‚ÌUŒ‚‚·‚é
+	IS_ATTACK_03,			// 3‰ñ–Ú‚ÌUŒ‚‚·‚é
+	IS_ATTACKED,
 
-	IS_KILL,			// ŽE‚·
-	IS_DIE,				// Ž€‚Ê
+	IS_DEFEND_01,			// 1‰ñ–Ú‚Ì–hŒä‚·‚é
+	IS_DEFEND_02,			// 2‰ñ–Ú‚Ì–hŒä‚·‚é
+	IS_DEFEND_03,			// 3‰ñ–Ú‚Ì–hŒä‚·‚é
+	IS_DEFENDED,
+
+	IS_KILL,				// ŽE‚·(ŽE‚·‚Æ‚«)
+	IS_DIE,					// Ž€‚Ê(ŽE‚³‚ê‚é‚Æ‚«)
+	IS_DETH,				// Ž€‚ñ‚Å‚é
 
 	STATE_MAX
 };

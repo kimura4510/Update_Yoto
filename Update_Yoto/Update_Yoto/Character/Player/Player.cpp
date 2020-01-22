@@ -20,42 +20,43 @@ Player::Player() : Character()
 void Player::Update()
 {
 	// 歩く時のカウント
-	if (m_walk == true)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] == true)
 	{
-		m_walk_to_standby = false;
-		m_wait == false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = false;
 		m_x += 1.0f;
 		m_walk_count += 0.5f;
 	}
 	// 歩いてきて待機するまでのカウント
-	if (m_walk_to_standby == true)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] == true)
 	{
-		m_walk = false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = false;
 		m_standby_count += 0.5f;
 		if (m_standby_count >= 18.0f)
 		{
 			m_standby_count = m_reset_count;
-			m_walk_to_standby = false;
-			m_wait = true;
+			m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = false;
+			m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = true;
 		}
 	}
 	// 待機中の時のカウント
-	if (m_wait == true)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == true)
 	{
 		m_standby_count = m_reset_count;
 		m_wait_count += 0.5f;
 	}
 	// 攻撃1回目
-	if (m_attack1 == true)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] == true)
 	{
-		m_walk_to_standby = false;
-		m_wait = false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = false;
 		m_attack_count += 0.5f;
 		if (m_attack_count >= 10.0f)
 		{
-			m_attacked = true;
+			m_character_state[static_cast<int>(CHARACTER_STATE::IS_DEFENDED)] = true;
 			m_attack_count = m_reset_count;
-			m_attack1 = false;
+			m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] = false;
 		}
 	}
 
@@ -82,7 +83,7 @@ void Player::Draw()
 
 		if (GetHp() >= 1)
 		{
-			if (m_walk == true)
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] == true)
 			{
 				Texture* tex = ctex->GetTexture(walk_anime);
 				Graphics::GetGraphicInstance()->Animation3D(
@@ -94,7 +95,7 @@ void Player::Draw()
 					(int)m_walk_count % (4 * 9)
 				);
 			}
-			if (m_walk_to_standby == true)
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] == true)
 			{
 				Texture* tex = ctex->GetTexture(walk_wait_anime);
 				Graphics::GetGraphicInstance()->Animation3D(
@@ -106,7 +107,7 @@ void Player::Draw()
 					(int)m_standby_count % ((4 * 4) + 2)
 				);
 			}
-			if (m_wait == true)
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == true)
 			{
 				Texture* tex = ctex->GetTexture(wait_anime);
 				Graphics::GetGraphicInstance()->Animation3D(
@@ -118,7 +119,7 @@ void Player::Draw()
 					(int)m_wait_count % ((4 * 8) + 2)
 				);
 			}
-			if (m_attack1 == true)
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] == true)
 			{
 				Texture* tex = ctex->GetTexture(attack1_anime);
 				Graphics::GetGraphicInstance()->Animation3D(

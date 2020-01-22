@@ -29,7 +29,7 @@ void Drawer::Draw()
 	{
 		if (GetHp() >= 1)
 		{
-			if (m_wait == true)
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == true)
 			{
 				Texture* tex = ctex->GetTexture(drawer_wait_anime);
 				Graphics::GetGraphicInstance()->Animation3D(
@@ -41,7 +41,7 @@ void Drawer::Draw()
 					(int)m_wait_count % (4 * 8) + 2
 				);
 			}
-			if (m_attack1 == true)
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] == true)
 			{
 				Texture* tex = ctex->GetTexture(drawer_attack1_anime);
 				Graphics::GetGraphicInstance()->Animation3D(

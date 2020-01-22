@@ -2,21 +2,21 @@
 
 void Enemy::Update()
 {
-	if (m_wait == true)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == true)
 	{
 		m_wait_count += 0.5f;
 	}
 	
 	// çUåÇ1âÒñ⁄
-	if (m_attack1 == true)
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] == true)
 	{
-		m_wait = false;
+		m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = false;
 		m_attack_count += 0.5f;
 		if (m_attack_count >= 10.0f)
 		{
-			m_attacked = true;
+			m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] = true;
 			m_attack_count = m_reset_count;
-			m_attack1 = false;
+			m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] = false;
 		}
 	}
 
