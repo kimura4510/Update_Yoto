@@ -38,7 +38,7 @@ void Drawer::Draw()
 					0.25, 0.0625,
 					this->m_width, this->m_height,
 					4,
-					(int)m_up_count % (4 * 8) + 2
+					(int)m_wait_count % (4 * 8) + 2
 				);
 			}
 			if (m_attack1 == true)

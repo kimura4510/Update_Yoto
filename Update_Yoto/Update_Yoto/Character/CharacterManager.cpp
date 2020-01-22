@@ -7,6 +7,7 @@
 #include "Enemy/Enemies/Fox.h"
 #include "../3DLibrary/3DLibrary/Engine/Input.hpp"
 #include "../DataBank/DataBank.h"
+#include "../3DLibrary/3DLibrary/Engine/Camera.h"
 
 CharacterManager::CharacterManager() :
 	m_enemy_id(ENEMY_ID::ENMEY_NONE),
@@ -242,12 +243,6 @@ void CharacterManager::Update()
 		if (m_p_enemy->GetHp() >= 1)
 		{
 			m_p_enemy->Wait();
-			/*if (m_p_player->GetPosX() >= 512.0f - 128.0f)
-			{
-				m_p_player->StopWalk();
-				m_p_player->HoldWeapon();
-				m_p_player->Wait();
-			}*/
 		}
 		else
 		{
@@ -258,7 +253,7 @@ void CharacterManager::Update()
 			}
 			else
 			{
-				// プレイヤーが画面が今で出ていくアニメーション
+				// プレイヤーが画面から出ていくアニメーション
 				m_p_player->Walk();
 				if (m_p_player->GetPosX() >= 768.0f)
 				{
@@ -268,7 +263,7 @@ void CharacterManager::Update()
 		}
 		if (m_p_player->GetHp() <= 0)
 		{
-			// エネミーが倒れるアニメーション
+			// プレイヤーが倒れるアニメーション
 			if (m_p_player->Dead() == false)
 			{
 				m_p_player->Fall();
@@ -291,25 +286,22 @@ void CharacterManager::PlayerStandBy()
 {
 	if (m_p_player->GetPosX() <= 512.0f - 128.0f)
 	{
-		// プレイヤーを所定の位置に移動させる
 		m_p_player->Walk();
 	}
 	else
 	{
 		m_p_player->StopWalk();
 		m_p_player->HoldWeapon();
-		//BeginBattle();
-		Battle();
+		if (m_p_player->HoldWeapon() == true)
+		{
+			m_p_player->Wait();
+			Battle();
+		}
 	}
 }
-
-//void CharacterManager::BegineBattle()
-//{
-//	Battle();
-//}
-
 void CharacterManager::Battle()
 {
+	Camera::GetCameraInstance()->UpdateCamera();
 	Input* input = Input::GetInputInstance();
 
 	//「押せ！」の描画までのカウントを始める
@@ -359,6 +351,7 @@ void CharacterManager::Battle()
 	{
 		//プレイヤーのカットインを描画
 		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->Update();
+		Camera::GetCameraInstance()->ChangeCameraPos(CameraState::WinningPlayer);
 		//if (プレイヤーのカットインの描画が終わったら)
 		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->IsOn() == false)
 		{

@@ -4,7 +4,7 @@ void Enemy::Update()
 {
 	if (m_wait == true)
 	{
-		m_up_count += 0.5f;
+		m_wait_count += 0.5f;
 	}
 	
 	// UŒ‚1‰ñ–Ú
