@@ -105,10 +105,11 @@ bool Character::HoldWeapon()
 	if (m_wait == false)
 	{
 		m_walk_to_standby = true;
+		return false;
 	}
 	else
 	{
-
+		return true;
 	}
 }
 // UŒ‚‚·‚é(1‰ñ–Ú‚Ì—\’è)

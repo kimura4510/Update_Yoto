@@ -299,6 +299,7 @@ void CharacterManager::PlayerStandBy()
 		m_p_player->StopWalk();
 		m_p_player->HoldWeapon();
 		//BeginBattle();
+		Battle();
 	}
 }
 
