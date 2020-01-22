@@ -111,6 +111,7 @@ enum class CameraState
 	WinningPlayer,
 	LosingPlayer,
 	GameClear,
+	Gameover
 };
 
 #endif

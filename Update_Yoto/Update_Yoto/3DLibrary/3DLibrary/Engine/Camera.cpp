@@ -10,12 +10,6 @@ void Camera::UpdateCamera()
 {
 	MoveCamera();
 
-	//if (camera_state == CameraState::GameClear)
-	//{
-	//	ChangeClearMovement();
-	//}
-	//// else if(camera_state == CameraState::)
-
 	D3DXMATRIX matProj, matView;
 
 	//View座標変換用の行列算出開始
@@ -115,6 +109,9 @@ void Camera::ChangeCameraPos(CameraState state_)
 	case CameraState::GameClear:
 		ChangeClearMovement();
 		break;
+	case CameraState::Gameover:
+		ChangeGameoverMovement();
+		break;
 	}
 }
 
@@ -193,7 +190,6 @@ void Camera::ChangeGameoverMovement()
 		camera_param.m_pos_x = camera_param.m_pos_x * cos(D3DXToRadian(rot)) + camera_param.m_pos_z * sin(D3DXToRadian(rot));
 		camera_param.m_pos_z = -camera_param.m_pos_x * sin(D3DXToRadian(rot)) + camera_param.m_pos_z * cos(D3DXToRadian(rot));
 	}
-
 }
 
 
