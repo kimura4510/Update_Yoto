@@ -14,14 +14,22 @@ Character::Character()
 	m_quick_press_flame = 0;
 	m_quick_press_flame_down = 0;
 
-	m_character_state[static_cast<int>(CHARACTER_STATE::STATE_MAX)] = false;
-
+	for (int i = 0; i < static_cast<int>(CHARACTER_STATE::STATE_MAX); i++)
+	{
+		m_character_state[i] = false;
+	}
+	m_anime_count = 0;
 	m_reset_count = 0;
-	m_walk_count = 0;
+
+
+	//m_chara_state = CHARACTER_STATE::STATE_MAX;
+
+	/*m_walk_count = 0;
 	m_wait_count = 0;
 	m_attack_count = 0;
-	m_fall_count = 0;
+	m_fall_count = 0;*/
 	
+
 
 
 	// 追加　アニメーション関連　前川
@@ -80,62 +88,176 @@ void Character::QuickPressFlameDown()
 	m_quick_press_flame_down--;
 }
 
-// 待機する
-void Character::Wait()
+void Character::CharacterState(CHARACTER_STATE ch_state_)
 {
-	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = true;
-}
-// 歩く
-void Character::Walk()
-{
-	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = true;
-}
-// 近づくのをやめる
-void Character::StopWalk()
-{
-	m_walk_count = m_reset_count;
-	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = false;
-}
-// 武器を構える
-bool Character::HoldWeapon()
-{
-	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == false)
+	for (int i = 0; i < static_cast<int>(CHARACTER_STATE::STATE_MAX); i++)
 	{
-		//m_walk_to_standby = true;
-		m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = true;
-		return false;
+		if (i == static_cast<int>(ch_state_))
+		{
+			m_character_state[i] = true;
+		}
+		m_character_state[i] = false;
 	}
-	else
+	/*switch (ch_state_)
 	{
-		return true;
-	}
+	case CHARACTER_STATE::WALK:
+		m_character_state[static_cast<int>(CHARACTER_STATE::WALK)] = true;
+		break;
+	case CHARACTER_STATE::WALK_WAIT:
+		m_character_state[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] = true;
+		break;
+	case CHARACTER_STATE::WAIT:
+		m_character_state[static_cast<int>(CHARACTER_STATE::WAIT)] = true;
+		break;
+	case CHARACTER_STATE::ATTACK_01:
+		m_character_state[static_cast<int>(CHARACTER_STATE::ATTACK_01)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_ATTACK_02:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_ATTACK_02:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] = true;
+		break;
+	case CHARACTER_STATE::ATTACKED:
+		m_character_state[static_cast<int>(CHARACTER_STATE::ATTACKED)] = true;
+		break;
+	case CHARACTER_STATE::DEFENCE_01:
+		m_character_state[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_DEFENCE_02:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_DEFENCE_02:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] = true;
+		break;
+	case CHARACTER_STATE::DEFENCED:
+		m_character_state[static_cast<int>(CHARACTER_STATE::DEFENCED)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_ATTACK_CROSS:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_CROSS)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_ATTACK_CROSS:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_CROSS)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_FRICK:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_FRICK:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_KILL:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_KILL:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_KILL_WALK:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL_WALK)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_KILL_WALK:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL_WALK)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_BACK:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_BACK:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] = true;
+		break;
+	case CHARACTER_STATE::RIGHT_DEATH:
+		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEATH)] = true;
+		break;
+	case CHARACTER_STATE::LEFT_DEATH:
+		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] = true;
+		break;
+	case CHARACTER_STATE::DETH:
+		m_character_state[static_cast<int>(CHARACTER_STATE::DETH)] = true;
+		break;
+	case CHARACTER_STATE::STATE_MAX:
+		break;
+	default:
+		break;
+	}*/
 }
-// 攻撃する(1回目の予定)
-bool Character::Attack()
+
+//// 待機する
+//void Character::Wait()
+//{
+//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = true;
+//}
+//// 歩く
+//void Character::Walk()
+//{
+//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = true;
+//}
+//// 近づくのをやめる
+//void Character::StopWalk()
+//{
+//	m_walk_count = m_reset_count;
+//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = false;
+//}
+//// 武器を構える
+//bool Character::HoldWeapon()
+//{
+//	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == false)
+//	{
+//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = true;
+//		return false;
+//	}
+//	else
+//	{
+//		return true;
+//	}
+//}
+//// 攻撃する(1回目の予定)
+//bool Character::Attack()
+//{
+//	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] == true)
+//	{
+//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] = false;
+//		return true;
+//	}
+//	else
+//	{
+//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] = true;
+//		return false;
+//	}
+//}
+//
+//// 倒れる
+//void Character::Fall()
+//{
+//	m_fall_count++;
+//}
+//
+//// 死んだかどうか
+//bool Character::Dead()
+//{
+//	return m_isdeth;
+//}
+
+void Character::Update()
 {
-	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] == true)
-	{
-		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] = false;
-		return true;
+	/*if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK)] == true) {
+		m_x += 1.0f;
+		m_anime_count += 0.5f;
 	}
-	else
+	if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] == true) {
+		m_anime_count += 0.5f;
+	}*/
+	for (int i = 0; i < static_cast<int>(CHARACTER_STATE::STATE_MAX); i++)
 	{
-		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] = true;
-		return false;
+		if (m_character_state[i] == true)
+		{
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK)] == true) 
+			{
+				m_x += 1.0f;
+			}
+			m_anime_count += 0.5f;
+		}
 	}
 }
 
-// 倒れる
-void Character::Fall()
-{
-	m_fall_count++;
-}
 
-// 死んだかどうか
-bool Character::Dead()
-{
-	return m_isdeth;
-}
 
 // キャラクターの座標と幅の情報
 float Character::GetPosX()

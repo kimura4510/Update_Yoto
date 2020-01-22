@@ -28,24 +28,39 @@ enum class GAME_END {
 };
 
 enum class CHARACTER_STATE : int{
-	IS_WALK,				// •à‚­
+	WALK,					// •à‚­
+	WALK_WAIT,				// •Ší‚ð\‚¦‚é
+	WAIT,					// ‘Ò‹@‚·‚é
 
-	IS_HOLD_WEAPON,			// •Ší‚ð\‚¦‚é
-	IS_WAIT,				// ‘Ò‹@‚·‚é
+	ATTACK_01,				// 1‰ñ–Ú‚ÌUŒ‚‚·‚é
+	RIGHT_ATTACK_02,		// ‰E‘«‚Å2‰ñ–ÚˆÈã‚ÌUŒ‚‚·‚é
+	LEFT_ATTACK_02,			// ¶‘«‚Å2‰ñ–ÚˆÈã‚ÌUŒ‚‚·‚é
+	ATTACKED,
 
-	IS_ATTACK_01,			// 1‰ñ–Ú‚ÌUŒ‚‚·‚é
-	IS_ATTACK_02,			// 2‰ñ–Ú‚ÌUŒ‚‚·‚é
-	IS_ATTACK_03,			// 3‰ñ–Ú‚ÌUŒ‚‚·‚é
-	IS_ATTACKED,
+	DEFENCE_01,				// 1‰ñ–Ú‚Ì–hŒä‚·‚é
+	RIGHT_DEFENCE_02,		// ‰E‘«‚Å2‰ñ–ÚˆÈã‚Ì–hŒä‚·‚é
+	LEFT_DEFENCE_02,		// ¶‘«‚Å2‰ñ–ÚˆÈã‚Ì–hŒä‚·‚é
+	DEFENCED,
 
-	IS_DEFEND_01,			// 1‰ñ–Ú‚Ì–hŒä‚·‚é
-	IS_DEFEND_02,			// 2‰ñ–Ú‚Ì–hŒä‚·‚é
-	IS_DEFEND_03,			// 3‰ñ–Ú‚Ì–hŒä‚·‚é
-	IS_DEFENDED,
+	RIGHT_ATTACK_CROSS,		// ‰E‘«‚Å‚Ì‚Â‚Î‚º‚è‚ ‚¢
+	LEFT_ATTACK_CROSS,		// ¶‘«‚Å‚Ì‚Â‚Î‚º‚è‚ ‚¢
 
-	IS_KILL,				// ŽE‚·(ŽE‚·‚Æ‚«)
-	IS_DIE,					// Ž€‚Ê(ŽE‚³‚ê‚é‚Æ‚«)
-	IS_DETH,				// Ž€‚ñ‚Å‚é
+	RIGHT_FRICK,			// ‰E‚Å‚Í‚¶‚­‘¤
+	LEFT_FRICK,				// ¶‚Å‚Í‚¶‚­‘¤
+
+	RIGHT_KILL,				// ‰E‘«‚ÅŽE‚·
+	LEFT_KILL,				// ¶‘«‚ÅŽE‚·
+
+	RIGHT_KILL_WALK,		// ‰E‘«‚ÅŽE‚·
+	LEFT_KILL_WALK,			// ¶‘«‚ÅŽE‚·
+
+	RIGHT_BACK,				// ‰E‘«‚ÌŽž“|‚³‚ê‚é
+	LEFT_BACK,				// ¶‘«‚ÌŽž“|‚³‚ê‚é
+
+	RIGHT_DEATH,			// ‰E‘«‚ÌŽž‚ÉŽE‚³‚ê‚é
+	LEFT_DEATH,				// ¶‘«‚ÌŽž‚ÉŽE‚³‚ê‚é
+
+	DETH,					// Ž€‚ñ‚Å‚é
 
 	STATE_MAX
 };

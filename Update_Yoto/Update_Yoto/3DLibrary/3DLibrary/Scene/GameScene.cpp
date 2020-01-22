@@ -30,7 +30,6 @@ void GameScene::Update()
 	// トランジションシーン画像が画面外(左側)に出たかどうか判定
 	if (m_bg.TransitionSceneLower() == true)
 	{
-
 		m_chmanager.PlayerStandBy();
 	}
 	else

@@ -25,7 +25,7 @@ void Perry::Draw()
 			0.5f,0.5f,
 	};
 	cTexture* ctex = cTexture::GetTextureInstance();
-	if (m_isdeth == false)
+	/*if (m_isdeth == false)
 	{
 		if (GetHp() >= 1)
 		{
@@ -71,5 +71,5 @@ void Perry::Draw()
 	else
 	{
 		
-	}
+	}*/
 }
