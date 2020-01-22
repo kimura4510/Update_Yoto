@@ -10,17 +10,21 @@ Character::Character()
 	m_height = 0.0f;
 
 	m_hp = 0;
-	m_dead = false;
 
 	m_quick_press_flame = 0;
 	m_quick_press_flame_down = 0;
 
-	m_approach = false;
+	m_walk = false;
+	m_walk_to_standby = false;
+	m_wait = false;
+	m_attacked = false;
+	m_attack1 = false;
+
 	m_reset_count = 0;
 	m_up_count = 0;
+	m_attack_count = 0;
 	m_fall_count = 0;
-	m_walk_to_standby = false;
-	m_standby = false;
+	
 
 
 	// 追加　アニメーション関連　前川
@@ -64,18 +68,6 @@ void Character::HpDown()
 	m_hp--;
 }
 
-bool Character::Dead()
-{
-	if (m_dead == true)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 void Character::SetQuickPressFlame()
 {
 	m_quick_press_flame_down = m_quick_press_flame;
@@ -91,21 +83,59 @@ void Character::QuickPressFlameDown()
 	m_quick_press_flame_down--;
 }
 
-// 近づく
-void Character::GoToApproach()
+// 待機する
+void Character::Wait()
 {
-	m_approach = true;
+	m_wait = true;
+}
+// 近づく
+void Character::Walk()
+{
+	m_walk = true;
 }
 // 近づくのをやめる
-void Character::StopApproach()
+void Character::StopWalk()
 {
 	m_up_count = m_reset_count;
-	m_approach = false;
+	m_walk = false;
 }
 // 武器を構える
-void Character::HoldWeapon()
+bool Character::HoldWeapon()
 {
-	m_walk_to_standby = true;
+	if (m_wait == false)
+	{
+		m_walk_to_standby = true;
+	}
+	else
+	{
+
+	}
+}
+// 攻撃する(1回目の予定)
+bool Character::Attack()
+{
+	if (m_attacked == true)
+	{
+		m_attacked = false;
+		return true;
+	}
+	else
+	{
+		m_attack1 = true;
+		return false;
+	}
+}
+
+// 倒れる
+void Character::Fall()
+{
+	m_fall_count++;
+}
+
+// 死んだかどうか
+bool Character::Dead()
+{
+	return m_isdeth;
 }
 
 // キャラクターの座標と幅の情報

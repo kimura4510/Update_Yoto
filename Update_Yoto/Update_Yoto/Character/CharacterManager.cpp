@@ -234,135 +234,44 @@ void CharacterManager::Create()
 
 void CharacterManager::Update()
 {
-	Input* input = Input::GetInputInstance();
-
 	Create();
 
 	//if (プレイヤーとエネミーが生きていたら)
 	if (m_p_player != nullptr && m_p_enemy != nullptr)
 	{
-		// プレイヤーを所定の位置に移動させる
-		m_p_player->GoToApproach();
-		if (m_p_enemy->GetHp() >= 1 && m_p_player->GetPosX() >= 684.0f)
+		if (m_p_enemy->GetHp() >= 1)
 		{
-			m_p_player->StopApproach();
-			m_p_player->HoldWeapon();
-			//「押せ！」の描画までのカウントを始める
-			m_p_callout_ui->Update();
-		}
-		//if (カウントが0になったら「押せ！」を描画)
-		if (m_p_callout_ui->IsOn() == true)
-		{
-			// プレイヤーがエンターキーを押していなかったら
-			//「押せ！」を描画中にエネミーのカウントを減らす
-			if (m_pcutin_trigger == false) 
+			m_p_enemy->Wait();
+			/*if (m_p_player->GetPosX() >= 512.0f - 128.0f)
 			{
-				m_p_enemy->QuickPressFlameDown();
-			}
-
-			//if (プレイヤーがエンターキーを押したら)
-			if ((input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
-				input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN) &&
-				m_pcutin_trigger == false)
-			{
-				m_pcutin_trigger = true;
-				// リセット
-				//m_p_enemy->SetQuickPressFlame();
-			}
-			//if (エネミーのカウントが0以下になったら)
-			if (m_p_enemy->GetQuickPressFlame() <= 0 && m_ecutin_trigger == false)
-			{
-				m_ecutin_trigger = true;
-				// リセット
-				m_p_enemy->SetQuickPressFlame();
-			}
+				m_p_player->StopWalk();
+				m_p_player->HoldWeapon();
+				m_p_player->Wait();
+			}*/
 		}
 		else
 		{
-			// お手付き
-			if (input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
-				input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
+			// エネミーが倒れるアニメーション
+			if (m_p_enemy->Dead() == false)
 			{
-				// プレイヤーのHPを減らす
-				m_p_player->HpDown();
-				HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
-				m_p_enemy->SetQuickPressFlame();
-			}
-		}
-
-		if (m_pcutin_trigger == true)
-		{
-			//プレイヤーのカットインを1秒描画
-			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->Update();
-			//if (プレイヤーのカットインの描画が終わったら)
-			if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->IsOn() == false)
-			{
-				//「押せ！」の描画を終了
-				m_p_callout_ui->IsNotOn();
-				//toriggerをonにする
-				m_player_trigger = true;
-				m_pcutin_trigger = false;
-			}
-		}
-		if (m_ecutin_trigger == true)
-		{
-			//エネミーのカットインを1秒描画
-			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->Update();
-			//if (エネミーのカットインの描画が終わったら)
-			if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->IsOn() == false)
-			{
-				//「押せ！」の描画を終了
-				m_p_callout_ui->IsNotOn();
-				//toriggerをonにする
-				m_enemy_trigger = true;
-				m_ecutin_trigger = false;
-			}
-		}
-
-		if (m_enemy_trigger == true)
-		{
-			//プレイヤーのHPを減らす
-			m_p_player->HpDown();
-			//プレイヤーのHPUIを減らす
-			HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
-			//エネミーのカウントをリセット
-			m_p_enemy->SetQuickPressFlame();
-			//toriggerをoffにする
-			m_enemy_trigger = false;
-		}
-		if (m_player_trigger == true)
-		{
-			//if (プレイヤーがエネミーと近づいていなかったら)
-			if (CollisionRect() == false)
-			{
-				//プレイヤーがエネミーに近づく
-				m_p_player->GoToApproach();
+				m_p_enemy->Fall();
 			}
 			else
 			{
-				// 近づくのをやめる
-				m_p_player->StopApproach();
-				//エネミーのHPを減らす
-				m_p_enemy->HpDown();
-				//エネミーのHPUIを減らす
-				HpUiManager(BATTLE_CHARACTER::BATTLE_ENEMY);
-				//エネミーのカウントをリセット
-				m_p_enemy->SetQuickPressFlame();
-				//toriggerをoffにする
-				m_player_trigger = false;
+				// プレイヤーが画面が今で出ていくアニメーション
+				m_p_player->Walk();
+				if (m_p_player->GetPosX() >= 768.0f)
+				{
+					m_p_player->StopWalk();
+				}
 			}
 		}
-		if (m_p_enemy->GetHp() <= 0)
+		if (m_p_player->GetHp() <= 0)
 		{
 			// エネミーが倒れるアニメーション
-			if (m_p_enemy->Dead() == true)
+			if (m_p_player->Dead() == false)
 			{
-				// プレイヤーが画面が今で出ていくアニメーション
-				m_p_player->GoToApproach();
-				if (m_p_player->GetPosX() >= 1024.0f)
-				{
-					m_p_player->StopApproach();
-				}
+				m_p_player->Fall();
 			}
 		}
 	}
@@ -375,6 +284,133 @@ void CharacterManager::Update()
 		if (m_p_hp_ui[i] != nullptr)
 		{
 			m_p_hp_ui[i]->Update();
+		}
+	}
+}
+void CharacterManager::PlayerStandBy()
+{
+	if (m_p_player->GetPosX() <= 512.0f - 128.0f)
+	{
+		// プレイヤーを所定の位置に移動させる
+		m_p_player->Walk();
+	}
+	else
+	{
+		m_p_player->StopWalk();
+		m_p_player->HoldWeapon();
+		//BeginBattle();
+	}
+}
+
+//void CharacterManager::BegineBattle()
+//{
+//	Battle();
+//}
+
+void CharacterManager::Battle()
+{
+	Input* input = Input::GetInputInstance();
+
+	//「押せ！」の描画までのカウントを始める
+	m_p_callout_ui->Update();
+	//if (カウントが0になったら「押せ！」を描画)
+	if (m_p_callout_ui->IsOn() == true)
+	{
+		// プレイヤーがエンターキーを押していなかったら
+		//「押せ！」を描画中にエネミーのカウントを減らす
+		if (m_pcutin_trigger == false)
+		{
+			m_p_enemy->QuickPressFlameDown();
+		}
+
+		//if (プレイヤーがエンターキーを押したら)
+		if ((input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
+			input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN) &&
+			m_pcutin_trigger == false &&
+			m_ecutin_trigger == false)
+		{
+			m_pcutin_trigger = true;
+		}
+		//if (エネミーのカウントが0以下になったら)
+		if (m_p_enemy->GetQuickPressFlame() <= 0 &&
+			m_ecutin_trigger == false &&
+			m_pcutin_trigger == false)
+		{
+			m_ecutin_trigger = true;
+			// リセット
+			m_p_enemy->SetQuickPressFlame();
+		}
+	}
+	else
+	{
+		// お手付き
+		if (input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
+			input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
+		{
+			// プレイヤーのHPを減らす
+			m_p_player->HpDown();
+			HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
+			m_p_enemy->SetQuickPressFlame();
+		}
+	}
+
+	if (m_pcutin_trigger == true)
+	{
+		//プレイヤーのカットインを描画
+		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->Update();
+		//if (プレイヤーのカットインの描画が終わったら)
+		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->IsOn() == false)
+		{
+			//「押せ！」の描画を終了
+			m_p_callout_ui->IsNotOn();
+			//toriggerをonにする
+			m_player_trigger = true;
+			m_pcutin_trigger = false;
+		}
+	}
+	if (m_ecutin_trigger == true)
+	{
+		//エネミーのカットインを描画
+		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->Update();
+		//if (エネミーのカットインの描画が終わったら)
+		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->IsOn() == false)
+		{
+			//「押せ！」の描画を終了
+			m_p_callout_ui->IsNotOn();
+			//toriggerをonにする
+			m_enemy_trigger = true;
+			m_ecutin_trigger = false;
+		}
+	}
+
+	if (m_enemy_trigger == true)
+	{
+		// プレイヤーに攻撃するアニメーション
+		if (m_p_enemy->Attack() == true)
+		{
+			//プレイヤーのHPを減らす
+			m_p_player->HpDown();
+			//プレイヤーのHPUIを減らす
+			HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
+			//エネミーのカウントをリセット
+			m_p_enemy->SetQuickPressFlame();
+			//toriggerをoffにする
+			m_enemy_trigger = false;
+		}
+	}
+	if (m_player_trigger == true)
+	{
+		// エネミーに攻撃するアニメーション
+		if (m_p_player->Attack() == true)
+		{
+			//エネミーのHPを減らす
+			m_p_enemy->HpDown();
+			//エネミーのHPUIを減らす
+			HpUiManager(BATTLE_CHARACTER::BATTLE_ENEMY);
+			//エネミーのカウントをリセット
+			m_p_enemy->SetQuickPressFlame();
+			//toriggerをoffにする
+			m_player_trigger = false;
 		}
 	}
 }
@@ -399,13 +435,11 @@ bool CharacterManager::CollisionRect()
 
 	if (m_collision.IsHitCaracter(rp, re) == true) 
 	{
-		// 衝突した場合
-		return true;
+		return true;	// 衝突した場合
 	}
 	else 
 	{
-		// 衝突していない場合
-		return false;
+		return false;	// 衝突していない場合
 	}
 }
 
@@ -443,7 +477,7 @@ void CharacterManager::DeleteCheck()
 {
 	if (m_p_player != nullptr && m_p_enemy != nullptr)
 	{
-		if (m_p_player->GetHp() <= 0 || m_p_player->GetPosX() >= 1000.0f)
+		if (m_p_player->Dead() == true || m_p_player->GetPosX() >= 768.0f)
 		{
 			for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 			{
@@ -513,7 +547,7 @@ void CharacterManager::HpUiManager(BATTLE_CHARACTER battle_character_)
 
 bool CharacterManager::IsBattleFinish()
 {
-	if (m_p_player->GetHp() <= 0 || m_p_player->GetPosX() >= 1000.0f)//m_p_enemy->GetHp() <= 0)
+	if (m_p_player->Dead() == true || m_p_player->GetPosX() >= 768.0f)//m_p_enemy->GetHp() <= 0)
 	{
 		return true;
 	}
@@ -525,11 +559,11 @@ bool CharacterManager::IsBattleFinish()
 
 GAME_END CharacterManager::GetGameEnd()
 {
-	if (m_p_player->GetHp() <= 0)
+	if (m_p_player->Dead() == true)
 	{
 		return GAME_END::GAME_OVER;
 	}
-	if (m_p_enemy->GetHp() <= 0)
+	if (m_p_enemy->Dead() == true)
 	{
 		//次のキャラぎいなかったらクリアを返す
 		if (m_enemy_id == ENEMY_ID::FOX)

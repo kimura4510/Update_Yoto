@@ -16,6 +16,8 @@ public:
 	void Init();
 	void Draw();
 	void Update();
+	void PlayerStandBy();
+	void Battle();
 	void HpUiManager(BATTLE_CHARACTER battle_character_);
 
 	void DeleteCheck();

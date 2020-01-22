@@ -3,8 +3,8 @@
 
 BackGround::BackGround()
 {
-	m_x = 1920.0f;
-	m_y = 0.0f;
+	m_transition_x = 0.0f;
+	m_transition_y = 0.0f;
 
 	// Œã‚ë
 	m_bg[0] = {
@@ -52,21 +52,43 @@ void BackGround::Draw()
 	gp->Draw3D(m_bg[1], tex->GetTexture(ground));
 	gp->Draw3D(m_bg[2], tex->GetTexture(background));
 	gp->Draw3D(m_bg[3], tex->GetTexture(background));
-
-	gp->DrawTexture(m_x, m_y, tex->GetTexture(transition));
 }
 
-void BackGround::Update()
+void BackGround::TransitionDraw()
 {
-	if (m_x > 0.0f)
+	Graphics* gp = Graphics::GetGraphicInstance();
+	cTexture* tex = cTexture::GetTextureInstance();
+	gp->DrawTexture(m_transition_x, m_transition_y, tex->GetTexture(transition));
+}
+
+void BackGround::MoveTransitionScene()
+{
+	m_transition_x -= 10.0f;
+}
+
+bool BackGround::TransitionSceneLower()
+{
+	if (m_transition_x <= -2048.0f)
 	{
-		m_x -= 10.0f;
+		return true;	// Ý’u‚Å‚«‚Ä‚¢‚é
+	}
+	else
+	{
+		return false;	// Ý’u‚Å‚«‚Ä‚¢‚È‚¢
+	}
+}
+
+void BackGround::TransitionSceneSetToRight()
+{
+	if (m_transition_x <= -2048)
+	{
+		m_transition_x = 2048.0f;
 	}
 }
 
 bool BackGround::TransitionSceneInstall()
 {
-	if (m_x <= 0.0f)
+	if (m_transition_x <= 0.0f)
 	{
 		return true;	// Ý’u‚Å‚«‚Ä‚¢‚é
 	}

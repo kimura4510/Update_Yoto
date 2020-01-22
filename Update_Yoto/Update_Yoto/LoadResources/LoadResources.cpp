@@ -7,7 +7,7 @@ namespace LoadResources {
 		cTexture* tex = cTexture::GetTextureInstance();
 
 		// トランジションシーン
-		tex->LoadTexture("Resource/Transition/rogo2.png", transition);
+		tex->LoadTexture("Resource/Transition/SceneSwitching.png", transition);
 
 
 		// 3D空間
@@ -17,18 +17,21 @@ namespace LoadResources {
 
 		// キャラクター
 			// 左側
-				// 仮
-		tex->LoadTexture("Resource/Character/LeftCharacter/CharaAnime.png", chara_anime);
 				// プレイヤー
 		tex->LoadTexture("Resource/Character/LeftCharacter/Walk.png", walk_anime);
-		tex->LoadTexture("Resource/Character/LeftCharacter/WalkWait.png", walk_to_standby_anime);
-		tex->LoadTexture("Resource/Character/LeftCharacter/Wait.png", standby_anime);
+		tex->LoadTexture("Resource/Character/LeftCharacter/WalkWait.png", walk_wait_anime);
+		tex->LoadTexture("Resource/Character/LeftCharacter/Wait.png", wait_anime);
+		tex->LoadTexture("Resource/Character/LeftCharacter/Attack1.png", attack1_anime);
+		tex->LoadTexture("Resource/Character/LeftCharacter/LeftDeath.png", player_die_anime);
 
 			// 右側
 				// 絵描き
 		tex->LoadTexture("Resource/Character/RightCharacter/Drawer/Wait.png", drawer_wait_anime);
+		tex->LoadTexture("Resource/Character/RightCharacter/Drawer/Attack1.png", drawer_attack1_anime);
+		tex->LoadTexture("Resource/Character/RightCharacter/Drawer/RightDeath.png", drawer_die_anime);
 				// ペリー
 		tex->LoadTexture("Resource/Character/RightCharacter/Perry/Wait.png", perry_wait_anime);
+		tex->LoadTexture("Resource/Character/RightCharacter/Perry/Attack1.png", perry_attack1_anime);
 		tex->LoadTexture("Resource/Character/RightCharacter/Perry/RightDeath.png", perry_die_anime);
 				// 仙人
 		tex->LoadTexture("Resource/Character/RightCharacter/Hermit/Hermit.png", hermit_tex);

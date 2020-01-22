@@ -4,7 +4,7 @@
 Drawer::Drawer() : Enemy()
 {
 	m_isdeth = false;
-	m_x = 1100.0f;
+	m_x = 512.0f;
 	m_y = 0.0f;
 	m_z = 512.0f;
 	m_width = 256.0f;
@@ -21,33 +21,54 @@ void Drawer::Draw()
 			0.0f,0.0f,
 			this->m_width, this->m_height,
 			0xffff,
-			0.0f,180.0f,180.0f,
+			0.0f,0.0f,0.0f,
 			0.5f,0.5f,
 	};
+	cTexture* ctex = cTexture::GetTextureInstance();
 	if (m_isdeth == false)
 	{
-		cTexture* ctex = cTexture::GetTextureInstance();
-		Texture* tex = ctex->GetTexture(drawer_wait_anime);
-		Graphics::GetGraphicInstance()->Animation3D(
-			drawer,
-			tex,
-			0.25, 0.0625,
-			this->m_width, this->m_height,
-			4,
-			(int)m_up_count % (4 * 8) + 2
-		);
+		if (GetHp() >= 1)
+		{
+			if (m_wait == true)
+			{
+				Texture* tex = ctex->GetTexture(drawer_wait_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					drawer,
+					tex,
+					0.25, 0.0625,
+					this->m_width, this->m_height,
+					4,
+					(int)m_up_count % (4 * 8) + 2
+				);
+			}
+			if (m_attack1 == true)
+			{
+				Texture* tex = ctex->GetTexture(drawer_attack1_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					drawer,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_attack_count % ((4 * 2) + 2)
+				);
+			}
+		}
+		else
+		{
+			Texture* tex = ctex->GetTexture(drawer_die_anime);
+			Graphics::GetGraphicInstance()->Animation3D(
+				drawer,
+				tex,
+				0.25, 0.0625,
+				this->m_width, this->m_height,
+				4,
+				(int)m_fall_count % (4 * 13) + 3
+			);
+		}
 	}
 	else
 	{
-		cTexture* ctex = cTexture::GetTextureInstance();
-		Texture* tex = ctex->GetTexture(drawer_die_anime);
-		Graphics::GetGraphicInstance()->Animation3D(
-			drawer,
-			tex,
-			0.25, 0.0625,
-			this->m_width, this->m_height,
-			4,
-			(int)m_up_count % (4 * 13) + 3
-		);
+		
 	}
 }

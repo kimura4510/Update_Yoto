@@ -24,7 +24,7 @@ void CutIn::Update()
 	m_ison = true;
 	if (m_ison == true)
 	{
-		m_count += 0.15f;
+		m_count += 0.2f;
 		if (m_count >= 9.0f)
 		{
 			m_ison = false;
@@ -37,7 +37,7 @@ void CutIn::Draw()
 {
 	if (m_method == DrawMethod::RIGHT)
 	{
-		m_x = 192.0f;
+		m_x = 320.0f;
 		switch (m_type)
 		{
 		case CutInType::PLAYER:

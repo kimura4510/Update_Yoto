@@ -7,7 +7,6 @@
 void TransitionScene::Init()
 {
 	LoadResources::Load();
-
 	m_State = SceneState::eMain;
 }
 
@@ -20,7 +19,8 @@ SceneID TransitionScene::End()
 void TransitionScene::Update()
 {
 	Input* input = Input::GetInputInstance();
-	if (input->GetKey(KEY_INFO::ENTER_KEY) == true)
+	if (input->GetKey(KEY_INFO::ENTER_KEY) == true ||
+		input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
 	{
 		m_State = SceneState::eEnd;
 	}
