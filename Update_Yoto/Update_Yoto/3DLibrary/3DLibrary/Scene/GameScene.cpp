@@ -24,12 +24,27 @@ void GameScene::Update()
 {
 	Camera::GetCameraInstance()->UpdateCamera();
 
+	Input* input = Input::GetInputInstance();
+
 	m_chmanager.Update();
+	// トランジションシーン画像が画面外(左側)に出たかどうか判定
+	if (m_bg.TransitionSceneLower() == true)
+	{
+		m_chmanager.PlayerStandBy();
+	}
+	else
+	{
+		m_bg.MoveTransitionScene();	// 左に動かす
+	}
 
 	if (m_chmanager.IsBattleFinish() == true)
 	{
-		m_bg.Update();
-		if (m_bg.TransitionSceneInstall() == true)
+		m_bg.TransitionSceneSetToRight();
+		if (m_bg.TransitionSceneInstall() == false)
+		{
+			m_bg.MoveTransitionScene();	// 左に動かす
+		}
+		else
 		{
 			switch (m_chmanager.GetGameEnd())
 			{
@@ -101,4 +116,5 @@ void GameScene::Draw()
 	}
 	m_bg.Draw();
 	m_chmanager.Draw();
+	m_bg.TransitionDraw();
 }

@@ -9,15 +9,19 @@ public:
 	~BackGround() {}
 
 public:
-	void Update();
-	void Draw();
-
+	void MoveTransitionScene();
+	bool TransitionSceneLower();
+	void TransitionSceneSetToRight();
 	bool TransitionSceneInstall();
+
+	void Draw();
+	void TransitionDraw();
+	
 
 private:
 	DrawingData3D m_bg[4];
-
-	float m_x, m_y;
+	
+	float m_transition_x, m_transition_y;
 };
 
 #endif

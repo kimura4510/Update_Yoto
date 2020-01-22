@@ -2,16 +2,26 @@
 
 void Enemy::Update()
 {
-	m_up_count += 0.5f;
-
-	if (GetHp() <= 0)
+	if (m_wait == true)
 	{
-		m_isdeth == true;
-		m_fall_count += 0.5f;
-		if (m_fall_count >= 55.0f)
+		m_up_count += 0.5f;
+	}
+	
+	// UŒ‚1‰ñ–Ú
+	if (m_attack1 == true)
+	{
+		m_wait = false;
+		m_attack_count += 0.5f;
+		if (m_attack_count >= 10.0f)
 		{
-			m_dead = true;
-			m_fall_count = m_reset_count;
+			m_attacked = true;
+			m_attack_count = m_reset_count;
+			m_attack1 = false;
 		}
+	}
+
+	if (m_fall_count >= 55.0f)
+	{
+		m_isdeth = true;
 	}
 }

@@ -7,9 +7,9 @@
 const std::string texture_name = "ex.Update_Yoto";
 
 // タイトルシーン
-const std::string title_base = "TitleBase";
-const std::string title_button = "TitleButton";
-const std::string menu = "Menu";
+const std::string title_base				= "TitleBase";
+const std::string title_button				= "TitleButton";
+const std::string menu						= "Menu";
 
 
 // トランジションシーン
@@ -24,16 +24,19 @@ const std::string ground					= "Ground";		// 地面
 // キャラクター
 const std::string r_perry_anime_hold		= "RightPerryAnime";	// 右側のペリーのアニメーション（仮）
 
-	// 今のプレイヤーの描画はこれ
-const std::string chara_anime				= "CharaAnime";	// プレイヤーのアニメーション（仮）
-const std::string walk_anime				= "WalkAnime";	// プレイヤーの歩くアニメーション（仮）
-const std::string walk_to_standby_anime		= "WalkToStanadbyAnime";	// プレイヤーが歩いてきて構えるまでのアニメーション（仮）
-const std::string standby_anime				= "StandbyAnime";		// プレイヤーの構えている状態のアニメーション（仮）
+	// プレイヤー
+const std::string walk_anime				= "WalkAnime";				// プレイヤー：歩くアニメーション
+const std::string walk_wait_anime			= "WalkToStanadbyAnime";	// プレイヤー：歩いてきて構えるまでのアニメーション
+const std::string wait_anime				= "StandbyAnime";			// プレイヤー：構えている状態のアニメーション
+const std::string attack1_anime				= "Attack1";				// プレイヤー：1回目の攻撃アニメーション
+const std::string player_die_anime			= "PlayerDie";				// プレイヤー：死ぬアニメーション
 	// 絵描き
 const std::string drawer_wait_anime			= "DrawerWait";		// 絵描き：待つアニメーション
+const std::string drawer_attack1_anime		= "DrawerAttack1";	// 絵描き：1回目の攻撃アニメーション
 const std::string drawer_die_anime			= "DrawerDie";		// 絵描き：死ぬアニメーション
 	// ペリー
 const std::string perry_wait_anime			= "PerryWait";		// ペリー：待つアニメーション
+const std::string perry_attack1_anime		= "PerryAttack1";		// ペリー：1回目の攻撃アニメーション
 const std::string perry_die_anime			= "PerryDie";		// ペリー：死ぬアニメーション
 
 const std::string hermit_tex				= "Hermit";		// 仙人
