@@ -21,7 +21,8 @@ Character::Character()
 	m_attack1 = false;
 
 	m_reset_count = 0;
-	m_up_count = 0;
+	m_walk_count = 0;
+	m_wait_count = 0;
 	m_attack_count = 0;
 	m_fall_count = 0;
 	
@@ -96,7 +97,7 @@ void Character::Walk()
 // ‹ß‚Ã‚­‚Ì‚ğ‚â‚ß‚é
 void Character::StopWalk()
 {
-	m_up_count = m_reset_count;
+	m_walk_count = m_reset_count;
 	m_walk = false;
 }
 // •Ší‚ğ\‚¦‚é

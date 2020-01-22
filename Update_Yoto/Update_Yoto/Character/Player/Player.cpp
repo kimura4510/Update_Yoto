@@ -25,10 +25,10 @@ void Player::Update()
 		m_walk_to_standby = false;
 		m_wait == false;
 		m_x += 1.0f;
-		m_up_count += 0.5f;
+		m_walk_count += 0.5f;
 	}
 	// 歩いてきて待機するまでのカウント
-	if (m_walk_to_standby == true/* && m_wait == false*/)
+	if (m_walk_to_standby == true)
 	{
 		m_walk = false;
 		m_standby_count += 0.5f;
@@ -40,10 +40,10 @@ void Player::Update()
 		}
 	}
 	// 待機中の時のカウント
-	if (/*m_walk_to_standby == true && */m_wait == true)
+	if (m_wait == true)
 	{
 		m_standby_count = m_reset_count;
-		m_standby_count += 0.5f;
+		m_wait_count += 0.5f;
 	}
 	// 攻撃1回目
 	if (m_attack1 == true)
@@ -91,10 +91,10 @@ void Player::Draw()
 					0.25f, 0.0625f,
 					this->m_width, this->m_height,
 					4,
-					(int)m_up_count % (4 * 9)
+					(int)m_walk_count % (4 * 9)
 				);
 			}
-			if (m_walk_to_standby == true/* && m_wait == false*/)
+			if (m_walk_to_standby == true)
 			{
 				Texture* tex = ctex->GetTexture(walk_wait_anime);
 				Graphics::GetGraphicInstance()->Animation3D(
@@ -106,7 +106,7 @@ void Player::Draw()
 					(int)m_standby_count % ((4 * 4) + 2)
 				);
 			}
-			if (/*m_walk_to_standby == true && */m_wait == true)
+			if (m_wait == true)
 			{
 				Texture* tex = ctex->GetTexture(wait_anime);
 				Graphics::GetGraphicInstance()->Animation3D(
@@ -115,7 +115,7 @@ void Player::Draw()
 					0.25f, 0.0625f,
 					this->m_width, this->m_height,
 					4,
-					(int)m_standby_count % ((4 * 8) + 2)
+					(int)m_wait_count % ((4 * 8) + 2)
 				);
 			}
 			if (m_attack1 == true)

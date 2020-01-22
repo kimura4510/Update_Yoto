@@ -49,6 +49,8 @@ protected:
 	float m_quick_press_flame;
 	float m_quick_press_flame_down;
 
+	//bool m_character_state[CHARACTER_STATE::STATE_MAX]
+
 	bool m_walk;
 	bool m_walk_to_standby;
 	bool m_wait;
@@ -56,7 +58,8 @@ protected:
 	bool m_attack1;
 
 	float m_reset_count;
-	float m_up_count;
+	float m_walk_count;
+	float m_wait_count;
 	float m_attack_count;
 	float m_fall_count;
 
