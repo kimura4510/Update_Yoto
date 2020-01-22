@@ -10,6 +10,12 @@ void Camera::UpdateCamera()
 {
 	MoveCamera();
 
+	if (camera_state == CameraState::GameClear)
+	{
+		ChangeClearMovement();
+	}
+	else if(camera_state == CameraState::)
+
 	D3DXMATRIX matProj, matView;
 
 	//View座標変換用の行列算出開始
@@ -118,28 +124,22 @@ void Camera::ChangeBattleMovement()
 
 void Camera::ChangeWinPos()
 {
-	D3DVECTOR vec;
-	// vec = GetCharaPos();
-	// camera_param.m_pos_x = vec.x - Length * cos(D3DXToRadian(60));
-	//	camera_param.m_pos_y = 
-	//	camera_param.m_pos_z = vec.z + Length * sin(D3DXToRadian(60));
-	
-	//	camera_param.m_eye_x = vec.x + Length * cos(D3DXToRadian(60));
-	//	camera_param.m_eye_y =
-	//	camera_param.m_eye_z = vec.z - Length * sin(D3DXToRadian(60));
+	//!< 注視点をフィールドの中心に変更
+	camera_param.m_eye_x = 512.0f;
+	camera_param.m_eye_z = 512.0f;
+
+	//!< 中心点から半径300の球の表面上に位置情報を変更
+	camera_param.m_pos_x = camera_param.m_eye_x - Length * cos(D3DXToRadian(60));
+	camera_param.m_pos_z = camera_param.m_eye_z + Length * cos(D3DXToRadian(60));
 }
 
 void Camera::ChangeLosePos()
 {
-	D3DVECTOR vec;
-	// vec = GetCharaPos();
-	// camera_param.m_pos_x = vec.x + Length * cos(D3DXToRadian(60));
-	//	camera_param.m_pos_y = 
-	//	camera_param.m_pos_z = vec.z + Length * sin(D3DXToRadian(60));
+	camera_param.m_eye_x = 512.0f;
+	camera_param.m_eye_z = 512.0f;
 
-	//	camera_param.m_eye_x = vec.x - Length * cos(D3DXToRadian(60));
-	//	camera_param.m_eye_y =
-	//	camera_param.m_eye_z = vec.z - Length * sin(D3DXToRadian(60));
+	camera_param.m_pos_x = camera_param.m_eye_x + Length * cos(D3DXToRadian(60));
+	camera_param.m_pos_z = camera_param.m_eye_z + Length * sin(D3DXToRadian(60));
 }
 
 void Camera::ChangeClearMovement()
@@ -151,18 +151,45 @@ void Camera::ChangeClearMovement()
 	}
 	else if (counter >= 80)
 	{
-		const float rot = 5.5 / 60;
-		// camera_param.m_pos_x = vec.x * cos(D3DXToRadian(rot)) + vec.z * sin(D3DXToRadian(rot)); 
-		// camera_param.m_pos_z = -vec.x * sin(D3DXToRadian(rot)) + vec.z * cos(D3DXToRadian(rot));
+		const float rot = 5.5 / 60.0f;
+		camera_param.m_pos_x = camera_param.m_pos_x * cos(D3DXToRadian(rot)) + camera_param.m_pos_z * sin(D3DXToRadian(rot));
+		camera_param.m_pos_z = -camera_param.m_pos_x * sin(D3DXToRadian(rot)) + camera_param.m_pos_z * cos(D3DXToRadian(rot));
 	}
 	else
 	{
-		const float rot = 54.5 / 60;
-		// camera_param.m_pos_x = camera_param.m_pos_x * cos(D3DXToRadian(rot)) + camera_param.m_pos_z * sin(D3DXToRadian(rot)); 
-		// camera_param.m_pos_z = camera_param.m_pos_x * sin(D3DXToRadian(rot)) + camera_param.m_pos_z * cos(D3DXToRadian(rot));
+		const float rot = 54.5 / 60.0f;
+		camera_param.m_pos_x = camera_param.m_pos_x * cos(D3DXToRadian(rot)) + camera_param.m_pos_z * sin(D3DXToRadian(rot)); 
+		camera_param.m_pos_z = camera_param.m_pos_x * sin(D3DXToRadian(rot)) + camera_param.m_pos_z * cos(D3DXToRadian(rot));
 	}
 }
 
+void Camera::ChangeGameoverMovement()
+{
+	counter++;
+	if (counter >= 102)
+	{
+		camera_state = CameraState::Battle;
+	}
+	else if (counter >= 80)
+	{
+		const float rot = 5.5 / -60.0f;
+		camera_param.m_pos_x = camera_param.m_pos_x * cos(D3DXToRadian(rot)) + camera_param.m_pos_z * sin(D3DXToRadian(rot));
+		camera_param.m_pos_z = -camera_param.m_pos_x * sin(D3DXToRadian(rot)) + camera_param.m_pos_z * cos(D3DXToRadian(rot));
+	}
+	else
+	{
+		const float rot = 54.5 / -60.0f;
+		camera_param.m_pos_x = camera_param.m_pos_x * cos(D3DXToRadian(rot)) + camera_param.m_pos_z * sin(D3DXToRadian(rot));
+		camera_param.m_pos_z = camera_param.m_pos_x * sin(D3DXToRadian(rot)) + camera_param.m_pos_z * cos(D3DXToRadian(rot));
+	}
+
+}
+
+
 void Camera::ReleaseCamera()
+{
+}
+
+Camera::Camera() : Length(300.0f)
 {
 }

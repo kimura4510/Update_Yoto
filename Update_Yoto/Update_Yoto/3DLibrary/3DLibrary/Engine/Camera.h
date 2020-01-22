@@ -53,6 +53,7 @@ private:
 	void ChangeWinPos();
 	void ChangeLosePos();
 	void ChangeClearMovement();
+	void ChangeGameoverMovement();
 
 public:
 	//シングルトン
@@ -90,7 +91,7 @@ public:
 private:
 	void MoveCamera();
 
-	Camera() { }		//コンストラクタ
+	Camera();		//コンストラクタ
 	~Camera() { }		//デストラクタ
 
 	static Camera* p_CameraInstance;	//インスタンス
@@ -98,6 +99,6 @@ private:
 	CameraParam camera_param;
 	CameraState camera_state;
 	int counter;
-	/*static const float Length = */
+	const float Length;
 };
 #endif // !CAMERA_H_
