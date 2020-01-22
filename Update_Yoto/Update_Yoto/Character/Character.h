@@ -10,7 +10,7 @@ public:
 
 public:
 	virtual void Draw() = 0;
-	virtual void Update() = 0;
+	void Update();
 
 	int GetHp();
 	void HpDown();
@@ -19,13 +19,14 @@ public:
 	int GetQuickPressFlame();
 	void QuickPressFlameDown();
 
-	void Wait();
+	void CharacterState(CHARACTER_STATE ch_state_);
+	/*void Wait();
 	void Walk();
 	void StopWalk();
 	bool HoldWeapon();
 	bool Attack();
 	void Fall();
-	bool Dead();
+	bool Dead();*/
 
 	float GetPosX();
 	float GetPosY();
@@ -50,12 +51,19 @@ protected:
 	float m_quick_press_flame_down;
 
 	bool m_character_state[static_cast<int>(CHARACTER_STATE::STATE_MAX)];
-
+	float m_anime_count;
 	float m_reset_count;
-	float m_walk_count;
+
+
+
+	//CHARACTER_STATE m_chara_state;
+
+	/*float m_walk_count;
 	float m_wait_count;
 	float m_attack_count;
-	float m_fall_count;
+	float m_fall_count;*/
+
+
 
 	// 追加　アニメーション関連　前川
 

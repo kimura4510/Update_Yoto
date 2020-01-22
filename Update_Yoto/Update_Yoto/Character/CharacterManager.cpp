@@ -242,7 +242,8 @@ void CharacterManager::Update()
 	{
 		if (m_p_enemy->GetHp() >= 1)
 		{
-			m_p_enemy->Wait();
+			//m_p_enemy->Wait();
+			m_p_enemy->CharacterState(CHARACTER_STATE::WAIT);
 		}
 		else
 		{
@@ -314,7 +315,10 @@ void CharacterManager::Battle()
 		//「押せ！」を描画中にエネミーのカウントを減らす
 		if (m_pcutin_trigger == false)
 		{
-			m_p_enemy->QuickPressFlameDown();
+			if (m_p_player->GetHp() >= 1 && m_p_enemy->GetHp() >= 1)
+			{
+				m_p_enemy->QuickPressFlameDown();
+			}
 		}
 
 		//if (プレイヤーがエンターキーを押したら)
@@ -352,6 +356,7 @@ void CharacterManager::Battle()
 	{
 		//プレイヤーのカットインを描画
 		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->Update();
+		// カメラをプレイヤーの後ろに移動させる
 		Camera::GetCameraInstance()->ChangeCameraPos(CameraState::WinningPlayer);
 		//if (プレイヤーのカットインの描画が終わったら)
 		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->IsOn() == false)
@@ -367,6 +372,7 @@ void CharacterManager::Battle()
 	{
 		//エネミーのカットインを描画
 		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->Update();
+		// カメラをエネミーの後ろに移動させる
 		Camera::GetCameraInstance()->ChangeCameraPos(CameraState::LosingPlayer);
 		//if (エネミーのカットインの描画が終わったら)
 		if (m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->IsOn() == false)
