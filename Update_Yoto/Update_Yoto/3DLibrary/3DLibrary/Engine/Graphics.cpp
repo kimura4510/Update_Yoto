@@ -88,14 +88,14 @@ void Graphics::DrawTexture(float x, float y, Texture* texture_data)
 {
 	CustomVertex TriStr[] =
 	{
-		{x, y, 0.0f, 1.0f, 0.0f, 0.0f}, //left-top
-		{x + texture_data->m_Width, y, 0.0f, 1.0f, 1.0f, 0.0f}, //right-top
-		{x, y + texture_data->m_Height, 0.0f, 1.0f, 0.0f, 1.0f},//left-bottom
-		{x + texture_data->m_Width, y + texture_data->m_Height, 0.0f, 1.0f, 1.0f, 1.0f},//right-bottom
+		{x, y, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, 255), 0.0f, 0.0f}, //left-top
+		{x + texture_data->m_Width, y, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, 255), 1.0f, 0.0f}, //right-top
+		{x, y + texture_data->m_Height, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, 255), 0.0f, 1.0f},//left-bottom
+		{x + texture_data->m_Width, y + texture_data->m_Height, 0.0f, 1.0f, D3DCOLOR_RGBA(255, 255, 255, 255), 1.0f, 1.0f},//right-bottom
 	};
 
 	//’¸“_\‘¢‚ÌŽw’è
-	g_D3DDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
+	g_D3DDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
 	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
 		2,

@@ -152,16 +152,14 @@ void Camera::ChangeClearMovement()
 	else if (counter >= 80)
 	{
 		const float rot = 5.5 / 60;
-		D3DVECTOR vec; //= GetCharaPos();
 		// camera_param.m_pos_x = vec.x * cos(D3DXToRadian(rot)) + vec.z * sin(D3DXToRadian(rot)); 
 		// camera_param.m_pos_z = -vec.x * sin(D3DXToRadian(rot)) + vec.z * cos(D3DXToRadian(rot));
 	}
 	else
 	{
 		const float rot = 54.5 / 60;
-		D3DVECTOR vec; //= GetCharaPos();
-		// camera_param.m_pos_x = vec.x * cos(D3DXToRadian(rot)) + vec.z * sin(D3DXToRadian(rot)); 
-		// camera_param.m_pos_z = -vec.x * sin(D3DXToRadian(rot)) + vec.z * cos(D3DXToRadian(rot));
+		// camera_param.m_pos_x = camera_param.m_pos_x * cos(D3DXToRadian(rot)) + camera_param.m_pos_z * sin(D3DXToRadian(rot)); 
+		// camera_param.m_pos_z = camera_param.m_pos_x * sin(D3DXToRadian(rot)) + camera_param.m_pos_z * cos(D3DXToRadian(rot));
 	}
 }
 
