@@ -71,7 +71,7 @@ void TitleScene::Update()
 		}
 
 		//!< ƒƒjƒ…[‰æ–Ê‚à‚µ‚­‚ÍƒQ[ƒ€I—¹‚Ö‚Ì‘JˆÚˆ—
-		if (inpt->GetKey(KEY_INFO::ENTER_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
+		if (inpt->GetKeyDown(KEY_INFO::ENTER_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
 		{
 			if (m_IsExit == false)
 			{
@@ -95,8 +95,7 @@ void TitleScene::Update()
 				m_DisplayState = static_cast<DisplayState>(m_DisplayNum);
 			}
 		}
-	
-		if (inpt->GetKeyDown(KEY_INFO::DOWN_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lDown) == INPUT_STATE::PUSH_DOWN)
+		else if (inpt->GetKeyDown(KEY_INFO::DOWN_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lDown) == INPUT_STATE::PUSH_DOWN)
 		{
 			if (m_DisplayNum < 3)
 			{
@@ -105,7 +104,7 @@ void TitleScene::Update()
 			}
 		}
 
-		if (inpt->GetKey(KEY_INFO::ENTER_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
+		if (inpt->GetKeyDown(KEY_INFO::ENTER_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
 		{
 			if (m_DisplayState != DisplayState::PvP)
 			{
