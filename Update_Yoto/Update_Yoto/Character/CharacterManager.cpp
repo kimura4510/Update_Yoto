@@ -22,10 +22,19 @@ CharacterManager::CharacterManager() :
 		m_p_cut_in[i] = nullptr;
 		m_p_hp_ui[i] = nullptr;
 	}
+	
 	m_player_trigger = false;
+	m_player_trigger2 = false;
 	m_enemy_trigger = false;
+	m_enemy_trigger2 = false;
+
 	m_pcutin_trigger = false;
 	m_ecutin_trigger = false;
+
+
+	m_battle_trigger = false;
+
+	m_standby = false;
 }
 
 CharacterManager::~CharacterManager()
@@ -193,8 +202,8 @@ void CharacterManager::Create()
 		case ENEMY_ID::SINSENGUMI:
 			m_p_enemy = new Sinsengumi;
 			m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY] = new CutIn(
-				CutIn::DrawMethod::RIGHT,
-				CutIn::CutInType::SINSENGUMI);
+			CutIn::DrawMethod::RIGHT,
+			CutIn::CutInType::SINSENGUMI);
 			break;
 		case ENEMY_ID::FOX:
 			m_p_enemy = new Fox;
@@ -240,35 +249,41 @@ void CharacterManager::Update()
 	//if (プレイヤーとエネミーが生きていたら)
 	if (m_p_player != nullptr && m_p_enemy != nullptr)
 	{
-		if (m_p_enemy->GetHp() >= 1)
+		if (m_p_player->GetHp() >= 1 && m_p_enemy->GetHp() >= 1)
 		{
-			//m_p_enemy->Wait();
-			m_p_enemy->CharacterState(CHARACTER_STATE::WAIT);
+			if (m_battle_trigger == false)
+			{
+				m_p_enemy->CharacterState(CHARACTER_STATE::WAIT);
+			}
+			if (m_standby == true)
+			{
+				Battle();
+				m_battle_trigger = true;
+			}
 		}
 		else
 		{
 			// エネミーが倒れるアニメーション
-			if (m_p_enemy->Dead() == false)
+			if (m_p_enemy->CheckCharacterState(CHARACTER_STATE::DETH) == false)
 			{
 				Camera::GetCameraInstance()->ChangeCameraPos(CameraState::GameClear);
-				m_p_enemy->Fall();
+				m_p_enemy->CharacterState(CHARACTER_STATE::LEFT_DEATH);
 			}
 			else
 			{
 				// プレイヤーが画面から出ていくアニメーション
-				m_p_player->Walk();
-				if (m_p_player->GetPosX() >= 768.0f)
+				if (m_p_player->GetPosX() <= 768.0f)
 				{
-					m_p_player->StopWalk();
+					m_p_player->CharacterState(CHARACTER_STATE::WALK);
 				}
 			}
 		}
 		if (m_p_player->GetHp() <= 0)
 		{
 			// プレイヤーが倒れるアニメーション
-			if (m_p_player->Dead() == false)
+			if (m_p_player->CheckCharacterState(CHARACTER_STATE::DETH) == false)
 			{
-				m_p_player->Fall();
+				m_p_player->CharacterState(CHARACTER_STATE::LEFT_DEATH);
 			}
 		}
 	}
@@ -284,20 +299,29 @@ void CharacterManager::Update()
 		}
 	}
 }
+bool CharacterManager::StandBy()
+{
+	return m_standby;
+}
 void CharacterManager::PlayerStandBy()
 {
-	if (m_p_player->GetPosX() <= 512.0f - 128.0f)
+	if (m_p_player->GetPosX() <= 512.0f - 256.0f)
 	{
-		m_p_player->Walk();
+		m_p_player->CharacterState(CHARACTER_STATE::WALK);
 	}
 	else
 	{
-		m_p_player->StopWalk();
-		m_p_player->HoldWeapon();
-		if (m_p_player->HoldWeapon() == true)
+		// 抜刀後
+		if(m_p_player->CheckCharacterState(CHARACTER_STATE::WAIT) == true)
 		{
-			m_p_player->Wait();
-			Battle();
+			m_p_player->CharacterState(CHARACTER_STATE::WAIT);
+			m_standby = true;
+		}
+
+		// 待機前
+		else
+		{
+			m_p_player->CharacterState(CHARACTER_STATE::WALK_WAIT);
 		}
 	}
 }
@@ -315,10 +339,7 @@ void CharacterManager::Battle()
 		//「押せ！」を描画中にエネミーのカウントを減らす
 		if (m_pcutin_trigger == false)
 		{
-			if (m_p_player->GetHp() >= 1 && m_p_enemy->GetHp() >= 1)
-			{
-				m_p_enemy->QuickPressFlameDown();
-			}
+			m_p_enemy->QuickPressFlameDown();
 		}
 
 		//if (プレイヤーがエンターキーを押したら)
@@ -356,6 +377,12 @@ void CharacterManager::Battle()
 	{
 		//プレイヤーのカットインを描画
 		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_PLAYER]->Update();
+		// プレイヤーとエネミーを密着させる
+		if (m_p_player->PBattlePos() == false || m_p_enemy->EBattlePos() == false)
+		{
+			m_p_player->PSetBattlePos();
+			m_p_enemy->ESetBattlePos();
+		}
 		// カメラをプレイヤーの後ろに移動させる
 		Camera::GetCameraInstance()->ChangeCameraPos(CameraState::WinningPlayer);
 		//if (プレイヤーのカットインの描画が終わったら)
@@ -363,8 +390,17 @@ void CharacterManager::Battle()
 		{
 			//「押せ！」の描画を終了
 			m_p_callout_ui->IsNotOn();
-			//toriggerをonにする
-			m_player_trigger = true;
+			// つばぜり合いをしているか見る
+			if (m_p_player->CheckCharacterState(CHARACTER_STATE::RIGHT_ATTACK_CROSS) == true ||
+				m_p_player->CheckCharacterState(CHARACTER_STATE::LEFT_ATTACK_CROSS) == true || 
+				m_p_player->CheckCharacterState(CHARACTER_STATE::RIGHT_DEFENCE_CROSS) == true || 
+				m_p_player->CheckCharacterState(CHARACTER_STATE::LEFT_ATTACK_CROSS) == true)
+			{
+				m_player_trigger2 = true;
+			}
+			else {
+				m_player_trigger = true;
+			}
 			m_pcutin_trigger = false;
 		}
 	}
@@ -372,6 +408,12 @@ void CharacterManager::Battle()
 	{
 		//エネミーのカットインを描画
 		m_p_cut_in[(int)BATTLE_CHARACTER::BATTLE_ENEMY]->Update();
+		// プレイヤーとエネミーを密着させる
+		if (m_p_player->PBattlePos() == false || m_p_enemy->EBattlePos() == false)
+		{
+			m_p_player->PSetBattlePos();
+			m_p_enemy->ESetBattlePos();
+		}
 		// カメラをエネミーの後ろに移動させる
 		Camera::GetCameraInstance()->ChangeCameraPos(CameraState::LosingPlayer);
 		//if (エネミーのカットインの描画が終わったら)
@@ -379,41 +421,79 @@ void CharacterManager::Battle()
 		{
 			//「押せ！」の描画を終了
 			m_p_callout_ui->IsNotOn();
-			//toriggerをonにする
-			m_enemy_trigger = true;
+			if (m_p_enemy->CheckCharacterState(CHARACTER_STATE::RIGHT_ATTACK_CROSS) == true ||
+				m_p_enemy->CheckCharacterState(CHARACTER_STATE::LEFT_ATTACK_CROSS) == true ||
+				m_p_enemy->CheckCharacterState(CHARACTER_STATE::RIGHT_DEFENCE_CROSS) == true ||
+				m_p_enemy->CheckCharacterState(CHARACTER_STATE::LEFT_DEFENCE_CROSS) == true)
+			{
+				m_enemy_trigger2 = true;
+			}
+			else {
+				m_enemy_trigger = true;
+			}
 			m_ecutin_trigger = false;
 		}
 	}
 
+
 	if (m_enemy_trigger == true)
 	{
 		// プレイヤーに攻撃するアニメーション
-		if (m_p_enemy->Attack() == true)
-		{
-			//プレイヤーのHPを減らす
-			m_p_player->HpDown();
-			//プレイヤーのHPUIを減らす
-			HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
-			//エネミーのカウントをリセット
-			m_p_enemy->SetQuickPressFlame();
-			//toriggerをoffにする
-			m_enemy_trigger = false;
-		}
+		m_p_enemy->CharacterState(CHARACTER_STATE::ATTACK_01);
+		m_p_player->CharacterState(CHARACTER_STATE::DEFENCE_01);
+		//プレイヤーのHPを減らす
+		m_p_player->HpDown();
+		//プレイヤーのHPUIを減らす
+		HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
+		//エネミーのカウントをリセット
+		m_p_enemy->SetQuickPressFlame();
+		//toriggerをoffにする
+		m_enemy_trigger = false;
 	}
+	if (m_enemy_trigger2 == true)
+	{
+		// エネミーの攻撃をはじいて
+		// エネミーに攻撃するアニメーション
+		m_p_enemy->CharacterState(CHARACTER_STATE::LEFT_FRICK);
+		m_p_player->CharacterState(CHARACTER_STATE::LEFT_BACK);
+		//エネミーのHPを減らす
+		m_p_player->HpDown();
+		// プレイヤーのHPUIを減らす
+		HpUiManager(BATTLE_CHARACTER::BATTLE_PLAYER);
+		//エネミーのカウントをリセット
+		m_p_enemy->SetQuickPressFlame();
+		//toriggerをoffにする
+		m_enemy_trigger2 = false;
+	}
+
 	if (m_player_trigger == true)
 	{
 		// エネミーに攻撃するアニメーション
-		if (m_p_player->Attack() == true)
-		{
-			//エネミーのHPを減らす
-			m_p_enemy->HpDown();
-			//エネミーのHPUIを減らす
-			HpUiManager(BATTLE_CHARACTER::BATTLE_ENEMY);
-			//エネミーのカウントをリセット
-			m_p_enemy->SetQuickPressFlame();
-			//toriggerをoffにする
-			m_player_trigger = false;
-		}
+		m_p_player->CharacterState(CHARACTER_STATE::ATTACK_01);
+		m_p_enemy->CharacterState(CHARACTER_STATE::DEFENCE_01);
+		//エネミーのHPを減らす
+		m_p_enemy->HpDown();
+		//エネミーのHPUIを減らす
+		HpUiManager(BATTLE_CHARACTER::BATTLE_ENEMY);
+		//エネミーのカウントをリセット
+		m_p_enemy->SetQuickPressFlame();
+		//toriggerをoffにする
+		m_player_trigger = false;
+	}
+	if (m_player_trigger2 == true)
+	{
+		// エネミーの攻撃をはじいて
+		// エネミーに攻撃するアニメーション
+		m_p_player->CharacterState(CHARACTER_STATE::LEFT_FRICK);
+		m_p_enemy->CharacterState(CHARACTER_STATE::LEFT_BACK);
+		//エネミーのHPを減らす
+		m_p_enemy->HpDown();
+		//エネミーのHPUIを減らす
+		HpUiManager(BATTLE_CHARACTER::BATTLE_ENEMY);
+		//エネミーのカウントをリセット
+		m_p_enemy->SetQuickPressFlame();
+		//toriggerをoffにする
+		m_player_trigger2 = false;
 	}
 }
 
@@ -479,7 +559,7 @@ void CharacterManager::DeleteCheck()
 {
 	if (m_p_player != nullptr && m_p_enemy != nullptr)
 	{
-		if (m_p_player->Dead() == true || m_p_player->GetPosX() >= 768.0f)
+		if (m_p_player->CheckCharacterState(CHARACTER_STATE::DETH) == true || m_p_player->GetPosX() >= 768.0f)
 		{
 			for (int i = 0; i < (int)BATTLE_CHARACTER::BATTLE_MAX; i++)
 			{
@@ -549,8 +629,10 @@ void CharacterManager::HpUiManager(BATTLE_CHARACTER battle_character_)
 
 bool CharacterManager::IsBattleFinish()
 {
-	if (m_p_player->Dead() == true || m_p_player->GetPosX() >= 768.0f)//m_p_enemy->GetHp() <= 0)
+	if (m_p_player->CheckCharacterState(CHARACTER_STATE::DETH) == true || m_p_player->GetPosX() >= 768.0f)
 	{
+		m_battle_trigger = false;
+		m_standby = false;
 		return true;
 	}
 	else
@@ -561,11 +643,11 @@ bool CharacterManager::IsBattleFinish()
 
 GAME_END CharacterManager::GetGameEnd()
 {
-	if (m_p_player->Dead() == true)
+	if (m_p_player->CheckCharacterState(CHARACTER_STATE::DETH) == true)
 	{
 		return GAME_END::GAME_OVER;
 	}
-	if (m_p_enemy->Dead() == true)
+	if (m_p_enemy->CheckCharacterState(CHARACTER_STATE::DETH) == true)
 	{
 		//次のキャラぎいなかったらクリアを返す
 		if (m_enemy_id == ENEMY_ID::FOX)

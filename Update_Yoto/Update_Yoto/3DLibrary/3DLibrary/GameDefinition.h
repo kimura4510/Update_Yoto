@@ -22,26 +22,80 @@ const std::string ground					= "Ground";		// 地面
 
 
 // キャラクター
-const std::string r_perry_anime_hold		= "RightPerryAnime";	// 右側のペリーのアニメーション（仮）
-
 	// プレイヤー
-const std::string walk_anime				= "WalkAnime";				// プレイヤー：歩くアニメーション
-const std::string walk_wait_anime			= "WalkToStanadbyAnime";	// プレイヤー：歩いてきて構えるまでのアニメーション
-const std::string wait_anime				= "StandbyAnime";			// プレイヤー：構えている状態のアニメーション
-const std::string attack1_anime				= "Attack1";				// プレイヤー：1回目の攻撃アニメーション
-const std::string player_die_anime			= "PlayerDie";				// プレイヤー：死ぬアニメーション
+const std::string player_walk_anime				= "P_Walk";				// プレイヤー：歩くアニメーション
+const std::string player_walk_wait_anime		= "P_WalkWait";	// プレイヤー：歩いてきて構えるまでのアニメーション
+const std::string player_wait_anime				= "P_WaitAnime";			// プレイヤー：構えている状態のアニメーション
+const std::string player_attack_01_anime		= "P_Attack01";				// プレイヤー：1回目の攻撃アニメーション
+const std::string player_r_attack_02_anime		= "P_R_Attack02";
+const std::string player_l_attack_02_anime		= "P_L_Attack02";
+const std::string player_defence_01_anime		= "P_Defence01";
+const std::string player_r_defence_02_anime		= "P_R_Defence02";
+const std::string player_l_defence_02_anime		= "P_L_Defence02";
+const std::string player_r_attack_cross_anime	= "P_R_AttackCross";
+const std::string player_l_attack_cross_anime	= "P_L_AttackCross";
+const std::string player_r_defence_cross_anime	= "P_R_DefenceCross";
+const std::string player_l_defence_cross_anime	= "P_L_DefenceCross";
+const std::string player_r_frick_anime			= "P_R_Frick";
+const std::string player_l_frick_anime			= "P_L_Frick";
+const std::string player_r_kill_anime			= "P_R_Kill";
+const std::string player_l_kill_anime			= "P_L_Kill";
+const std::string player_r_kill_walk_anime		= "P_R_KillWalk";
+const std::string player_l_kill_walk_anime		= "P_L_KillWalk";
+const std::string player_r_back_anime			= "P_R_Back";
+const std::string player_l_back_anime			= "P_L_Back";
+const std::string player_r_death_anime			= "P_R_Death";
+const std::string player_l_death_anime			= "P_L_Death";
 	// 絵描き
-const std::string drawer_wait_anime			= "DrawerWait";		// 絵描き：待つアニメーション
-const std::string drawer_attack1_anime		= "DrawerAttack1";	// 絵描き：1回目の攻撃アニメーション
-const std::string drawer_die_anime			= "DrawerDie";		// 絵描き：死ぬアニメーション
-	// ペリー
-const std::string perry_wait_anime			= "PerryWait";		// ペリー：待つアニメーション
-const std::string perry_attack1_anime		= "PerryAttack1";		// ペリー：1回目の攻撃アニメーション
-const std::string perry_die_anime			= "PerryDie";		// ペリー：死ぬアニメーション
-
-const std::string hermit_tex				= "Hermit";		// 仙人
-const std::string sinsengumi_tex			= "Sinsengumi";	// 新選組
-const std::string fox_tex					= "Fox";		// 狐
+const std::string drawer_wait_anime				= "D_WaitAnime";			
+const std::string drawer_attack_01_anime		= "D_Attack01";		
+const std::string drawer_r_attack_02_anime		= "D_R_Attack02";
+const std::string drawer_l_attack_02_anime		= "D_L_Attack02";
+const std::string drawer_defence_01_anime		= "D_Defence01";
+const std::string drawer_r_defence_02_anime		= "D_R_Defence02";
+const std::string drawer_l_defence_02_anime		= "D_L_Defence02";
+const std::string drawer_r_attack_cross_anime	= "D_R_AttackCross";
+const std::string drawer_l_attack_cross_anime	= "D_L_AttackCross";
+const std::string drawer_r_defence_cross_anime	= "D_R_DefenceCross";
+const std::string drawer_l_defence_cross_anime	= "D_L_DefenceCross";
+const std::string drawer_r_frick_anime			= "D_R_Frick";
+const std::string drawer_l_frick_anime			= "D_L_Frick";
+const std::string drawer_r_kill_anime			= "D_R_Kill";
+const std::string drawer_l_kill_anime			= "D_L_Kill";
+const std::string drawer_r_kill_stand_anime		= "D_R_KillStand";
+const std::string drawer_l_kill_stand_anime		= "D_L_KillStand";
+const std::string drawer_r_back_anime			= "D_R_Back";
+const std::string drawer_l_back_anime			= "D_L_Back";
+const std::string drawer_r_death_anime			= "D_R_Death";
+const std::string drawer_l_death_anime			= "D_L_Death";
+	// ペリー			
+const std::string perry_wait_anime				= "Pe_WaitAnime";		
+const std::string perry_attack_01_anime			= "Pe_Attack01";	
+const std::string perry_r_attack_02_anime		= "Pe_R_Attack02";
+const std::string perry_l_attack_02_anime		= "Pe_L_Attack02";
+const std::string perry_defence_01_anime		= "Pe_Defence01";
+const std::string perry_r_defence_02_anime		= "Pe_R_Defence02";
+const std::string perry_l_defence_02_anime		= "Pe_L_Defence02";
+const std::string perry_r_attack_cross_anime	= "Pe_R_AttackCross";
+const std::string perry_l_attack_cross_anime	= "Pe_L_AttackCross";
+const std::string perry_r_defence_cross_anime	= "Pe_R_DefenceCross";
+const std::string perry_l_defence_cross_anime	= "Pe_L_DefenceCross";
+const std::string perry_r_frick_anime			= "Pe_R_Frick";
+const std::string perry_l_frick_anime			= "Pe_L_Frick";
+const std::string perry_r_kill_anime			= "Pe_R_Kill";
+const std::string perry_l_kill_anime			= "Pe_L_Kill";
+const std::string perry_r_kill_stand_anime		= "Pe_R_KillStand";
+const std::string perry_l_kill_stand_anime		= "Pe_L_KillStand";
+const std::string perry_r_back_anime			= "Pe_R_Back";
+const std::string perry_l_back_anime			= "Pe_L_Back";
+const std::string perry_r_death_anime			= "Pe_R_Death";
+const std::string perry_l_death_anime			= "Pe_L_Death";
+	// 仙人
+const std::string hermit_tex				= "Hermit";
+	// 新選組
+const std::string sinsengumi_tex			= "Sinsengumi";
+	// 狐
+const std::string fox_tex					= "Fox";
 
 
 // UI

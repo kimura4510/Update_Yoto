@@ -16,6 +16,7 @@ public:
 	void Init();
 	void Draw();
 	void Update();
+	bool StandBy();
 	void PlayerStandBy();
 	void Battle();
 	void HpUiManager(BATTLE_CHARACTER battle_character_);
@@ -45,9 +46,15 @@ private:
 	Collision m_collision;
 
 	bool m_player_trigger;
+	bool m_player_trigger2;
 	bool m_enemy_trigger;
+	bool m_enemy_trigger2;
 	bool m_pcutin_trigger;
 	bool m_ecutin_trigger;
+
+	bool m_battle_trigger;
+
+	bool m_standby;
 
 };
 

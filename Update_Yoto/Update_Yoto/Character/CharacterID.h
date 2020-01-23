@@ -45,14 +45,20 @@ enum class CHARACTER_STATE : int{
 	RIGHT_ATTACK_CROSS,		// 右足でのつばぜりあい
 	LEFT_ATTACK_CROSS,		// 左足でのつばぜりあい
 
+	RIGHT_DEFENCE_CROSS,		// 右足でのつばぜりあい
+	LEFT_DEFENCE_CROSS,		// 左足でのつばぜりあい
+
 	RIGHT_FRICK,			// 右ではじく側
 	LEFT_FRICK,				// 左ではじく側
 
 	RIGHT_KILL,				// 右足で殺す
 	LEFT_KILL,				// 左足で殺す
 
-	RIGHT_KILL_WALK,		// 右足で殺す
-	LEFT_KILL_WALK,			// 左足で殺す
+	RIGHT_KILL_WALK,		// 右足で殺して歩く（プレイヤー）
+	LEFT_KILL_WALK,			// 左足で殺して歩く（プレイヤー）
+
+	RIGHT_KILL_STAND,		// 右足で殺して立つ（エネミー）
+	LEFT_KILL_STAND,		// 左足で殺して立つ（エネミー）
 
 	RIGHT_BACK,				// 右足の時倒される
 	LEFT_BACK,				// 左足の時倒される

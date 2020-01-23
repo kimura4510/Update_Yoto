@@ -19,14 +19,14 @@ public:
 	int GetQuickPressFlame();
 	void QuickPressFlameDown();
 
-	void CharacterState(CHARACTER_STATE ch_state_);
-	/*void Wait();
-	void Walk();
-	void StopWalk();
-	bool HoldWeapon();
-	bool Attack();
-	void Fall();
-	bool Dead();*/
+	void CharacterState(CHARACTER_STATE chara_state_);
+	CHARACTER_STATE GetCharacterState();
+	bool CheckCharacterState(CHARACTER_STATE ch_chara_state_);
+	
+	bool PBattlePos();
+	bool EBattlePos();
+	void PSetBattlePos();
+	void ESetBattlePos();
 
 	float GetPosX();
 	float GetPosY();
@@ -51,19 +51,9 @@ protected:
 	float m_quick_press_flame_down;
 
 	bool m_character_state[static_cast<int>(CHARACTER_STATE::STATE_MAX)];
-	float m_anime_count;
+	CHARACTER_STATE m_chara_state;
+	float m_anime_count[static_cast<int>(CHARACTER_STATE::STATE_MAX)];
 	float m_reset_count;
-
-
-
-	//CHARACTER_STATE m_chara_state;
-
-	/*float m_walk_count;
-	float m_wait_count;
-	float m_attack_count;
-	float m_fall_count;*/
-
-
 
 	// 追加　アニメーション関連　前川
 

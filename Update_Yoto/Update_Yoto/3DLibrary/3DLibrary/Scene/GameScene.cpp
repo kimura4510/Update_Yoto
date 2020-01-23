@@ -13,7 +13,7 @@ void GameScene::Init()
 
 	m_State = SceneState::eMain;
 	Camera::CreateInstance();
-	Camera::GetCameraInstance()->InitCamera(512.0f, 64.0f, 300.0f, 512.0f, 32.0f, 1024.0f);
+	Camera::GetCameraInstance()->InitCamera(512.0f, 192.0f, 128.0f, 512.0f, 32.0f, 1024.0f);
 
 	LoadResources::Load();
 
@@ -27,15 +27,22 @@ void GameScene::Update()
 	Input* input = Input::GetInputInstance();
 
 	m_chmanager.Update();
-	// トランジションシーン画像が画面外(左側)に出たかどうか判定
-	if (m_bg.TransitionSceneLower() == true)
+	if (m_chmanager.IsBattleFinish() == false)
 	{
-		m_chmanager.PlayerStandBy();
+		// トランジションシーン画像が画面外(左側)に出たかどうか判定
+		if (m_bg.TransitionSceneLower() == true)
+		{
+			if (m_chmanager.StandBy() == false)
+			{
+				m_chmanager.PlayerStandBy();
+			}
+		}
+		else
+		{
+			m_bg.MoveTransitionScene();	// 左に動かす
+		}
 	}
-	else
-	{
-		m_bg.MoveTransitionScene();	// 左に動かす
-	}
+	
 
 	if (m_chmanager.IsBattleFinish() == true)
 	{
