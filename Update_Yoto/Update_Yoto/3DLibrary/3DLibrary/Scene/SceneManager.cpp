@@ -81,13 +81,3 @@ void SceneManager::ChangeScene(SceneID nextScene_)
 	}
 	m_CurrentScene = m_SceneList[(int)m_SceneID];
 }
-
-//ƒQ[ƒ€I—¹ŠÖ”
-bool SceneManager::IsGameEnd()
-{
-	if (Input::GetInputInstance()->GetKey(KEY_INFO::ESCAPE_KEY) == true)
-	{
-		return true;
-	}
-	return false;
-}

@@ -25,6 +25,9 @@ public:
 private:
 	DisplayState m_DisplayState;
 	int m_DisplayNum;
+	int m_IsExit;
+	int m_FPScounter;
+	int m_transparency;
 };
 
 #endif

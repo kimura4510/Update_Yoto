@@ -100,5 +100,7 @@ private:
 	CameraState camera_state;
 	int counter;
 	const float Length;
+	float angle;
+	const float setAngle;
 };
 #endif // !CAMERA_H_

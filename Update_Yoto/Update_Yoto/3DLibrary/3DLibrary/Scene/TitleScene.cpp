@@ -2,12 +2,16 @@
 #include "../Engine/Input.hpp"
 #include "../Engine/Graphics.hpp"
 #include "../Texture/Texture.hpp"
+#include "SceneManager.hpp"
 
 //初期化
 void TitleScene::Init()
 {
 	m_DisplayState = DisplayState::Title;
 	m_DisplayNum = 0;
+	m_IsExit = 0;
+	m_FPScounter = 0;
+	m_transparency = 255;
 
 	cTexture* tex = cTexture::GetTextureInstance();
 	tex->LoadTexture("Resource/Title/master/title_m_base.png", title_base);
@@ -20,18 +24,58 @@ void TitleScene::Init()
 //更新
 void TitleScene::Update()
 {
+
 	Input* inpt = Input::GetInputInstance();
 
 	if (m_DisplayState == DisplayState::Title)
 	{
+		//!< カウント処理
+		m_FPScounter++;
+		if (m_FPScounter >= 60)
+		{
+			m_transparency = 255;
+			m_FPScounter = 0;
+		}
+		else if (m_FPScounter >= 30)
+		{
+			m_transparency = 0;
+		}
+
+		//!< タイトル画面のスタート、イグジットのどちらを選択しているかの処理
+		if (inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lUp) == INPUT_STATE::PUSH_DOWN || inpt->GetKeyDown(KEY_INFO::UP_KEY) == true
+			|| inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lDown) == INPUT_STATE::PUSH_DOWN || inpt->GetKeyDown(KEY_INFO::DOWN_KEY) == true)
+		{
+			if (m_IsExit == false)
+			{
+				m_IsExit = true;
+				m_transparency = 255;
+				m_FPScounter = 0;
+			}
+			else
+			{
+				m_IsExit = false;
+				m_transparency = 255;
+				m_FPScounter = 0;
+			}
+		}
+
+		//!< メニュー画面もしくはゲーム終了への遷移処理
 		if (inpt->GetKey(KEY_INFO::ENTER_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
 		{
-			m_DisplayState = DisplayState::PvE;
-			m_DisplayNum = (int)DisplayState::PvE;
+			if (m_IsExit == false)
+			{
+				m_DisplayState = DisplayState::PvE;
+				m_DisplayNum = (int)DisplayState::PvE;
+			}
+			else
+			{
+				PostQuitMessage(0);
+			}
 		}
 	}
 	else if (m_DisplayState != DisplayState::Title)
 	{
+		//!< メニュー画面の処理
 		if (inpt->GetKeyDown(KEY_INFO::UP_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lUp) == INPUT_STATE::PUSH_DOWN)
 		{
 			if (m_DisplayNum > 1)
@@ -52,7 +96,10 @@ void TitleScene::Update()
 
 		if (inpt->GetKey(KEY_INFO::ENTER_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
 		{
-			m_State = SceneState::eEnd;
+			if (m_DisplayState != DisplayState::PvP)
+			{
+				m_State = SceneState::eEnd;
+			}
 		}
 	}
 }
@@ -62,9 +109,19 @@ SceneID TitleScene::End()
 	cTexture* tex = cTexture::GetTextureInstance();
 	tex->ReleaseTexture(title_base);
 	tex->ReleaseTexture(menu);
+	tex->ReleaseTexture(title_button);
 
 	m_State = SceneState::eInit;
-	return SceneID::eGameScene;
+
+	if (m_DisplayState == DisplayState::PvE)
+	{
+		return SceneID::eGameScene;
+	}
+	else if (m_DisplayState == DisplayState::Help)
+	{
+		return SceneID::eHelpScene;
+	}
+
 }
 
 SceneID TitleScene::Control()
@@ -93,6 +150,20 @@ void TitleScene::Draw()
 	case DisplayState::Title:
 		graph->DrawIntegratedImage(0.0f, 0.0f,
 			tex->GetTexture(title_base), 0.9375f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
+		if (m_IsExit == 0)
+		{
+			graph->DrawIntegratedImage(448.0f, 824.0f,
+				tex->GetTexture(title_button), 1.0f, 0.5f, 1024.0f, 128.0f, 1, 1, m_transparency);
+			graph->DrawIntegratedImage(448.0f, 952.0f,
+				tex->GetTexture(title_button), 1.0f, 0.5f, 1024.0f, 128.0f, 1, 2);
+		}
+		else
+		{
+			graph->DrawIntegratedImage(448.0f, 824.0f,
+				tex->GetTexture(title_button), 1.0f, 0.5f, 1024.0f, 128.0f, 1, 1);
+			graph->DrawIntegratedImage(448.0f, 952.0f,
+				tex->GetTexture(title_button), 1.0f, 0.5f, 1024.0f, 128.0f, 1, 2, m_transparency);
+		}
 		break;
 	case DisplayState::PvE:
 		graph->DrawIntegratedImage(0.0f, 0.0f,
