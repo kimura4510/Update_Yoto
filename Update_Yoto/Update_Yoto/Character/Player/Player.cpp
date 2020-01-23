@@ -6,7 +6,7 @@
 Player::Player() : Character()
 {
 	m_isdeth = false;
-	m_x = 0.0f;		// 「player.png」の描画だけなら→ //128.0f;
+	m_x = -256.0f;		// 「player.png」の描画だけなら→ //128.0f;
 	m_y = 0.0f;
 	m_z = 512.0f;			// 「player.png」の描画だけなら→ //256.0f;
 	m_width = 256.0f;
@@ -17,81 +17,6 @@ Player::Player() : Character()
 	m_standby_count = 0;
 }
 
-void Player::Update()
-{
-	//// 歩く時のカウント
-	//if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] == true)
-	//{
-	//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = false;
-	//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = false;
-	//	m_x += 1.0f;
-	//	m_walk_count += 0.5f;
-	//}
-	//// 歩いてきて待機するまでのカウント
-	//if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] == true/* &&
-	//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == false*/)
-	//{
-	//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = false;
-	//	m_standby_count += 0.5f;
-	//	if (m_standby_count >= 18.0f)
-	//	{
-	//		m_standby_count = m_reset_count;
-	//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = true;
-	//	}
-	//}
-	//// 待機中の時のカウント
-	//if (/*m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] == true &&*/
-	//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == true)
-	//{
-	//	m_standby_count = m_reset_count;
-	//	m_wait_count += 0.5f;
-	//}
-	//// 攻撃1回目
-	//if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] == true)
-	//{
-	//	// 攻撃モーションするためのカウント
-	//	m_attack_count += 0.5f;
-	//	if (m_attack_count >= 10.0f)
-	//	{
-	//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] = true;
-	//		m_attack_count = m_reset_count;
-	//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] = false;
-	//	}
-	//}
-	//switch ()
-	//{
-	///*case CHARACTER_STATE::IS_WALK:
-	//	m_x += 1.0f;
-	//	m_walk_count += 0.5f;*/
-	//case CHARACTER_STATE::IS_HOLD_WEAPON:
-	//	m_standby_count += 0.5f;
-	//	if (m_standby_count >= 18.0f)
-	//	{
-	//		m_standby_count = m_reset_count;
-	//		m_chara_state = CHARACTER_STATE::IS_WAIT;
-	//	}
-	//case CHARACTER_STATE::IS_WAIT:
-	//	m_standby_count = m_reset_count;
-	//	m_wait_count += 0.5f;
-	//case CHARACTER_STATE::IS_ATTACK_01:
-	//	m_attack_count += 0.5f;
-	//	if (m_attack_count >= 10.0f)
-	//	{
-	//		m_chara_state=CHARACTER_STATE::
-	//		m_attack_count = m_reset_count;
-	//	}
-	//}
-	//default:
-	//	break;
-	//}
-
-	// 倒れるときのカウント
-	/*if (m_fall_count >= 55.0f)
-	{
-		m_isdeth = true;
-	}*/
-}
-
 void Player::Draw()
 {
 	DrawingData3D player{
@@ -100,80 +25,274 @@ void Player::Draw()
 		this->m_width,this->m_height,
 		0xffff,
 		0.0f,0.0f,0.0f,
-		0.5f,0.5f,
+		1.0f,1.0f,
 	};
 	cTexture* ctex = cTexture::GetTextureInstance();
-	//if (m_isdeth == false)
-	//{
+	if (m_isdeth == false)
+	{
+		if (GetHp() >= 1)
+		{
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK)] == true) {
+				Texture* tex = ctex->GetTexture(player_walk_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.0625f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::WALK)] % (4 * 9)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] == true) {
+				Texture* tex = ctex->GetTexture(player_walk_wait_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.125f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] % ((4 * 4) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::WAIT)] == true) {
+				Texture* tex = ctex->GetTexture(player_wait_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.0625f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::WAIT)] % ((4 * 8) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::ATTACK_01)] == true) {
+				Texture* tex = ctex->GetTexture(player_attack_01_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::ATTACK_01)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_attack_02_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_attack_02_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] == true) {
+				Texture* tex = ctex->GetTexture(player_defence_01_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_defence_02_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_defence_02_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_CROSS)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_attack_cross_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_CROSS)] % ((4 * 3) + 1)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_CROSS)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_attack_cross_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_CROSS)] % ((4 * 3) + 1)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_CROSS)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_defence_cross_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_CROSS)] % ((4 * 3) + 1)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_CROSS)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_defence_cross_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_CROSS)] % ((4 * 3) + 1)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_frick_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_frick_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_kill_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] % ((4 * 9) + 1)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_kill_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] % ((4 * 9) + 1)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL_WALK)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_kill_walk_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL_WALK)] % ((4 * 3) + 3)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL_WALK)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_kill_walk_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL_WALK)] % ((4 * 3) + 3)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_back_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] % ((4 * 2) + 2)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_back_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.25f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] % ((4 * 2) + 2)
+				);
+			}
+			
+		}
+		else
+		{
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEATH)] == true) {
+				Texture* tex = ctex->GetTexture(player_r_death_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.0625f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_DEATH)] % ((4 * 13) + 3)
+				);
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] == true) {
+				Texture* tex = ctex->GetTexture(player_l_death_anime);
+				Graphics::GetGraphicInstance()->Animation3D(
+					player,
+					tex,
+					0.25f, 0.0625f,
+					this->m_width, this->m_height,
+					4,
+					(int)m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] % ((4 * 13) + 3)
+				);
+			}
+		}
+	}
+	else
+	{
 
-	//	if (GetHp() >= 1)
-	//	{
-	//		if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] == true)
-	//		{
-	//			Texture* tex = ctex->GetTexture(walk_anime);
-	//			Graphics::GetGraphicInstance()->Animation3D(
-	//				player,
-	//				tex,
-	//				0.25f, 0.0625f,
-	//				this->m_width, this->m_height,
-	//				4,
-	//				(int)m_walk_count % (4 * 9)
-	//			);
-	//		}
-	//		if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] == true/* &&
-	//			m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == false*/)
-	//		{
-	//			Texture* tex = ctex->GetTexture(walk_wait_anime);
-	//			Graphics::GetGraphicInstance()->Animation3D(
-	//				player,
-	//				tex,
-	//				0.25f, 0.125f,
-	//				this->m_width, this->m_height,
-	//				4,
-	//				(int)m_standby_count % ((4 * 4) + 2)
-	//			);
-	//		}
-	//		if (/*m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] == true &&*/
-	//			m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == true)
-	//		{
-	//			Texture* tex = ctex->GetTexture(wait_anime);
-	//			Graphics::GetGraphicInstance()->Animation3D(
-	//				player,
-	//				tex,
-	//				0.25f, 0.0625f,
-	//				this->m_width, this->m_height,
-	//				4,
-	//				(int)m_wait_count % ((4 * 8) + 2)
-	//			);
-	//		}
-	//		if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] == true)
-	//		{
-	//			Texture* tex = ctex->GetTexture(attack1_anime);
-	//			Graphics::GetGraphicInstance()->Animation3D(
-	//				player,
-	//				tex,
-	//				0.25f, 0.25f,
-	//				this->m_width, this->m_height,
-	//				4,
-	//				(int)m_attack_count % ((4 * 2) + 2)
-	//			);
-	//		}
-	//	}
-	//	else
-	//	{
-	//		Texture* tex = ctex->GetTexture(player_die_anime);
-	//		Graphics::GetGraphicInstance()->Animation3D(
-	//			player,
-	//			tex,
-	//			0.25, 0.0625,
-	//			this->m_width, this->m_height,
-	//			4,
-	//			(int)m_fall_count % ((4 * 13) + 3)
-	//		);
-	//	}
-	//}
-	//else
-	//{
-
-	//}
+	}
 }

@@ -18,19 +18,12 @@ Character::Character()
 	{
 		m_character_state[i] = false;
 	}
-	m_anime_count = 0;
+	m_chara_state = CHARACTER_STATE::STATE_MAX;
+	for (int i = 0; i < static_cast<int>(CHARACTER_STATE::STATE_MAX); i++)
+	{
+		m_anime_count[i] = 0;
+	}
 	m_reset_count = 0;
-
-
-	//m_chara_state = CHARACTER_STATE::STATE_MAX;
-
-	/*m_walk_count = 0;
-	m_wait_count = 0;
-	m_attack_count = 0;
-	m_fall_count = 0;*/
-	
-
-
 
 	// 追加　アニメーション関連　前川
 	//! 現在アニメーションをしているカウント
@@ -96,167 +89,286 @@ void Character::CharacterState(CHARACTER_STATE ch_state_)
 		{
 			m_character_state[i] = true;
 		}
-		m_character_state[i] = false;
+		else
+		{
+			m_character_state[i] = false;
+		}
 	}
-	/*switch (ch_state_)
-	{
-	case CHARACTER_STATE::WALK:
-		m_character_state[static_cast<int>(CHARACTER_STATE::WALK)] = true;
-		break;
-	case CHARACTER_STATE::WALK_WAIT:
-		m_character_state[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] = true;
-		break;
-	case CHARACTER_STATE::WAIT:
-		m_character_state[static_cast<int>(CHARACTER_STATE::WAIT)] = true;
-		break;
-	case CHARACTER_STATE::ATTACK_01:
-		m_character_state[static_cast<int>(CHARACTER_STATE::ATTACK_01)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_ATTACK_02:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_ATTACK_02:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] = true;
-		break;
-	case CHARACTER_STATE::ATTACKED:
-		m_character_state[static_cast<int>(CHARACTER_STATE::ATTACKED)] = true;
-		break;
-	case CHARACTER_STATE::DEFENCE_01:
-		m_character_state[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_DEFENCE_02:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_DEFENCE_02:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] = true;
-		break;
-	case CHARACTER_STATE::DEFENCED:
-		m_character_state[static_cast<int>(CHARACTER_STATE::DEFENCED)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_ATTACK_CROSS:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_CROSS)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_ATTACK_CROSS:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_CROSS)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_FRICK:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_FRICK:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_KILL:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_KILL:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_KILL_WALK:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL_WALK)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_KILL_WALK:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL_WALK)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_BACK:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_BACK:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] = true;
-		break;
-	case CHARACTER_STATE::RIGHT_DEATH:
-		m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEATH)] = true;
-		break;
-	case CHARACTER_STATE::LEFT_DEATH:
-		m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] = true;
-		break;
-	case CHARACTER_STATE::DETH:
-		m_character_state[static_cast<int>(CHARACTER_STATE::DETH)] = true;
-		break;
-	case CHARACTER_STATE::STATE_MAX:
-		break;
-	default:
-		break;
-	}*/
+	m_chara_state = ch_state_;
 }
 
-//// 待機する
-//void Character::Wait()
-//{
-//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] = true;
-//}
-//// 歩く
-//void Character::Walk()
-//{
-//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = true;
-//}
-//// 近づくのをやめる
-//void Character::StopWalk()
-//{
-//	m_walk_count = m_reset_count;
-//	m_character_state[static_cast<int>(CHARACTER_STATE::IS_WALK)] = false;
-//}
-//// 武器を構える
-//bool Character::HoldWeapon()
-//{
-//	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_WAIT)] == false)
-//	{
-//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_HOLD_WEAPON)] = true;
-//		return false;
-//	}
-//	else
-//	{
-//		return true;
-//	}
-//}
-//// 攻撃する(1回目の予定)
-//bool Character::Attack()
-//{
-//	if (m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] == true)
-//	{
-//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACKED)] = false;
-//		return true;
-//	}
-//	else
-//	{
-//		m_character_state[static_cast<int>(CHARACTER_STATE::IS_ATTACK_01)] = true;
-//		return false;
-//	}
-//}
-//
-//// 倒れる
-//void Character::Fall()
-//{
-//	m_fall_count++;
-//}
-//
-//// 死んだかどうか
-//bool Character::Dead()
-//{
-//	return m_isdeth;
-//}
+CHARACTER_STATE Character::GetCharacterState()
+{
+	return m_chara_state;
+}
+
+bool Character::CheckCharacterState(CHARACTER_STATE ch_chara_state_)
+{
+	if (GetCharacterState() == ch_chara_state_)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 void Character::Update()
 {
-	/*if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK)] == true) {
-		m_x += 1.0f;
-		m_anime_count += 0.5f;
-	}
-	if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] == true) {
-		m_anime_count += 0.5f;
-	}*/
 	for (int i = 0; i < static_cast<int>(CHARACTER_STATE::STATE_MAX); i++)
 	{
 		if (m_character_state[i] == true)
 		{
+			// 歩いてくる
 			if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK)] == true) 
 			{
-				m_x += 1.0f;
+				m_anime_count[static_cast<int>(CHARACTER_STATE::WALK)] += 0.5f;
+				m_x += 2.0f;
 			}
-			m_anime_count += 0.5f;
+			// 武器を出して構える
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] >= 18.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::WALK_WAIT)] = 0.0f;
+					CharacterState(CHARACTER_STATE::WAIT);
+				}
+			}
+
+
+			// 待機状態
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::WAIT)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::WAIT)] += 0.5f;
+			}
+
+
+			// 攻撃1回目
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::ATTACK_01)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::ATTACK_01)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::ATTACK_01)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::ATTACK_01)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::ATTACK_01)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_ATTACK_CROSS);
+				}
+			}
+			// 攻撃1回目以降
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_02)] = 0.0f;
+					CharacterState(CHARACTER_STATE::RIGHT_ATTACK_CROSS);
+				}
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_02)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_ATTACK_CROSS);
+				}
+			}
+			// 攻撃した後におこるつばぜり合い
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_CROSS)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_ATTACK_CROSS)] += 0.5f;
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_CROSS)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_ATTACK_CROSS)] += 0.5f;
+			}
+
+
+			// 防御1回目
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::DEFENCE_01)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_DEFENCE_CROSS);
+				}
+			}
+			// 防御1回目以降
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_02)] = 0.0f;
+					CharacterState(CHARACTER_STATE::RIGHT_DEFENCE_CROSS);
+				}
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_02)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_DEFENCE_CROSS);
+				}
+			}
+			// 防御した後におこるつばぜり合い
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_CROSS)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_DEFENCE_CROSS)] += 0.5f;
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_CROSS)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEFENCE_CROSS)] += 0.5f;
+			}
+
+
+			// つばぜり合いに勝った場合
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_FRICK)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_ATTACK_02);
+				}
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_FRICK)] = 0.0f;
+					//CharacterState(CHARACTER_STATE::RIGHT_ATTACK_02);
+					CharacterState(CHARACTER_STATE::LEFT_ATTACK_02);
+				}
+			}
+			// つばぜり合いに負けた場合
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_BACK)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_DEFENCE_02);
+				}
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] >= 10.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_BACK)] = 0.0f;
+					//CharacterState(CHARACTER_STATE::RIGHT_DEFENCE_02);
+					CharacterState(CHARACTER_STATE::LEFT_DEFENCE_02);
+				}
+			}
+
+			// 敵を殺すとき(プレイヤーが)
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] >= 40.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] = 0.0f;
+					CharacterState(CHARACTER_STATE::RIGHT_KILL_WALK);
+				}
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] >= 40.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_KILL_WALK);
+				}
+			}
+			// 敵を殺すとき（エネミーが）
+			/*if (m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] >= 40.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::RIGHT_KILL)] = 0.0f;
+					CharacterState(CHARACTER_STATE::RIGHT_KILL_STAND);
+				}
+			}
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] >= 40.0f)
+				{
+					m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] = false;
+					m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_KILL)] = 0.0f;
+					CharacterState(CHARACTER_STATE::LEFT_KILL_STAND);
+				}
+			}*/
+
+
+			// 左足で死ぬ
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] += 0.5f;
+				if (m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] >= 55.0f)
+				{
+					m_anime_count[static_cast<int>(CHARACTER_STATE::LEFT_DEATH)] = 0.0f;
+					m_isdeth = true;
+					CharacterState(CHARACTER_STATE::DETH);
+				}
+			}
+			// 死んでる状態
+			if (m_character_state[static_cast<int>(CHARACTER_STATE::DETH)] == true)
+			{
+				m_anime_count[static_cast<int>(CHARACTER_STATE::DETH)] = 55.0f;
+			}
 		}
 	}
 }
 
+
+bool Character::PBattlePos()
+{
+	if (GetPosX() >= 512.0f - 256.0f + 64.0f + 8.0f)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+bool Character::EBattlePos()
+{
+	if (GetPosX() >= 512.0f - 64.0f - 8.0f)
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+void Character::PSetBattlePos()
+{
+	m_x = 512.0f - 256.0f + 64.0f + 8.0f;
+}
+void Character::ESetBattlePos()
+{
+	m_x = 512.0f - 64.0f - 8.0f;
+}
 
 
 // キャラクターの座標と幅の情報
