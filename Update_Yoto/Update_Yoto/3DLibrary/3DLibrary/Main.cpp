@@ -23,6 +23,7 @@ int WINAPI WinMain(
 	SceneManager sceneManager;
 
 	sceneManager.Init(SceneID::eTitleScene);
+	cTexture::GetTextureInstance()->LoadTexture("Resource/Transition/SceneSwitching.png", transition);
 
 	//ゲームループの開始
 	while (true)

@@ -12,6 +12,8 @@ void TitleScene::Init()
 	m_IsExit = 0;
 	m_FPScounter = 0;
 	m_transparency = 255;
+	m_IsChange = false;
+	m_BambooPosX = 1920.0f;
 
 	cTexture* tex = cTexture::GetTextureInstance();
 	tex->LoadTexture("Resource/Title/master/title_m_base.png", title_base);
@@ -24,6 +26,15 @@ void TitleScene::Init()
 //çXêV
 void TitleScene::Update()
 {
+	if (m_IsChange == true)
+	{
+		m_BambooPosX -= 10.0f;
+		if (m_BambooPosX < 0)
+		{
+			m_State = SceneState::eEnd;
+		}
+		return;
+	}
 
 	Input* inpt = Input::GetInputInstance();
 
@@ -98,7 +109,7 @@ void TitleScene::Update()
 		{
 			if (m_DisplayState != DisplayState::PvP)
 			{
-				m_State = SceneState::eEnd;
+				m_IsChange = true;
 			}
 		}
 	}
@@ -177,5 +188,11 @@ void TitleScene::Draw()
 		graph->DrawIntegratedImage(0.0f, 0.0f,
 			tex->GetTexture(menu), 0.234375f, 0.52734375f, 1920.0f, 1080.0f, 3, 1);
 		break;
+	}
+
+	if (m_IsChange == true)
+	{
+		graph->DrawTexture(m_BambooPosX, 0.0f,
+			tex->GetTexture(transition));
 	}
 }
