@@ -28,8 +28,6 @@ public:
 	//ƒV[ƒ“•ÏXŠÖ”
 	void ChangeScene(SceneID nextScene);
 
-	bool IsGameEnd();
-
 private:
 	std::vector<BaseScene*> m_SceneList;
 	BaseScene* m_CurrentScene;

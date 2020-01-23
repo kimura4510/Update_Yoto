@@ -10,7 +10,12 @@ void HelpScene::Init()
 
 void HelpScene::Update()
 {
-	m_State = SceneState::eEnd;
+	Input* inp =  Input::GetInputInstance();
+
+	if (inp->GetKeyDown(KEY_INFO::ENTER_KEY) == true || inp->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
+	{
+		m_State = SceneState::eEnd;
+	}
 }
 
 void HelpScene::Draw()
