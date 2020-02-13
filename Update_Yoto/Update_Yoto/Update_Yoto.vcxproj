@@ -153,6 +153,7 @@
     <ClCompile Include="3DLibrary\3DLibrary\Scene\GameoverScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\GameScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\HelpScene.cpp" />
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\PvPScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\SceneManager.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\TitleScene.cpp" />
     <ClCompile Include="3DLibrary\3DLibrary\Scene\TransitionScene.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="3DLibrary\3DLibrary\Scene\GameoverScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\GameScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\HelpScene.hpp" />
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\PvPScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\SceneManager.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TitleScene.hpp" />
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp" />

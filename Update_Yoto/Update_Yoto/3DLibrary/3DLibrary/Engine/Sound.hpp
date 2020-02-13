@@ -1,6 +1,10 @@
 #ifndef SOUND_H_
 #define SOUND_H_
 
+#include <dsound.h>
+#include <unordered_map>
+#include <string>
+
 class Sound
 {
 public:
@@ -12,79 +16,88 @@ public:
 	bool InitSound(HWND hw);
 
 	/**
-	* @brief プライマリ・バッファの作成関数
-	* @return 作成できた場合はtrue、失敗した場合はfalse
-	*/
-	bool CreatePrimaryBuffer();
-
-	/**
 	* @brief waveデータの読み込み関数
 	* 指定したパスのwaveデータをセカンダリ・バッファに読み込みます
 	* @return 成功した場合はtrue、そうでないならfalse
 	* @param[in] file_name 読み込むパスを含むファイル名
+	* @param[in] key_name 読み込むデータを管理するキー
 	*/
-	bool LoadSound(const char* file_name);
+	bool LoadSound(std::string file_name, std::string key_name);
 
-public:
+	/**
+	* @brief サウンド開放関数
+	* 読み込んだデータとDirectSoundの解放を行います
+	*/
+	void ReleaseSound();
+
+	/**
+	* @brief サウンド再生関数
+	* 指定したセカンダリ・バッファのサウンドを再生します
+	* @param[in] key_ 再生したいサウンドのキー
+	*/
+	void Play(std::string key_);
+
+	/**
+	* @brief サウンド停止関数
+	* 指定したセカンダリ・バッファのサウンドを停止します
+	* @param[in] key_ 停止したいサウンドのキー
+	*/
+	void Stop(std::string key_);
+
 	//シングルトン
 	/**
-	* @biref インスタンス作成関数
+	* @brief インスタンス生成関数@n
+	* インスタンスを生成する関数です@n
 	*/
-	static void CreateInstance()
+	static void CreateInputInstance()
 	{
-		if (IsInstanceNULL() == true)
+		if (IsInputInstance_NULL() == true)
 		{
-			p_SoundInstance = new Sound;
+			p_Instance = new Sound;
 		}
 	}
 
 	/**
-	* @brief インスタンス破棄関数
+	* @brief インスタンス破棄関数@n
+	* インスタンスを破棄する関数です@n
 	*/
-	static void DestroyInstance()
+	static void DestroyInputInstance()
 	{
-		if (IsInstanceNULL() == false)
+		if (IsInputInstance_NULL() == false)
 		{
-			delete p_SoundInstance;
-			p_SoundInstance = NULL;
+			delete p_Instance;
+			p_Instance = nullptr;
 		}
 	}
 
 	/**
-	* @brief インスタンスNULL確認関数
-	* インスタンスがnullか確認する関数です
-	* @return nullの場合true、そうでないならfalse
+	* @brief インスタンス確認関数@n
+	* インスタンスの有無を確認する関数です@n
 	*/
-	static bool IsInstanceNULL()
+	static bool IsInputInstance_NULL()
 	{
-		return p_SoundInstance == NULL;
+		return p_Instance == nullptr;
 	}
 
 	/**
-	* @biref インスタンス取得関数
+	* @brief インスタンス取得関数@n
+	* インスタンスを取得する関数です@n
 	*/
-	static Sound* GetInstance()
+	static Sound* GetInputInstance()
 	{
-		return p_SoundInstance;
+		return p_Instance;
 	}
+private:
+	Sound() : m_pSound(nullptr) { }		//!< コンストラクタ
+	~Sound() { }						//!< デストラクタ
 
 private:
-	/**
-	* @brief セカンダリ・バッファの作成関数
-	* @return 作成できた場合はtrue、失敗した場合はfalse
-	* この関数はLoadSound内で処理されているため、使用する必要はありません
-	*/
-	bool CreateSecondaryBuffer(MMCKINFO sound_data);
-
-private:
-	Sound() { }
-	~Sound() { }
 	LPDIRECTSOUND8 m_pSound;
-	LPDIRECTSOUNDBUFFER m_pPrimary;
-	LPDIRECTSOUNDBUFFER8 m_pSoundData;
+	std::unordered_map <std::string, LPDIRECTSOUNDBUFFER8> m_pSoundData;
 
-	static Sound* p_SoundInstance;
+	static Sound* p_Instance;
 };
+
 
 
 #endif

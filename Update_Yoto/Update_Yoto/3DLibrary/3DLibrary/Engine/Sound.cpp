@@ -1,4 +1,3 @@
-#include <dsound.h>
 #include "Sound.hpp"
 #include <mmsystem.h>
 
@@ -6,166 +5,150 @@
 #pragma comment (lib, "dsound.lib")
 #pragma comment (lib, "winmm.lib")
 
-Sound* Sound::p_SoundInstance = NULL;
-
 bool Sound::InitSound(HWND hw)
 {
-	HRESULT hr = DirectSoundCreate8(NULL, &m_pSound, NULL);
-	if (FAILED(hr))
+	//!< DirectSoundの生成
+	if (FAILED(DirectSoundCreate8(NULL, &m_pSound, NULL)))
 	{
 		return false;
 	}
 
-	hr = m_pSound->SetCooperativeLevel(hw, DSSCL_PRIORITY);
-	if (FAILED(hr))
+	//!< 協調レベルの設定
+	if (FAILED(m_pSound->SetCooperativeLevel(hw, DSSCL_NORMAL)))
 	{
 		return false;
-	}
-}
-
-bool Sound::CreatePrimaryBuffer()
-{
-	HRESULT hr;
-
-	// DSBUFFERDESC構造体を設定
-	DSBUFFERDESC dsdesc;
-	ZeroMemory(&dsdesc, sizeof(DSBUFFERDESC));
-	dsdesc.dwSize = sizeof(DSBUFFERDESC);
-
-	// PrimaryBufferを指定
-	dsdesc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_PRIMARYBUFFER;
-	dsdesc.dwBufferBytes = 0;
-	dsdesc.lpwfxFormat = NULL;
-
-	//Bufferの作成
-	hr = m_pSound->CreateSoundBuffer(&dsdesc, &m_pPrimary, NULL);
-	if (FAILED(hr))
-	{
-		return false;
-	}
-
-	//PrimaryBufferのフォーマットの設定
-	WAVEFORMATEX wf;
-	ZeroMemory(&wf, sizeof(PCMWAVEFORMAT));
-	wf.wFormatTag = WAVE_FORMAT_PCM;
-	wf.nChannels = 2;
-	wf.nSamplesPerSec = 44100;
-	wf.wBitsPerSample = 16;
-	wf.nBlockAlign = wf.nChannels * wf.wBitsPerSample / 8;
-	wf.nAvgBytesPerSec = wf.nSamplesPerSec * wf.nBlockAlign;
-	hr = m_pPrimary->SetFormat(&wf);
-	if (FAILED(hr))
-	{
-		return false;
+		m_pSound->Release();
+		m_pSound = nullptr;
 	}
 
 	return true;
 }
 
-bool Sound::CreateSecondaryBuffer(MMCKINFO sound_data)
+
+void Sound::ReleaseSound()
 {
-	WAVEFORMATEX wf;
-	DSBUFFERDESC dsdesc;
-	HRESULT hr;
-
-	// WAVEFORMATEXの設定
-	ZeroMemory(&wf, sizeof(WAVEFORMATEX));
-	wf.wFormatTag = WAVE_FORMAT_PCM;
-	wf.nChannels = 2;
-	wf.nSamplesPerSec = 44100;
-	wf.wBitsPerSample = 16;
-	wf.nBlockAlign = wf.nChannels * wf.wBitsPerSample / 8;
-	wf.nAvgBytesPerSec = wf.nSamplesPerSec * wf.nBlockAlign;
-
-	// DSBUFFERDESC構造体を設定
-	ZeroMemory(&dsdesc, sizeof(DSBUFFERDESC));
-	dsdesc.dwSize = sizeof(DSBUFFERDESC);
-	
-	//サウンド・バッファの作成
-	dsdesc.dwFlags = 0;
-	dsdesc.dwBufferBytes = sound_data.cksize;
-	dsdesc.lpwfxFormat = &wf;
-	dsdesc.guid3DAlgorithm = DS3DALG_DEFAULT;
-	LPDIRECTSOUNDBUFFER pDSB;
-	hr = m_pSound->CreateSoundBuffer(&dsdesc, &pDSB, NULL);
-	if (FAILED(hr))
+	for (auto& sound : m_pSoundData)
 	{
-		return false;
+		sound.second->Stop();
+		sound.second->Release();
 	}
-	hr = pDSB->QueryInterface(IID_IDirectSoundBuffer8, (LPVOID*)m_pSoundData);
-	pDSB->Release();
-	if (FAILED(hr))
-	{
-		return false;
-	}
-	return true;
+
+	m_pSoundData.clear();
+
+	m_pSound->Release();
+	m_pSound = nullptr;
 }
 
-bool Sound::LoadSound(const char* file_name)
+bool Sound::LoadSound(std::string file_name, std::string key_name)
 {
-	LPSTR file = const_cast<char*>(file_name);
-	HMMIO hmmio = NULL;
-	MMIOINFO mmioInfo;
+	//!< WindowsマルチメディアAPIのハンドル
+	HMMIO hmmio = nullptr;
 
-	// wavefileのオープン
-	memset(&mmioInfo, 0, sizeof(MMIOINFO));
-	hmmio = mmioOpen(file, &mmioInfo, MMIO_READ);
-	if (!hmmio)
-	{
-		return false;
-	}
+	//!< waveファイル内のヘッダ情報の読み込みと確認
+	hmmio = mmioOpenA((LPSTR)file_name.c_str(), nullptr, MMIO_ALLOCBUF | MMIO_READ);
 
-	// RIFFチャンク検索
-	MMRESULT mmRes;
-	MMCKINFO riffChunk;
-	riffChunk.fccType = mmioFOURCC('W', 'A', 'V', 'E');
-	mmRes = mmioDescend(hmmio, &riffChunk, NULL, MMIO_FINDRIFF);
-	if (mmRes != MMSYSERR_NOERROR)
+	//!< RIFFチャンクを検索
+	MMCKINFO riffInfo;
+	riffInfo.fccType = mmioFOURCC('W', 'A', 'V', 'E');
+	if (MMSYSERR_NOERROR != mmioDescend(hmmio, &riffInfo, nullptr, MMIO_FINDRIFF))
 	{
 		mmioClose(hmmio, 0);
 		return false;
 	}
 
-	// FORMATチャンク検索
-	MMCKINFO formatChunk;
-	formatChunk.ckid = mmioFOURCC('f', 'm', 't', ' ');
-	mmRes = mmioDescend(hmmio, &formatChunk, &riffChunk, MMIO_FINDCHUNK);
-	if (mmRes != MMSYSERR_NOERROR)
+	//!< フォーマットチャンクの検索と読み込み
+	MMCKINFO fmtInfo;
+	fmtInfo.ckid = mmioFOURCC('f', 'm', 't', ' ');
+	if (MMSYSERR_NOERROR != mmioDescend(hmmio, &fmtInfo, &riffInfo, MMIO_FINDCHUNK))
 	{
 		mmioClose(hmmio, 0);
 		return false;
 	}
 
-	// WAVEFORMATEX構造体格納
-	LPWAVEFORMATEX wf;
-	DWORD fmsize = formatChunk.cksize;
-	DWORD size = mmioRead(hmmio, (HPSTR)&wf, fmsize);
-	if (size != fmsize)
-	{
-		mmioClose(hmmio, 0);
-		return false;
-	}
-	mmioAscend(hmmio, &formatChunk, 0);
-
-	// DATAチャンク検索
-	MMCKINFO dataChunk;
-	dataChunk.ckid = mmioFOURCC('d', 'a', 't', 'a');
-	mmRes = mmioDescend(hmmio, &dataChunk, &riffChunk, MMIO_FINDCHUNK);
-	if (mmRes != MMSYSERR_NOERROR)
+	WAVEFORMATEX wavfmt;
+	if (mmioRead(hmmio, reinterpret_cast<HPSTR>(&wavfmt), fmtInfo.cksize) != fmtInfo.cksize)
 	{
 		mmioClose(hmmio, 0);
 		return false;
 	}
 
-	const DWORD readsize = 1024;
-	char* pData = new char[(int)dataChunk.cksize];
-	size = mmioRead(hmmio, (HPSTR)pData, dataChunk.cksize);
-	if (size != dataChunk.cksize)
+	//!< マルチチャンネルの確認
+	if (wavfmt.wFormatTag != WAVE_FORMAT_PCM)
 	{
-		delete[] pData;
+		mmioClose(hmmio, 0);
 		return false;
 	}
+
+	//!< データチャンクの検索と読み込み
+	mmioAscend(hmmio, &fmtInfo, 0);
+	MMCKINFO dataCK;
+	dataCK.ckid = mmioFOURCC('d', 'a', 't', 'a');
+	if (MMSYSERR_NOERROR != mmioDescend(hmmio, &dataCK, &riffInfo, MMIO_FINDCHUNK))
+	{
+		mmioClose(hmmio, 0);
+		return false;
+	}
+
+	//!< セカンダリ・バッファの作成
+	DSBUFFERDESC DSBufDesc;
+	ZeroMemory(&DSBufDesc, sizeof(DSBUFFERDESC));
+	DSBufDesc.dwSize = sizeof(DSBUFFERDESC);
+	DSBufDesc.dwFlags = DSBCAPS_CTRLPAN | DSBCAPS_CTRLFREQUENCY;
+	DSBufDesc.dwBufferBytes = dataCK.cksize;
+	DSBufDesc.guid3DAlgorithm = DS3DALG_DEFAULT;
+	DSBufDesc.lpwfxFormat = &wavfmt;
+
+	LPDIRECTSOUNDBUFFER pDSBuf;
+	if (FAILED(m_pSound->CreateSoundBuffer(&DSBufDesc, &pDSBuf, NULL)))
+	{
+		return false;
+	}
+	m_pSoundData.emplace(key_name, nullptr);
+	if (FAILED(pDSBuf->QueryInterface(IID_IDirectSoundBuffer8, (LPVOID*)&m_pSoundData.at(key_name))))
+	{
+		return false;
+	}
+
+	//!< waveデータの書き込み
+	LPVOID pBuf[2] = { nullptr };
+	DWORD Bufsize[2] = { 0 };
+	if (FAILED(m_pSoundData[key_name]->Lock(0, dataCK.cksize, &pBuf[0], &Bufsize[0], &pBuf[1], &Bufsize[1], 0)))
+	{
+		m_pSoundData.erase(key_name);
+		return false;
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (pBuf[i] == nullptr)
+		{
+			continue;
+		}
+		mmioRead(hmmio, reinterpret_cast<HPSTR>(pBuf[i]), Bufsize[i]);
+	}
+
+	m_pSoundData[key_name]->Unlock(&pBuf[0], Bufsize[0], &pBuf[1], Bufsize[1]);
 
 	mmioClose(hmmio, 0);
 
+	return true;
+}
+
+void Sound::Play(std::string key_)
+{
+	auto it = m_pSoundData.find(key_);
+
+	if (it == m_pSoundData.end())
+	{
+		return;
+	}
+
+	bool is_loop = true;
+	int loop_bit = is_loop == true ? 1 : 0;
+	m_pSoundData[key_]->Play(NULL, 0, DSBPLAY_LOOPING & loop_bit);
+}
+
+void Sound::Stop(std::string key_)
+{
+	m_pSoundData[key_]->Stop();
 }

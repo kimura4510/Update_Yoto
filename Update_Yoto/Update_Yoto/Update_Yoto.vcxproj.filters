@@ -123,7 +123,6 @@
     <ClCompile Include="3DLibrary\3DLibrary\Engine\Sound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-
     <ClCompile Include="DataBank\DataBank.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -137,7 +136,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="3DLibrary\3DLibrary\Scene\ClearScene.cpp">
-
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Engine\Collision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLibrary\3DLibrary\Scene\PvPScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -235,7 +239,6 @@
     <ClInclude Include="3DLibrary\3DLibrary\Engine\Sound.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-
     <ClInclude Include="DataBank\DataBank.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -243,13 +246,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="3DLibrary\3DLibrary\Scene\TransitionScene.hpp">
-
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="3DLibrary\3DLibrary\Scene\GameoverScene.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="3DLibrary\3DLibrary\Scene\ClearScene.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Engine\Collision.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLibrary\3DLibrary\Scene\PvPScene.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

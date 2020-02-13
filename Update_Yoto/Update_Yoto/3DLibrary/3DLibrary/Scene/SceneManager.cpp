@@ -12,7 +12,7 @@
 SceneManager::SceneManager()
 {
 	Init(SceneID::eTitleScene);
-	m_CurrentScene = m_SceneList[(int)m_SceneID];
+	m_CurrentScene = m_SceneList[static_cast<int>(m_SceneID)];
 }
 
 SceneManager::~SceneManager()
@@ -25,6 +25,7 @@ void SceneManager::Init(SceneID id)
 {
 	m_SceneList.push_back(new TitleScene());
 	m_SceneList.push_back(new GameScene());
+	// m_SceneList.push_back(new PvPScene());
 	m_SceneList.push_back(new HelpScene());
 	m_SceneList.push_back(new ClearScene());
 	m_SceneList.push_back(new GameoverScene());
