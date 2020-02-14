@@ -25,7 +25,6 @@ void SceneManager::Init(SceneID id)
 {
 	m_SceneList.push_back(new TitleScene());
 	m_SceneList.push_back(new GameScene());
-	// m_SceneList.push_back(new PvPScene());
 	m_SceneList.push_back(new HelpScene());
 	m_SceneList.push_back(new ClearScene());
 	m_SceneList.push_back(new GameoverScene());

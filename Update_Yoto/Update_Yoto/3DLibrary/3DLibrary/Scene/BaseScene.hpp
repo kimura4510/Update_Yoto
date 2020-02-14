@@ -5,7 +5,6 @@ enum class SceneID
 {
 	eTitleScene,
 	eGameScene,
-	ePvPScene,
 	eHelpScene,
 	eClearScene,
 	eGameoverScene,

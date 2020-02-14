@@ -8,7 +8,6 @@ enum class DisplayState :int
 {
 	Title,
 	PvE,
-	PvP,
 	Help,
 };
 

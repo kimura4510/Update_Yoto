@@ -45,24 +45,31 @@ void HelpScene::Draw()
 
 	if (m_counter < 90)
 	{
-		gra->DrawIntegratedImage(250, 100, tex->GetTexture(help1), 1432, 796, 1, 1, 1, 1);
+		gra->DrawIntegratedImage(250, 180, tex->GetTexture(help1), 1, 1, 1432, 796, 1, 1);
 	}
 	else if (m_counter < 180)
 	{
-		gra->DrawIntegratedImage(250, 100, tex->GetTexture(help2), 1432, 796, 1, 1, 1, 1);
+		gra->DrawIntegratedImage(250, 180, tex->GetTexture(help2), 1, 1, 1432, 796, 1, 1);
 	}
 	else if (m_counter < 270)
 	{
-		gra->DrawIntegratedImage(250, 100, tex->GetTexture(help3), 1432, 796, 1, 1, 1, 1);
+		gra->DrawIntegratedImage(250, 180, tex->GetTexture(help3), 1, 1, 1432, 796, 1, 1);
 	}
 	else
 	{
-		gra->DrawIntegratedImage(250, 100, tex->GetTexture(help4), 1432, 796, 1, 1, 1, 1);
+		gra->DrawIntegratedImage(450, 180, tex->GetTexture(help4), 1, 1, 1432, 796, 1, 1);
 	}
 }
 
 SceneID HelpScene::End()
 {
+	cTexture* tex = cTexture::GetTextureInstance();
+	tex->ReleaseTexture(help_base);
+	tex->ReleaseTexture(help1);
+	tex->ReleaseTexture(help2);
+	tex->ReleaseTexture(help3);
+	tex->ReleaseTexture(help4);
+
 	return SceneID::eTitleScene;
 }
 

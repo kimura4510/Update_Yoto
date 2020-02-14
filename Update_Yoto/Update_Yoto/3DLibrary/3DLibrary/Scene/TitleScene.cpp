@@ -18,7 +18,7 @@ void TitleScene::Init()
 	cTexture* tex = cTexture::GetTextureInstance();
 	tex->LoadTexture("Resource/Title/master/title_m_base.png", title_base);
 	tex->LoadTexture("Resource/Title/master/title_button.png", title_button);
-	tex->LoadTexture("Resource/Title/master/menu_master.png", menu);
+	tex->LoadTexture("Resource/Title/master/menu_non2p.png", menu);
 
 	m_State = SceneState::eMain;
 }
@@ -102,7 +102,7 @@ void TitleScene::Update()
 		}
 		else if (inpt->GetKeyDown(KEY_INFO::DOWN_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lDown) == INPUT_STATE::PUSH_DOWN)
 		{
-			if (m_DisplayNum < 3)
+			if (m_DisplayNum < 2)
 			{
 				m_DisplayNum++;
 				m_DisplayState = static_cast<DisplayState>(m_DisplayNum);
@@ -111,10 +111,7 @@ void TitleScene::Update()
 
 		if (inpt->GetKeyDown(KEY_INFO::ENTER_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
 		{
-			if (m_DisplayState != DisplayState::PvP)
-			{
 				m_IsChange = true;
-			}
 		}
 	}
 }
@@ -182,15 +179,11 @@ void TitleScene::Draw()
 		break;
 	case DisplayState::PvE:
 		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(menu), 0.234275f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
-		break;
-	case DisplayState::PvP:
-		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(menu), 0.234375f, 0.52734375f, 1920.0f, 1080.0f, 2, 1);
+			tex->GetTexture(menu), 0.46875f, 0.52734375f, 1920.0f, 1080.0f, 1, 1);
 		break;
 	case DisplayState::Help:
 		graph->DrawIntegratedImage(0.0f, 0.0f,
-			tex->GetTexture(menu), 0.234375f, 0.52734375f, 1920.0f, 1080.0f, 3, 1);
+			tex->GetTexture(menu), 0.46875f, 0.52734375f, 1920.0f, 1080.0f, 2, 1);
 		break;
 	}
 
