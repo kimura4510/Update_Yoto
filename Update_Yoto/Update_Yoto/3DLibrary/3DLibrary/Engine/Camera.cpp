@@ -8,8 +8,6 @@ Camera* Camera::p_CameraInstance = nullptr;
 
 void Camera::UpdateCamera()
 {
-	MoveCamera();
-
 	D3DXMATRIX matProj, matView;
 
 	//View座標変換用の行列算出開始
