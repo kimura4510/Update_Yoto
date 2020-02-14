@@ -93,7 +93,7 @@ namespace LoadResources {
 
 
 		// UI
-		tex->LoadTexture("Resource/UI/Callout2048x1024.png", calloutui_tex);
+		tex->LoadTexture("Resource/UI/ose_1pmode.png", calloutui_tex);
 		tex->LoadTexture("Resource/UI/HP.png", hpui_tex);
 
 			// 右側用
