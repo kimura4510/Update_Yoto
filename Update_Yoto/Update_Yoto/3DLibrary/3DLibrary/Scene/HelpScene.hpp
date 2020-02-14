@@ -12,6 +12,9 @@ public:
 	void Update() override;
 	SceneID Control() override;
 	void Draw() override;
+
+private:
+	int m_counter;
 };
 
 #endif

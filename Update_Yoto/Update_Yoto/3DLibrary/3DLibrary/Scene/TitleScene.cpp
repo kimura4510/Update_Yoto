@@ -86,6 +86,11 @@ void TitleScene::Update()
 	}
 	else if (m_DisplayState != DisplayState::Title)
 	{
+		if (inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::B) == INPUT_STATE::PUSH_DOWN)
+		{
+			m_DisplayState = DisplayState::Title;
+		}
+
 		//!< ƒƒjƒ…[‰æ–Ê‚Ìˆ—
 		if (inpt->GetKeyDown(KEY_INFO::UP_KEY) == true || inpt->GetGamePadBottonState(0, GAMEPAD_BUTTONS::lUp) == INPUT_STATE::PUSH_DOWN)
 		{
