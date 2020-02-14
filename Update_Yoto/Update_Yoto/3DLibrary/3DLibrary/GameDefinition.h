@@ -1,4 +1,5 @@
 #ifndef GAMEDEFINITION_H_
+
 #define GAMEDEFINITION_H_
 
 #include <string>
@@ -10,6 +11,14 @@ const std::string texture_name = "ex.Update_Yoto";
 const std::string title_base				= "TitleBase";
 const std::string title_button				= "TitleButton";
 const std::string menu						= "Menu";
+
+
+// ヘルプシーン
+const std::string help1						= "Help1";
+const std::string help2						= "Help2";
+const std::string help3						= "Help3";
+const std::string help4						= "Help4";
+const std::string help_base					= "HelpBase";
 
 
 // トランジションシーン
