@@ -122,7 +122,9 @@ void Graphics::DrawIntegratedImage(float x, float y, Texture* texture_data, floa
 	//’¸“_\‘¢‚ÌŽw’è
 	g_D3DDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 	g_D3DDevice->SetTexture(0, texture_data->m_TextureData);
-	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
+
+
+   	g_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
 		2,
 		TriStr,
 		sizeof(CustomVertex));
