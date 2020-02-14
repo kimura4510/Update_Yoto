@@ -24,7 +24,7 @@ bool Graphics::InitGraphics(HWND hwindow)
 
 	pres_param.BackBufferCount = 1;
 	pres_param.BackBufferFormat = D3DFMT_A8R8G8B8;
-	pres_param.Windowed = true;
+	pres_param.Windowed = false;
 	pres_param.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	pres_param.BackBufferHeight = 1080;
 	pres_param.BackBufferWidth = 1920;
