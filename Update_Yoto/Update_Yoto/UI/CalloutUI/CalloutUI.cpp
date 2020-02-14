@@ -19,6 +19,8 @@ void CalloutUI::Init()
 	srand((unsigned int)time(NULL));
 	m_time_to_count_out = rand() % 180 + 420;
 	m_push_flame_count = 0;
+
+	m_callout_state = rand() % 4;
 }
 
 void CalloutUI::Update()
@@ -38,17 +40,65 @@ void CalloutUI::Draw() {
 		cTexture* tex = cTexture::GetTextureInstance();
 		
 		// 分割して描画
-		Graphics::GetGraphicInstance()->DrawIntegratedImage(
-			(float)710.f,
-			(float)190.f,
-			tex->GetTexture(calloutui_tex),
-			0.5f,
-			0.5f,
-			500.f,
-			500.f,
-			1,
-			1
-		);
+
+
+		switch (static_cast<BUTTOM_UI>(m_callout_state))
+		{
+		case BUTTOM_UI::A:
+			Graphics::GetGraphicInstance()->DrawIntegratedImage(
+				(float)710.f,
+				(float)190.f,
+				tex->GetTexture(calloutui_tex),
+				0.25f,
+				0.25f,
+				500.f,
+				500.f,
+				1,
+				1
+			);
+			break;
+		case BUTTOM_UI::B:
+			Graphics::GetGraphicInstance()->DrawIntegratedImage(
+				(float)710.f,
+				(float)190.f,
+				tex->GetTexture(calloutui_tex),
+				0.25f,
+				0.25f,
+				500.f,
+				500.f,
+				2,
+				1
+			);
+			break;
+		case BUTTOM_UI::X:
+			Graphics::GetGraphicInstance()->DrawIntegratedImage(
+				(float)710.f,
+				(float)190.f,
+				tex->GetTexture(calloutui_tex),
+				0.25f,
+				0.25f,
+				500.f,
+				500.f,
+				3,
+				1
+			);
+			break;
+		case BUTTOM_UI::Y:
+			Graphics::GetGraphicInstance()->DrawIntegratedImage(
+				(float)710.f,
+				(float)190.f,
+				tex->GetTexture(calloutui_tex),
+				0.25f,
+				0.25f,
+				500.f,
+				500.f,
+				4,
+				1
+			);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
