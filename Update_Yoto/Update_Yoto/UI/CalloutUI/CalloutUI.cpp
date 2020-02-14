@@ -20,7 +20,8 @@ void CalloutUI::Init()
 	m_time_to_count_out = rand() % 180 + 420;
 	m_push_flame_count = 0;
 
-	m_callout_state = rand() % 4;
+
+	m_callout_state = static_cast<BUTTOM_UI>(rand() % 4);
 }
 
 void CalloutUI::Update()
@@ -33,6 +34,11 @@ void CalloutUI::Update()
 	}
 }
 
+BUTTOM_UI CalloutUI::GetButtomUI()
+{
+	return m_callout_state;
+}
+
 void CalloutUI::Draw() {
 	if (m_ison == true)
 	{
@@ -42,15 +48,15 @@ void CalloutUI::Draw() {
 		// 分割して描画
 
 
-		switch (static_cast<BUTTOM_UI>(m_callout_state))
+		switch (m_callout_state)
 		{
 		case BUTTOM_UI::A:
 			Graphics::GetGraphicInstance()->DrawIntegratedImage(
 				(float)710.f,
-				(float)190.f,
+				(float)100.f,
 				tex->GetTexture(calloutui_tex),
 				0.25f,
-				0.25f,
+				1.0f,
 				500.f,
 				500.f,
 				1,
@@ -60,10 +66,10 @@ void CalloutUI::Draw() {
 		case BUTTOM_UI::B:
 			Graphics::GetGraphicInstance()->DrawIntegratedImage(
 				(float)710.f,
-				(float)190.f,
+				(float)100.f,
 				tex->GetTexture(calloutui_tex),
 				0.25f,
-				0.25f,
+				1.0f,
 				500.f,
 				500.f,
 				2,
@@ -73,10 +79,10 @@ void CalloutUI::Draw() {
 		case BUTTOM_UI::X:
 			Graphics::GetGraphicInstance()->DrawIntegratedImage(
 				(float)710.f,
-				(float)190.f,
+				(float)100.f,
 				tex->GetTexture(calloutui_tex),
 				0.25f,
-				0.25f,
+				1.0f,
 				500.f,
 				500.f,
 				3,
@@ -86,10 +92,10 @@ void CalloutUI::Draw() {
 		case BUTTOM_UI::Y:
 			Graphics::GetGraphicInstance()->DrawIntegratedImage(
 				(float)710.f,
-				(float)190.f,
+				(float)100.f,
 				tex->GetTexture(calloutui_tex),
 				0.25f,
-				0.25f,
+				1.0f,
 				500.f,
 				500.f,
 				4,

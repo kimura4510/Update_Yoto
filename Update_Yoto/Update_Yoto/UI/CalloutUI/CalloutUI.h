@@ -17,6 +17,9 @@ public:
 
 	void Init();
 	void Update();
+
+	BUTTOM_UI GetButtomUI();
+
 	void Draw();
 
 	bool IsOn();
@@ -29,6 +32,6 @@ private:
 	int m_time_to_count_out;
 	int m_push_flame_count;
 
-	int m_callout_state;
+	BUTTOM_UI m_callout_state;
 
 };

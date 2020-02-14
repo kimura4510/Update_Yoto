@@ -342,14 +342,56 @@ void CharacterManager::Battle()
 			m_p_enemy->QuickPressFlameDown();
 		}
 
-		//if (プレイヤーがエンターキーを押したら)
-		if ((input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
-			input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN) &&
-			m_pcutin_trigger == false &&
-			m_ecutin_trigger == false)
-		{
-			m_pcutin_trigger = true;
-		}
+		bool push_check = false;
+		 BUTTOM_UI bt_ui = m_p_callout_ui->GetButtomUI();
+		 if (input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN &&
+			 m_pcutin_trigger == false &&
+			 m_ecutin_trigger == false)
+		 {
+			 if (bt_ui == BUTTOM_UI::A)
+			 {
+				 //push_check = true;
+				 m_pcutin_trigger = true;
+				 delete m_p_callout_ui;
+				 m_p_callout_ui = nullptr;
+			 }
+		 }
+		 else if (input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::B) == INPUT_STATE::PUSH_DOWN &&
+			 m_pcutin_trigger == false &&
+			 m_ecutin_trigger == false)
+		 {
+			 if (bt_ui == BUTTOM_UI::B)
+			 {
+				 //push_check = true;
+				 m_pcutin_trigger = true;
+				 delete m_p_callout_ui;
+				 m_p_callout_ui = nullptr;
+			 }
+		 }
+		 else if (input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::X) == INPUT_STATE::PUSH_DOWN &&
+			 m_pcutin_trigger == false &&
+			 m_ecutin_trigger == false)
+		 {
+			 if (bt_ui == BUTTOM_UI::X)
+			 {
+				 //push_check = true;
+				 m_pcutin_trigger = true;
+				 delete m_p_callout_ui;
+				 m_p_callout_ui = nullptr;
+			 }
+		 }
+		 else if (input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::Y) == INPUT_STATE::PUSH_DOWN &&
+			 m_pcutin_trigger == false &&
+			 m_ecutin_trigger == false)
+		 {
+			 if (bt_ui == BUTTOM_UI::Y)
+			 {
+				 //push_check = true;
+				 m_pcutin_trigger = true;
+				 delete m_p_callout_ui;
+				 m_p_callout_ui = nullptr;
+			 }
+		 }
 		//if (エネミーのカウントが0以下になったら)
 		if (m_p_enemy->GetQuickPressFlame() <= 0 &&
 			m_ecutin_trigger == false &&
@@ -358,13 +400,17 @@ void CharacterManager::Battle()
 			m_ecutin_trigger = true;
 			// リセット
 			m_p_enemy->SetQuickPressFlame();
+			delete m_p_callout_ui;
+			m_p_callout_ui = nullptr;
 		}
 	}
 	else
 	{
 		// お手付き
-		if (input->GetKeyDown(KEY_INFO::ENTER_KEY) == true ||
-			input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN)
+		if (input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN ||
+			input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::B) == INPUT_STATE::PUSH_DOWN ||
+			input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::X) == INPUT_STATE::PUSH_DOWN ||
+			input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::Y) == INPUT_STATE::PUSH_DOWN)
 		{
 			// プレイヤーのHPを減らす
 			m_p_player->HpDown();

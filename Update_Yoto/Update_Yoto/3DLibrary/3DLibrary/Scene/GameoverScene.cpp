@@ -13,7 +13,11 @@ void GameoverScene::Init()
 
 void GameoverScene::Update()
 {
-	if (Input::GetInputInstance()->GetKeyDown(KEY_INFO::ENTER_KEY) == true)
+	Input* input = Input::GetInputInstance();
+	if (input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::A) == INPUT_STATE::PUSH_DOWN ||
+		input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::B) == INPUT_STATE::PUSH_DOWN ||
+		input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::X) == INPUT_STATE::PUSH_DOWN ||
+		input->GetGamePadBottonState(0, GAMEPAD_BUTTONS::Y) == INPUT_STATE::PUSH_DOWN)
 	{
 		m_State = SceneState::eEnd;
 	}
